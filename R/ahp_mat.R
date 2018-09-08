@@ -11,6 +11,7 @@
 #' @param negconvert logical, whether to convert all positive values to
 #'  negative. In the pairwise comparison A_B, if -6 denotes A is more
 #'  important than B by 6 units, set `negconvert = TRUE`.
+#' @param reciprocal logical, whether to convert negative values (after negconvert) to its reciprocal. If the comparison A_B where B is more important than A was already entered in its reciprocal (e.g. 1/6), choose `reciprocal = FALSE`. When `reciprocal = FALSE`, do not set `negconvert = TRUE`.
 #' @return A list of pairwise comparison matrices of each decision-maker.
 #'
 #' @examples
@@ -26,8 +27,14 @@
 #'
 #'@export
 
-ahp.mat <- function(df, atts, negconvert = FALSE) {
+ahp.mat <- function(df, atts, negconvert = FALSE, reciprocal = TRUE) {
     
+  ## If reciprocal = FALSE, negconvert cannot be set to TRUE.
+  
+  if (reciprocal == FALSE & negconvert == TRUE){
+    stop("Error: cannot set reciprocal = FALSE & negconvert = TRUE, because data was already assumed to be all positive.")
+  }
+  
     ## Since in the data, if the attribute in the left is the more important the data is
     ## negative, here I will invert the whole matrix so that the attribute coming first is
     ## rated positively Inversion rule set
@@ -44,13 +51,15 @@ ahp.mat <- function(df, atts, negconvert = FALSE) {
     }
     
     ## Inverting all negative values to its reciprocals
-    for (x in 1:ncol(df)) {
-        for (y in 1:nrow(df)) {
-            if (is.na(df[y, x]) == TRUE) {
-            } else if (df[y, x] < 0) {
-                df[y, x] <- 1/(-df[y, x])
-            }
-        }
+    if (reciprocal == TRUE){
+      for (x in 1:ncol(df)) {
+          for (y in 1:nrow(df)) {
+              if (is.na(df[y, x]) == TRUE) {
+              } else if (df[y, x] < 0) {
+                  df[y, x] <- 1/(-df[y, x])
+              }
+          }
+      }
     }
     
     respmat <- list()
