@@ -20,7 +20,8 @@ Imports:
     knitr
 Suggests:
     ggplot2, 
-    tidyverse
+    tidyverse,
+    scales
 RdMacros: Rdpack
 Collate:
     'ahp_mat.R'

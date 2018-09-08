@@ -20,11 +20,13 @@
 #' ## Computes individual priorities with geometric mean and aggregates them
 #' ## with a trimmed arithmetic mean
 #'
+#'library(magrittr)
+#'
 #' data(city200)
 #' atts <- c('cult', 'fam', 'house', 'jobs', 'trans')
 #'
-#' ahp.mat(df = city200, atts = atts, negconvert = T) %>%
-#'   ahp.aggpref(atts, eigen = FALSE, method = 'geometric', aggmethod = 'tmean', qt = 0.1)
+#' cityahp <- ahp.mat(df = city200, atts = atts, negconvert = TRUE)
+#' ahp.aggpref(cityahp, atts, eigen = FALSE, method = 'geometric', aggmethod = 'tmean', qt = 0.1)
 #'
 #'@references
 #'

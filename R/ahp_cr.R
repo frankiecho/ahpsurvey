@@ -20,8 +20,8 @@
 #' data(city200)
 #' atts <- c('cult', 'fam', 'house', 'jobs', 'trans')
 #'
-#' ahp.mat(df = city200, atts = atts, negconvert = TRUE) %>%
-#'   ahp.cr(atts)
+#' cityahp <- ahp.mat(df = city200, atts = atts, negconvert = TRUE) 
+#' ahp.cr(cityahp, atts)
 #'
 #'@references
 #'\insertAllCited{}

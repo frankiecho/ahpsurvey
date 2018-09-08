@@ -20,9 +20,8 @@
 #'
 #'data(city200)
 #'
-#' city200 %>%
-#'   ahp.mat(atts) %>%
-#'   ahp.error(atts)
+#' cityahp <- ahp.mat(city200, atts, negconvert = TRUE)
+#' ahp.error(cityahp, atts)
 #'
 #'
 #'@references

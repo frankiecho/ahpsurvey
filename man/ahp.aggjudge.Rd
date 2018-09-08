@@ -29,10 +29,8 @@ Aggregate individual judgements from pairwise comparison matrices
 data(city200)
 atts <- c('cult', 'fam', 'house', 'jobs', 'trans')
 
-ahp.mat(df = city200, atts = atts, negconvert = TRUE) \%>\%
-  ahp.aggjudge(atts, aggmethod = 'tmean', qt = 0.1)
-
-
+cityahp <- ahp.mat(df = city200, atts = atts, negconvert = TRUE)
+ahp.aggjudge(cityahp, atts, aggmethod = 'tmean', qt = 0.1)
 
 }
 \references{

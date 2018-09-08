@@ -15,21 +15,10 @@
 #'
 #' @examples
 #'
-#' library(tidyverse)
 #'
+#' data(city200)
 #' atts <- c('cult', 'fam', 'house', 'jobs', 'trans')
-#' colnames <- c('cult_fam', 'cult_house', 'cult_jobs', 'cult_trans',
-#'              'fam_house', 'fam_jobs', 'fam_trans',
-#'              'house_jobs', 'house_trans',
-#'              'jobs_trans')
-#'
-#' weight <- c(5,-3,2,-5,-7,-1,-7,4,-3,-7)
-#'
-#' df <- data.frame(t(weight))
-#'
-#' colnames(df) <- colnames
-#'
-#' ahp.mat(df = df, atts = atts, negconvert = TRUE)
+#' ahp.mat(df = city200, atts = atts, negconvert = TRUE)
 #'
 #'@references
 #'

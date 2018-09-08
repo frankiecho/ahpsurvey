@@ -35,9 +35,8 @@ atts <- c('cult', 'fam', 'house', 'jobs', 'trans')
 
 data(city200)
 
-city200 \%>\%
-  ahp.mat(atts, negconvert = TRUE) \%>\%
-  ahp.harker(atts)
+cityahp <- ahp.mat(city200, atts, negconvert = TRUE)
+ahp.harker(cityahp, atts)
 
 }
 \references{

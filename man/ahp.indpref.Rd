@@ -23,8 +23,11 @@ A \code{data.frame} of the individual preferences of all the decision-makers.
 }
 \examples{
 
-ahp.mat(df = df, atts = atts, negconvert = TRUE) \%>\%
-  ahp.indpref(atts, eigen = TRUE)
+data(city200)
+atts <- c('cult', 'fam', 'house', 'jobs', 'trans')
+
+cityahp <- ahp.mat(df = city200, atts = atts, negconvert = TRUE) 
+ahp.indpref(cityahp, atts, eigen = TRUE)
 
 }
 \references{
