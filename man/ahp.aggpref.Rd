@@ -2,7 +2,7 @@
 % Please edit documentation in R/ahp_aggpref.R
 \name{ahp.aggpref}
 \alias{ahp.aggpref}
-\title{Aggregate individual priorities}
+\title{Aggregate priority weights}
 \usage{
 ahp.aggpref(ahpmat, atts, eigen = FALSE, method = "geometric",
   aggmethod = method, qt = 0)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ahp_error.R
 \name{ahp.error}
 \alias{ahp.error}
-\title{Construct a matrix of the product between the the comparison value and wj/wi}
+\title{Matrix of the product between the pairwise comparison value and pj/pi}
 \usage{
 ahp.error(ahpmat, atts)
 }

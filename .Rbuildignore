@@ -9,3 +9,5 @@ my-vignette.pdf
 ^README\.Rmd$
 ^README-.*\.png$
 ^\.travis\.yml$
+cran-comments.md
+NEWS.md
