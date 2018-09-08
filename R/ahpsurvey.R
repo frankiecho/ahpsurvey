@@ -10,7 +10,7 @@
 #'
 #' @keywords Analytic Hierarchy Process
 #'
-#' @import Rdpack dplyr knitr rmarkdown
+#' @import Rdpack dplyr
 #'
 #' @importFrom Rdpack reprompt
 #'

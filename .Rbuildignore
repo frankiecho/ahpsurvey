@@ -1,4 +1,3 @@
-TODO
 ..Rcheck
 .DS_Store
 .gitignore
@@ -6,4 +5,4 @@ TODO
 ^\.Rproj\.user$
 .Rinstignore
 inst\doc
-vignettes\my.vignette.md
+vignettes\my-vignette.pdf

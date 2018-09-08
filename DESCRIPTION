@@ -14,10 +14,8 @@ Imports:
     stats, 
     magrittr, 
     knitr, 
-    rmarkdown, 
     tidyr,
-    dplyr,
-    knitr
+    dplyr
 Suggests:
     ggplot2, 
     tidyverse,
