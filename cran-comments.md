@@ -1,8 +1,9 @@
 ## Test environments
-
+* macOS High Sierra 10.13.6 with R 3.5.1
+* Ubuntu 12.04 (on travis-ci), R-oldrel, R-release, R-devel
+* win-builder (devel and release)
 
 ## R CMD check results
-No errors, warnings or notes on MacOS High Sierra
-No errors, warnings or notes on build_win()
+0 ERRORs | 0 WARNINGs | 0 NOTES
 
 ## Downstream dependencies
