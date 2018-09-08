@@ -6,3 +6,5 @@
 .Rinstignore
 inst\doc
 vignettes\my-vignette.pdf
+^README\.Rmd$
+^README-.*\.png$

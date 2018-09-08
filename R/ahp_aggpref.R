@@ -1,4 +1,4 @@
-#' Aggregate individual priorities
+#' Aggregate priority weights
 #'
 #' @author Frankie Cho
 #'

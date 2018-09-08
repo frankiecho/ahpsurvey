@@ -1,0 +1,102 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# ahpsurvey
+
+Date: 8 September 2018    
+Version: 0.1.0
+
+## Overview
+
+The `ahpsurvey` package provides a consistent methodology for researchers to reformat data and run  on data that are formatted with the survey data entry mode. It is optimised for performing the AHP with many decision-makers, and provides tools and options for researchers to aggregate individual preferences and concurrently test multiple aggregation options. It also allows researchers to quantify, visualise and correct for inconsistent pairwise comparisons.
+
+## Installation
+
+You can install `ahpsurvey` from Github with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("frankiecho/ahpsurvey")
+```
+A CRAN submission is under way and a direct CRAN download will be available in the near future.
+
+## Usage
+
+Here, we have the simulated survey data of pairwise comparisons of 200 decision-makers who responded to a survey about the attributes they think is important when choosing a city to live in.
+
+```{r example}
+library(ahpsurvey)
+library(magrittr)
+
+data(city200)
+city200 %>% head()
+```
+
+`ahpsurvey` allows us to convert this `data.frame` into a usable list of pairwise comparison matrices for our further action:
+
+```{r}
+## Define the attributes used
+atts <- c("cult", "fam", "house", "jobs", "trans")
+
+city200 %>%
+  ahp.mat(atts = atts, negconvert = TRUE) %>%
+  head(2)
+```
+
+And can calculate the aggregated individual preferences of the 200 decision-makers using that list:
+
+```{r}
+city200 %>%
+  ahp.mat(atts = atts, negconvert = TRUE) %>%
+  ahp.aggpref(atts = atts)
+```
+
+Further arguments allow you to specify the aggregation method, impute missing values and identify and correct inconsistent responses.
+
+## Functions
+
+An overview of the functions in this package are as follows:
+
+* `ahp.mat`: Generate AHP pairwise matrices from survey data
+* `ahp.indpref`: Priority weights of individual decision-makers
+* `ahp.aggpref`: Aggregate individual priorities (AIP)
+* `ahp.aggjudge`: Aggregate individual judgements (AIJ)
+* `ahp.cr`: Saaty's Consistency Ratio
+* `ahp.error`: The product between the pairwise comparison value and pj/pi
+* `ahp.pwerror`: Finds the pairwise comparisons with the maximum amount of inconsistency
+* `ahp.missing`: Impute missing pairwise comparsions
+* `ahp.harker`: Replace inconsistent pairwise comparisons
+
+## Vignettes
+
+For a detailed example of how the above function works, look no further than the vignettes, which are stored in `/vignettes/my-vignette.md/`. There, you can find a detailed step-by-step instruction of how to use the function using a simulated survey dataset and visualise the output using `ggplot2`.
+
+## Future development
+
+I have plans to add the following features in the future, perhaps after I finish writing up my masters thesis :-(
+
+* Multiple level of attributes: right now, you can always multiply the weights manually, but I'm looking to develop this feature in a convenient function
+* Comparing alternatives: or a way to export the matrices to be used in other packages which does this
+* Sensitivity analysis
+* More ways to impute missing data
+
+Please let me know if there are any features which could be useful to you in a feature request or contribution.
+
+## Author
+
+* **Frankie Cho** - *Author & Maintainer* - [frankiecho](https://github.com/frankiecho)
+
+## License
+
+This project is licensed under the GPL-3 License.

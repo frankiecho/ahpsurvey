@@ -1,4 +1,4 @@
-#' Construct a matrix of the product between the the comparison value and wj/wi
+#' Matrix of the product between the pairwise comparison value and pj/pi
 #'
 #' @author Frankie Cho
 #'

@@ -3,7 +3,7 @@ Type: Package
 Title: Analytic Hierarchy Process for Survey Data
 Version: 0.1.0
 Authors@R: person("Frankie", "Cho", email = "htcho@connect.hku.hk", role = c("aut", "cre"))
-Description: The Analytic Hierarchy Process (AHP) is a versatile multi-criteria decision-making tool that allows individuals to rationally weigh attributes and evaluate alternatives presented to them.    The ``ahpsurvey`` package provides a workflow for researchers to reformat data and run analytic hierarchy process on data that are originally formatted using the survey data entry mode. It is optimised for performing the AHP with many decision-makers, and provides tools and options for researchers to aggregate individual preferences and concurrently test multiple options. It also allows researchers to quantify, visualise and correct for inconsistent pairwise comparisons.
+Description: The Analytic Hierarchy Process is a versatile multi-criteria decision-making tool that allows decision-makers to weigh attributes and evaluate alternatives presented to them.    This package provides a consistent methodology for researchers to reformat data and run analytic hierarchy process in R on data that are formatted using the survey data entry mode. It is optimised for performing the AHP with many decision-makers, and provides tools and options for researchers to aggregate individual preferences and test multiple options. It also allows researchers to quantify, visualise and correct for inconsistency in the decision-maker's comparisons.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
