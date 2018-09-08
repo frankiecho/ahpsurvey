@@ -4,7 +4,7 @@
 * win-builder (devel and release)
 
 ## R CMD check results
-0 ERRORs | 0 WARNINGs | 1 NOTE
+0 ERRORs | 0 WARNINGs | 0 NOTES
 * NOTE: Maintainer: 'Frankie Cho <htcho@connect.hku.hk>'
 
 ## Downstream dependencies
