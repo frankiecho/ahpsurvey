@@ -5,6 +5,6 @@
 ^\.Rproj\.user$
 .Rinstignore
 inst\doc
-vignettes\my-vignette.pdf
+my-vignette.pdf
 ^README\.Rmd$
 ^README-.*\.png$
