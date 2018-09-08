@@ -20,7 +20,8 @@ Suggests:
     ggplot2, 
     tidyverse,
     scales
-RdMacros: Rdpack
+RdMacros: 
+    Rdpack
 Collate:
     'ahp_mat.R'
     'ahp_aggjudge.R'
