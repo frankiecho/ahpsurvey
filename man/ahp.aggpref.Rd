@@ -14,11 +14,11 @@ ahp.aggpref(ahpmat, atts, eigen = FALSE, method = "geometric",
 
 \item{eigen}{if \code{eigen = TRUE}, the individual priority weights are computed using the Dominant Eigenvalues method described in \insertCite{Saaty2003;textual}{ahpsurvey}. The \code{method} argument is not evaluated if \code{eigen = TRUE}. If \code{eigen = TRUE}, \code{aggmethod} should be specified to instruct the function how to aggregate the weights obtained through the dominant eigenvalue methods.}
 
-\item{method}{if \code{eigen = FALSE}, then the priorities are computed based on the averages of normalised values. Basically it normalises the matrices so that all of the columns add up to 1, and then computes the averages of the row as the priority weights of each attribute. Three modes of finding the averages are available:  \code{arithmetic}: the arithmetic mean; \code{geometric}: the geometric mean (the default); \code{rootmean}: the square root of the sum of the squared value.}
+\item{method}{if \code{eigen = FALSE}, then the priorities are computed based on the averages of normalized values. Basically it normalizes the matrices so that all of the columns add up to 1, and then computes the averages of the row as the priority weights of each attribute. Three modes of finding the averages are available:  \code{arithmetic}: the arithmetic mean; \code{geometric}: the geometric mean (the default); \code{rootmean}: the square root of the sum of the squared value.}
 
 \item{aggmethod}{how to aggregate the individual priorities. By default \code{aggmethod = method}. Apart from the methods offered in \code{method}, \code{aggmethod} also permits three other options: \code{tmean} computes the trimmed arithmetic mean, \code{tgmean} computes the trimmed geometric mean (both with quantiles trimmed based on \code{qt}), and \code{sd} computes the standard deviation from the arithmetic mean.}
 
-\item{qt}{specifes the quantile which the top \strong{and} bottom priority weights are trimmed. Used only if \code{aggmethod = 'tmean'} or \code{aggmethod = 'tgmean'}. For example, \code{qt = 0.25} specifies that the aggregation is the arithmetic mean of the values from the 25 to 75 percentile. By default \code{qt = 0}.}
+\item{qt}{specifies the quantile which the top \strong{and} bottom priority weights are trimmed. Used only if \code{aggmethod = 'tmean'} or \code{aggmethod = 'tgmean'}. For example, \code{qt = 0.25} specifies that the aggregation is the arithmetic mean of the values from the 25 to 75 percentile. By default \code{qt = 0}.}
 }
 \value{
 A \code{data.frame} of the aggregated preferences of all the decision-makers.

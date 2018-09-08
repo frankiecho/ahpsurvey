@@ -11,7 +11,7 @@ ahp.indpref(ahpmat, atts, method = "geometric", eigen = FALSE)
 
 \item{atts}{a list of attributes in the correct order}
 
-\item{method}{if \code{eigen = FALSE}, then the priorities are computed based on the averages of normalised values. Basically it normalises the matrices so that all of the columns add up to 1, and then computes the averages of the row as the priority weights of each attribute. Three modes of finding the averages are available:  \code{arithmetic}: the arithmetic mean; \code{geometric}: the geometric mean; \code{rootmean}: the square root of the sum of the squared value.}
+\item{method}{if \code{eigen = FALSE}, then the priorities are computed based on the averages of normalized values. Basically it normalizes the matrices so that all of the columns add up to 1, and then computes the averages of the row as the priority weights of each attribute. Three modes of finding the averages are available:  \code{arithmetic}: the arithmetic mean; \code{geometric}: the geometric mean; \code{rootmean}: the square root of the sum of the squared value.}
 
 \item{eigen}{if \code{eigen = TRUE}, the priority weights are computed using the Dominant Eigenvalues method described in \insertCite{Saaty2003;textual}{ahpsurvey}. The \code{method} argument is not evaluated if \code{eigen = TRUE}.}
 }

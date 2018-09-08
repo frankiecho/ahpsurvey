@@ -15,7 +15,7 @@ ahp.error(ahpmat, atts)
 A list of matrices containing \eqn{\epsilon_{ij} = a_{ij}p_{j}/p_{i}} for each decision-maker, with elements from the lower triangle set as NA automatically (since it is essentially equal to the element in the upper triangle).
 }
 \description{
-Consider the comparison matrix where element \eqn{a_{ij}} contains the pairwise comparsion between the attributes i and j. The weights of the matrix was constructed as in \code{agg.indpref} using the Perron eigenvector where \eqn{p_{i}} and \eqn{p_{j}} are the weights of the \eqn{i^{th}} and the \eqn{j^{th}} element respectively. \code{ahp.error} constructs a matrix \eqn{\epsilon_{ij} = a_{ij}p_{j}/p_{i}}.
+Consider the comparison matrix where element \eqn{a_{ij}} contains the pairwise comparision between the attributes i and j. The weights of the matrix was constructed as in \code{agg.indpref} using the Perron eigenvector where \eqn{p_{i}} and \eqn{p_{j}} are the weights of the \eqn{i^{th}} and the \eqn{j^{th}} element respectively. \code{ahp.error} constructs a matrix \eqn{\epsilon_{ij} = a_{ij}p_{j}/p_{i}}.
 }
 \examples{
 
