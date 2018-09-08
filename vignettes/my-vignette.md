@@ -237,7 +237,7 @@ error %>%
 ```
 
 ![Maximum difference of between eigenvalue and mean
-aggregation](/private/var/folders/pr/kz338zbd58g6m78mrf49n5bh0000gn/T/Rtmp0wAOUu/preview-3e4a54e2e768.dir/my-vignette_files/figure-gfm/unnamed-chunk-5-1.png)
+aggregation](/private/var/folders/pr/kz338zbd58g6m78mrf49n5bh0000gn/T/Rtmp0wAOUu/preview-3e4a56aa6bd.dir/my-vignette_files/figure-gfm/unnamed-chunk-5-1.jpeg)
 
 ## Aggregated priority weights
 
@@ -299,7 +299,7 @@ qtresults %>%
 ```
 
 ![Changes of aggregated weights based on quantile of data
-trimmed](/private/var/folders/pr/kz338zbd58g6m78mrf49n5bh0000gn/T/Rtmp0wAOUu/preview-3e4a54e2e768.dir/my-vignette_files/figure-gfm/unnamed-chunk-7-1.png)
+trimmed](/private/var/folders/pr/kz338zbd58g6m78mrf49n5bh0000gn/T/Rtmp0wAOUu/preview-3e4a56aa6bd.dir/my-vignette_files/figure-gfm/unnamed-chunk-7-1.jpeg)
 
 It is also possible to quantify the heterogeneity amongst
 decision-makers’ priorities, information possibly lost by group
@@ -440,7 +440,7 @@ city.df %>%
 ```
 
 ![Individual Priorities with respect to
-goal](/private/var/folders/pr/kz338zbd58g6m78mrf49n5bh0000gn/T/Rtmp0wAOUu/preview-3e4a54e2e768.dir/my-vignette_files/figure-gfm/unnamed-chunk-13-1.png)
+goal](/private/var/folders/pr/kz338zbd58g6m78mrf49n5bh0000gn/T/Rtmp0wAOUu/preview-3e4a56aa6bd.dir/my-vignette_files/figure-gfm/unnamed-chunk-13-1.jpeg)
 
 # Dealing with inconsistent and missing data
 
@@ -510,8 +510,8 @@ the cult fam comparison is calculated by dividing weight of cult by the
 weight of fam, 0.152 / 0.433 = 0.351.
 
 ``` r
-pjpi <- priority %*% t((priority)^-1)
-pjpi
+S <- priority %*% t((priority)^-1)
+S
 ```
 
     ##        cult    fam house  jobs trans
@@ -534,7 +534,7 @@ value in the pairwise comparison matrix. The values can be obtained with
 a simple matrix multiplication of the transpose of pjpi.
 
 ``` r
-sample_mat[[1]] *t(pjpi)
+sample_mat[[1]] *t(S)
 ```
 
     ##        cult   fam house  jobs trans
@@ -662,7 +662,7 @@ cityahp %>%
 
 ![Pairwise comparison and its frequency as the most, second-most, and
 third most inconsistent pairwise
-comparsion](/private/var/folders/pr/kz338zbd58g6m78mrf49n5bh0000gn/T/Rtmp0wAOUu/preview-3e4a54e2e768.dir/my-vignette_files/figure-gfm/unnamed-chunk-22-1.png)
+comparsion](/private/var/folders/pr/kz338zbd58g6m78mrf49n5bh0000gn/T/Rtmp0wAOUu/preview-3e4a56aa6bd.dir/my-vignette_files/figure-gfm/unnamed-chunk-22-1.jpeg)
 
 The results are favorable – the frequency which a pairwise comparison is
 the most inconsistent for that decision-maker is reflective of the
@@ -859,7 +859,7 @@ crmat %>%
 ```
 
 ![Consistency Ratios under different number of iterations with Harker’s
-method](/private/var/folders/pr/kz338zbd58g6m78mrf49n5bh0000gn/T/Rtmp0wAOUu/preview-3e4a54e2e768.dir/my-vignette_files/figure-gfm/unnamed-chunk-27-1.png)
+method](/private/var/folders/pr/kz338zbd58g6m78mrf49n5bh0000gn/T/Rtmp0wAOUu/preview-3e4a56aa6bd.dir/my-vignette_files/figure-gfm/unnamed-chunk-27-1.jpeg)
 
 ``` r
 it <- 1
@@ -896,7 +896,7 @@ city.df %>%
 ```
 
 ![Individual priority weights with respect to goal (1
-iteration)](/private/var/folders/pr/kz338zbd58g6m78mrf49n5bh0000gn/T/Rtmp0wAOUu/preview-3e4a54e2e768.dir/my-vignette_files/figure-gfm/unnamed-chunk-28-1.png)
+iteration)](/private/var/folders/pr/kz338zbd58g6m78mrf49n5bh0000gn/T/Rtmp0wAOUu/preview-3e4a56aa6bd.dir/my-vignette_files/figure-gfm/unnamed-chunk-28-1.jpeg)
 
 Let’s take a look at how applying Harker’s method affects the overall
 aggregated preferences of the population.
