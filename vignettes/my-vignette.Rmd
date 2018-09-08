@@ -3,29 +3,26 @@ title: 'ahpsurvey: Analytic Hierarchy Process for survey data'
 author: "Frankie Cho"
 date: "7 September 2018"
 output:
-  github_document:
-    toc: true
-    toc_depth: 2
-    html_preview: true
-    fig_width: 5
-    fig_height: 3
-    dev: jpeg
-  pdf_document:
-    df_print: kable
-    fig_caption: yes
-    highlight: tango
-    number_sections: yes
-    toc: yes
-    toc_depth: 2
-  html_document:
-    df_print: paged
-    toc: yes
-    toc_depth: '2'
+  rmarkdown::html_vignette
+#  github_document:
+#    toc: true
+#    toc_depth: 2
+#    html_preview: true
+#    fig_width: 5
+#    fig_height: 3
+#    dev: jpeg
+#  pdf_document:
+#    df_print: kable
+#    fig_caption: yes
+#    highlight: tango
+#    number_sections: yes
+#    toc: yes
+#    toc_depth: 2
 header-includes: \usepackage{amsmath}
 email: htcho@connect.hku.hk
 bibliography: /Users/chohinting/Documents/ahpsurvey/inst/REFERENCES.bib
 vignette: >
-  %\VignetteIndexEntry{Analytic Hierarchy Process for Survey Data} 
+  %\VignetteIndexEntry{full} 
   %\usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown} 
 ---
