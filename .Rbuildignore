@@ -1,0 +1,7 @@
+TODO
+..Rcheck
+.DS_Store
+.gitignore
+^.*\.Rproj$
+^\.Rproj\.user$
+.Rinstignore

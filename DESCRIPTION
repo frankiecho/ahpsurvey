@@ -1,0 +1,37 @@
+Package: ahpsurvey
+Type: Package
+Title: Analytic Hierarchy Process for Survey Data
+Version: 0.1.0
+Authors@R: person("Frankie", "Cho", email = "htcho@connect.hku.hk", role = c("aut", "cre"))
+Description: The Analytic Hierarchy Process (AHP) is a versatile multi-criteria decision-making tool that allows individuals to rationally weigh attributes and evaluate alternatives presented to them.    The ``ahpsurvey`` package provides a workflow for researchers to reformat data and run analytic hierarchy process on data that are originally formatted using the survey data entry mode. It is optimised for performing the AHP with many decision-makers, and provides tools and options for researchers to aggregate individual preferences and concurrently test multiple options. It also allows researchers to quantify, visualise and correct for inconsistent pairwise comparisons.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.0
+Roxygen: list(markdown = TRUE)
+Imports: 
+    Rdpack,
+    stats, 
+    magrittr, 
+    knitr, 
+    rmarkdown, 
+    tidyr,
+    dplyr,
+    knitr
+Suggests:
+    ggplot2
+RdMacros: Rdpack
+Collate:
+    'ahp_aggjudge.R'
+    'ahp_aggpref.R'
+    'ahp_bweight.R'
+    'ahp_cr.R'
+    'ahp_indpref.R'
+    'ahp_error.R'
+    'ahp_harker.R'
+    'ahp_mat.R'
+    'ahp_missing.R'
+    'ahp_pwerror.R'
+    'ahpsurvey.R'
+    'data.R'
+VignetteBuilder: knitr
