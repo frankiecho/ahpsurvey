@@ -8,3 +8,4 @@ inst\doc
 my-vignette.pdf
 ^README\.Rmd$
 ^README-.*\.png$
+^\.travis\.yml$
