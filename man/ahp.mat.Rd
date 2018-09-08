@@ -15,7 +15,7 @@ ahp.mat(df, atts, negconvert = FALSE, reciprocal = TRUE)
 negative. In the pairwise comparison A_B, if -6 denotes A is more
 important than B by 6 units, set \code{negconvert = TRUE}.}
 
-\item{reciprocal}{logical, whether to convert negative values (after negconvert) to its reciprocal. If the comparison A_B where B is more important than A was already entered in its reciprocal (e.g. 1/6), choose \code{reciprocal = FALSE}. When \code{reciprocal = FALSE}, do not set \code{negconvert = TRUE}.}
+\item{reciprocal}{logical, whether to convert negative values (after \code{negconvert}) to its reciprocal. If the comparison A_B where B is more important than A was already entered in its reciprocal (e.g. 1/6), choose \code{reciprocal = FALSE}. When \code{reciprocal = FALSE}, do not set \code{negconvert = TRUE}.}
 }
 \value{
 A list of pairwise comparison matrices of each decision-maker.

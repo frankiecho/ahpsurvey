@@ -11,7 +11,7 @@
 #' @param negconvert logical, whether to convert all positive values to
 #'  negative. In the pairwise comparison A_B, if -6 denotes A is more
 #'  important than B by 6 units, set `negconvert = TRUE`.
-#' @param reciprocal logical, whether to convert negative values (after negconvert) to its reciprocal. If the comparison A_B where B is more important than A was already entered in its reciprocal (e.g. 1/6), choose `reciprocal = FALSE`. When `reciprocal = FALSE`, do not set `negconvert = TRUE`.
+#' @param reciprocal logical, whether to convert negative values (after `negconvert`) to its reciprocal. If the comparison A_B where B is more important than A was already entered in its reciprocal (e.g. 1/6), choose `reciprocal = FALSE`. When `reciprocal = FALSE`, do not set `negconvert = TRUE`.
 #' @return A list of pairwise comparison matrices of each decision-maker.
 #'
 #' @examples
