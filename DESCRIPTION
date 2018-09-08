@@ -19,9 +19,11 @@ Imports:
     dplyr,
     knitr
 Suggests:
-    ggplot2
+    ggplot2, 
+    tidyverse
 RdMacros: Rdpack
 Collate:
+    'ahp_mat.R'
     'ahp_aggjudge.R'
     'ahp_aggpref.R'
     'ahp_bweight.R'
@@ -29,7 +31,6 @@ Collate:
     'ahp_indpref.R'
     'ahp_error.R'
     'ahp_harker.R'
-    'ahp_mat.R'
     'ahp_missing.R'
     'ahp_pwerror.R'
     'ahpsurvey.R'

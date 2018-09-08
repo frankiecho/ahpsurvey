@@ -13,6 +13,8 @@
 #'
 #' @return A `list` of consistency ratios of each decision-maker.
 #'
+#' @include ahp_mat.R
+#'
 #' @examples
 #'
 #' data(city200)

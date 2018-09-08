@@ -14,6 +14,8 @@
 #'
 #' @return A list of matrices with values replaced with consistent values.
 #'
+#'@include ahp_mat.R
+#'
 #' @seealso ahp.error ahp.cr
 #' @examples
 #'

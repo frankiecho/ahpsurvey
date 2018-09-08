@@ -12,6 +12,8 @@
 #' @param qt specifes the quantile which the top **and** bottom priority weights are trimmed. Used only if `aggmethod = 'tmean'` or `aggmethod = 'tgmean'`. For example, `qt = 0.25` specifies that the aggregation is the arithmetic mean of the values from the 25 to 75 percentile. By default `qt = 0`.
 #'
 #' @return A `data.frame` of the aggregated preferences of all the decision-makers.
+#'@include ahp_mat.R
+#'
 #'
 #' @examples
 #'
@@ -23,8 +25,6 @@
 #'
 #' ahp.mat(df = city200, atts = atts, negconvert = T) %>%
 #'   ahp.aggpref(atts, eigen = FALSE, method = 'geometric', aggmethod = 'tmean', qt = 0.1)
-#'
-#'
 #'
 #'@references
 #'

@@ -11,6 +11,8 @@
 #'
 #' @return A `data.frame` of the individual preferences of all the decision-makers.
 #'
+#'@include ahp_mat.R
+#'
 #' @examples
 #'
 #' ahp.mat(df = df, atts = atts, negconvert = TRUE) %>%

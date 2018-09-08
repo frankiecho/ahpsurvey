@@ -11,6 +11,8 @@
 #'
 #' @return A list of matrices with all `NA` values imputed.
 #'
+#'@include ahp_mat.R
+#'
 #' @examples
 #'
 #' library(magrittr)

@@ -18,9 +18,9 @@ header-includes: \usepackage{amsmath}
 email: htcho@connect.hku.hk
 bibliography: /Volumes/GoogleDrive/My Drive/ahpsurvey/inst/REFERENCES.bib
 vignette: >
-  %\VignetteEngine{knitr::knitr} 
-  %\VignetteIndexEntry{01-full} 
-  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown} 
+  %\VignetteIndexEntry{Analytic Hierarchy Process for Survey Data} 
+  %\usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE, eval=TRUE}

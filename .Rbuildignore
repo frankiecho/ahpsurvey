@@ -5,3 +5,4 @@ TODO
 ^.*\.Rproj$
 ^\.Rproj\.user$
 .Rinstignore
+^\inst\doc$

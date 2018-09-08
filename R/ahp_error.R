@@ -9,6 +9,8 @@
 #'
 #' @return A list of matrices containing \eqn{\epsilon_{ij} = a_{ij}p_{j}/p_{i}} for each decision-maker, with elements from the lower triangle set as NA automatically (since it is essentially equal to the element in the upper triangle).
 #'
+#'@include ahp_mat.R
+#'
 #' @examples
 #'
 #'

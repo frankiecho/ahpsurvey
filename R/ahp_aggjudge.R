@@ -11,6 +11,8 @@
 #'
 #' @return A `data.frame` of the aggregated pairwise judgements of all the decision-makers.
 #'
+#' @include ahp_mat.R
+#' 
 #' @examples
 #'
 #' ## Computes individual judgements with geometric mean and aggregates them
@@ -19,10 +21,8 @@
 #' data(city200)
 #' atts <- c('cult', 'fam', 'house', 'jobs', 'trans')
 #'
-#' ahp.mat(df = city200, atts = atts, negconvert = TRUE) %>%
-#'   ahp.aggjudge(atts, aggmethod = 'tmean', qt = 0.1)
-#'
-#'
+#' cityahp <- ahp.mat(df = city200, atts = atts, negconvert = TRUE)
+#' ahp.aggjudge(cityahp, atts, aggmethod = 'tmean', qt = 0.1)
 #'
 #'@references
 #'
@@ -82,3 +82,5 @@ ahp.aggjudge <- function(ahpmat, atts, aggmethod = "geometric", qt = 0) {
     colnames(aggpref) <- rownames(aggpref) <- atts
     aggpref
 }
+
+if (getRversion() >= "2.15.1") utils::globalVariables(c("sd", "%>%", "count", "quantile"))
