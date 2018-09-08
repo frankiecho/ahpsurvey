@@ -3,16 +3,19 @@ title: 'ahpsurvey: Analytic Hierarchy Process for survey data'
 author: "Frankie Cho"
 date: "7 September 2018"
 output:
-  html_document:
-    df_print: paged
-    toc: yes
-    toc_depth: '2'
+#  html_document:
+#    df_print: paged
+#    toc: yes
+#    toc_depth: '2'
   pdf_document:
     df_print: kable
     fig_caption: yes
     highlight: tango
     number_sections: yes
     toc: yes
+    toc_depth: 2
+  github_document:
+    toc: true
     toc_depth: 2
 header-includes: \usepackage{amsmath}
 email: htcho@connect.hku.hk
