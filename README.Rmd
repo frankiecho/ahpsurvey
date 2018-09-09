@@ -99,4 +99,4 @@ Please let me know if there are any features which could be useful to you in a f
 
 ## License
 
-This project is licensed under the GPL-3 License.
+This project is licensed under the MIT License.

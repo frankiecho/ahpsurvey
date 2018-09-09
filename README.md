@@ -116,7 +116,7 @@ An overview of the functions in this package are as follows:
 ## Vignettes
 
 For a detailed example of how the above function works, look no further
-than the vignettes, which are stored in `/my-vignette.pdf`.
+than the vignettes, which are stored in `/vignettes/my-vignette.md/`.
 There, you can find a detailed step-by-step instruction of how to use
 the function using a simulated survey dataset and visualise the output
 using `ggplot2`.
@@ -144,4 +144,4 @@ you in a feature request or contribution.
 
 ## License
 
-This project is licensed under the GPL-3 License.
+This project is licensed under the MIT License.
