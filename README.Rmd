@@ -19,7 +19,7 @@ Version: 0.1.0
 
 ## Overview
 
-The `ahpsurvey` package provides a consistent methodology for researchers to reformat data and run  on data that are formatted with the survey data entry mode. It is optimised for performing the AHP with many decision-makers, and provides tools and options for researchers to aggregate individual preferences and concurrently test multiple aggregation options. It also allows researchers to quantify, visualise and correct for inconsistent pairwise comparisons.
+The `ahpsurvey` package provides a consistent methodology for researchers to reformat data and run the analytic hierarchy process (AHP) on data that are formatted with the survey data entry mode. It is optimised for performing the AHP with many decision-makers, and provides tools and options for researchers to aggregate individual preferences and concurrently test multiple aggregation options. It also allows researchers to quantify, visualise and correct for inconsistent pairwise comparisons.
 
 ## Installation
 
