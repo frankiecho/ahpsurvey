@@ -135,7 +135,7 @@ data.frame(Rating, Definition) %>% kable()
 
 A Saaty scale is composed of 9 items on each end (17 options per pairwise comparison) where decision-makers are asked to indicate how much attribute/ characteristic A is more preferred to B (or vice versa), and how much it is preferred in a 9-point scale. Respondents are asked to make pairwise comparisons for a range of attributes, and indicate their preferences for each of them.
 
-Based on the above scale, a matrix for the $k^{th}$ individual is obtained:
+Based on the above scale, a pairwise comparison matrix of $N$ attributes for the $k^{th}$ individual is obtained:
 
 $$ \mathbf{S_k} =\begin{pmatrix}
                       a_{1,1} & a_{1,2} & \cdots & a_{1,N} \\
@@ -150,9 +150,13 @@ The reformatting of the survey data (with one row per individual) into such a ma
 
 *Culture* 9 8 7 **6** 5 4 3 2 1 2 3 4 5 6 7 8 9 *Family*
 
-In the case where the decision-maker chose 6, the sensible codebook maker would code it as -6, which denotes that *Culture* is more important than *Family* in 6 units for that decision-maker. For `ahp.mat` to work, the value in A_B variable have to be the importance A has over B in positive values. In this case, the values should be converted from negative to positive, and the negative values would be converted to its reciprocal in the pairwise matrix. When data is coded in the above way, set `negconvert = TRUE`.
+In the case where the decision-maker chose 6, the sensible codebook maker would code it as -6, which denotes that *Culture* is more important than *Family* in 6 units for that decision-maker. For `ahp.mat` to work, the value in A_B variable have to be the importance A has over B in positive values. In this case, the values should be converted from negative to positive, and the negative values would be converted to its reciprocal in the pairwise matrix. When data is coded in the above way, set `negconvert = TRUE`. If the data is already coded in the reciprocal (as opposed to negatives), set `reciprocal = FALSE`.
 
-``ahp.mat`` takes three arguments: the dataframe `df`, a list of attributes in the correct order `atts`, and whether to convert all positive values to negative (`negconvert`, which is logical).
+``ahp.mat`` takes four arguments: 
+*   `df`:  the dataframe
+*   `atts`: a list of attributes in the correct order 
+*   `negconvert`: whether to convert all positive values to negative (logical, defaults to `FALSE`)
+*   `reciprocal`: whether to convert negative values (after `negconvert`) to its reciprocals (defaults to `TRUE`).
 
 ```{r}
 city.df %>%
@@ -202,8 +206,8 @@ amean
 ```
 
 Two steps were simutaneously conducted in the above command:
-1. Compute the individual priorities of each decision-maker (using `method`)
-2. Aggregate the priorities (using `aggmethod`)
+1.    Compute the individual priorities of each decision-maker (using `method`)
+2.    Aggregate the priorities (using `aggmethod`)
 
 By default, the two steps rely on the same aggregation method as specified in `method` (unless when `eigen = TRUE`, where `aggmethod` defaults to `arithmetic`). However, it is possible to specify different aggregation methods for the individual and group level. For instance, one can specify that in the individual level, the arithmetic mean is used to compute the individual priorities; the priorities are aggregated using a trimmed mean by trimming observations higher and lower quantile. 
 
