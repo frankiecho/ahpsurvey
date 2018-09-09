@@ -7,7 +7,7 @@
 #' @name city1
 #' @usage data(city1)
 #'
-#' @format A data frame with 1 row and 10 variables, which are pairwise comparisons of atts.
+#' @format A data frame with 1 row and 10 variables, which are pairwise comparisons of `atts`.
 #' @source \insertCite{Saaty2004;textual}{ahpsurvey}
 "city1"
 

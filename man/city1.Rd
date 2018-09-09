@@ -4,7 +4,7 @@
 \name{city1}
 \alias{city1}
 \title{Dataframe of one decision-maker based on \insertCite{Saaty2004;textual}{ahpsurvey}}
-\format{A data frame with 1 row and 10 variables, which are pairwise comparisons of atts.}
+\format{A data frame with 1 row and 10 variables, which are pairwise comparisons of \code{atts}.}
 \source{
 \insertCite{Saaty2004;textual}{ahpsurvey}
 }
