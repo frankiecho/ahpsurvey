@@ -12,3 +12,4 @@ my-vignette.pdf
 ^cran-comments\.md$
 ^NEWS\.md$ 
 ^figure$
+^revdep$
