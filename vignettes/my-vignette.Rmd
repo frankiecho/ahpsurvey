@@ -1,6 +1,6 @@
 ---
 title: 'Analytic Hierarchy Process for Survey Data in R'
-subtitle: 'Vignettes with the `ahpsurvey` package'
+subtitle: 'Vignettes for the `ahpsurvey` package'
 author: "Frankie Cho"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
@@ -150,7 +150,9 @@ Where $a_{i,j}$ represents the pairwise comparison between the attribute $i$ and
 
 The reformatting of the survey data (with one row per individual) into such a matrix necessary for further analysis is cumbersome for researchers. Furthermore, as researchers conducting the AHP as an integrated part of a survey, we typically receive data in the above format: the pairwise comparisons are coded in positive and negative numbers as opposed to reciprocals. In the pairwise comparison of `cult_fam`:
 
-*Culture* 9 8 7 **6** 5 4 3 2 1 2 3 4 5 6 7 8 9 *Family*
+\begin{center}
+\textit{Culture} 9 8 7 \textbf{6} 5 4 3 2 1 2 3 4 5 6 7 8 9 \textit{Family}
+\end{center}
 
 In the case where the decision-maker chose 6, the sensible codebook maker would code it as -6, which denotes that *Culture* is more important than *Family* in 6 units for that decision-maker. For `ahp.mat` to work, the value in A_B variable have to be the importance A has over B in positive values. In this case, the values should be converted from negative to positive, and the negative values would be converted to its reciprocal in the pairwise matrix. When data is coded in the above way, set `negconvert = TRUE`. If the data is already coded in the reciprocal (as opposed to negatives), set `reciprocal = FALSE`.
 
@@ -175,7 +177,11 @@ The ahp.mat function creates a list of pairwise comparison matrices for all deci
 
 ## Individual priority weights
 
-The `ahp.indpref` function computes the individual priorities of the decision-makers, and returns a `data.frame` containing the priority weights of the decision-makers. It takes in the object created from the `ahp.mat` function, the attribute lists, and has two additional arguments.
+The `ahp.indpref` function computes the individual priorities of the decision-makers, and returns a `data.frame` containing the priority weights of the decision-makers. The three arguments are as follows:
+
+* `ahpmat`: The list of matrices created by `ahp.mat`.
+
+* `atts`: a list of attributes in the correct order.
 
 * `method`: It normalises the matrices so that all of the columns add up to 1, and then computes the averages of the row as the priority weights of each attribute. Four modes of finding the averages are available:  
   + ``arithmetic``: the arithmetic mean
@@ -185,7 +191,7 @@ The `ahp.indpref` function computes the individual priorities of the decision-ma
 
 Here I demonstrate the difference of using arithmetic aggregation and dominant eigenvalue methods. In my own testing with real datasets, a much higher proportion of respondents have at least one attribute with a difference larger than 0.05 due to presence of inconsistent and heterogeneous responses.
 
-```{r dpi=300,fig.cap="\\label{fig:figs}Maximum difference of between eigenvalue and mean aggregation"}
+```{r dpi=300,fig.cap="\\label{fig:figs}Maximum difference of between eigenvalue and mean aggregation", fig.height=4, fig.width=7}
 cityahp <- city.df %>% 
   ahp.mat(atts, negconvert = T)
 eigentrue <- ahp.indpref(cityahp, atts, method = "eigen")
@@ -195,6 +201,7 @@ error %>%
   ggplot(aes(x = id, y = maxdiff)) +
   geom_point() +
   geom_hline(yintercept = 0.05, linetype = "dashed", color = "red") +
+  geom_hline(yintercept = 0, color = "gray50") +
   scale_x_continuous("Respondent ID") +
   scale_y_continuous("Maximum difference") +
   theme_minimal()
@@ -231,7 +238,7 @@ Two steps were simutaneously conducted in the above command:
 
 By default, the two steps rely on the same aggregation method as specified in `method` (unless when `method = "eigen"`, where `aggmethod` defaults to `arithmetic`). However, it is possible to specify different aggregation methods for the individual and group level. For instance, one can specify that in the individual level, the arithmetic mean is used to compute the individual priorities; the priorities are aggregated using a trimmed mean by trimming observations higher and lower quantile. 
 
-```{r dpi = 300,fig.cap="\\label{fig:figs}Changes of aggregated weights based on quantile of data trimmed"}
+```{r dpi = 300,fig.cap="\\label{fig:figs}Changes of aggregated weights based on quantile of data trimmed", fig.height=4, fig.width=7}
 qtresults <- matrix(nrow = 50, ncol = 5, data = NA)
 for (q in 1:50){
   qtresults[q,] <- ahp.aggpref(cityahp, atts, method = "arithmetic", 
@@ -322,7 +329,7 @@ table(cr <= 0.1)
 
 The `ahp.indpref` function provides a detailed account of each individuals' priorities and its corresponding weighting. An overlay of the violin density, boxplots and jitter plots is useful in visualising the heterogeneity in weights each respondent gives.
 
-```{r, dpi = 300,fig.cap="\\label{fig:figs}Individual Priorities with respect to goal"}
+```{r, dpi = 300,fig.cap="\\label{fig:figs}Individual Priorities with respect to goal", fig.height=4, fig.width=7}
 thres <- 0.1
 dict <- c("cult" = "Culture", 
           "fam" = "Family", 
@@ -410,10 +417,10 @@ sample_mat[[1]] * t(S)
 
 ```
 
-The process is automated in `ahp.error`. `ahp.error` also loops through all pairwise comparison matrices generated by `ahp.mat`, and returns a list of error consistency matrices. The consistency matrices quantifies the inconsistency underlying each pairwise comparison of each decision-maker.
+The process is automated in `ahp.error`. `ahp.error` also loops through all pairwise comparison matrices generated by `ahp.mat`, and returns a list of error consistency matrices. The consistency matrices quantifies the inconsistency underlying each pairwise comparison of each decision-maker. I can also use `reciprocal = TRUE` to put all the errors that are above 1 into the upper triangular matrix. If `reciprocal = FALSE`, the below output will be essentially the same as the matrix above.
 
 ```{r}
-error <- ahp.error(sample_mat, atts)
+error <- ahp.error(sample_mat, atts, reciprocal = TRUE)
 error
 ```
 
@@ -451,7 +458,7 @@ city.df %>%
 
 A better way to visualise the pairwise comparisons is a bar chart:
 
-```{r dpi = 300,fig.cap="\\label{fig:figs}Pairwise comparison and its frequency\n as the most, second-most, and third most inconsistent pairwise comparsion"}
+```{r dpi = 300,fig.cap="\\label{fig:figs}Pairwise comparison and its frequency\n as the most, second-most, and third most inconsistent pairwise comparsion", fig.height=4, fig.width=7}
 cityahp %>%
   ahp.pwerror(atts) %>% 
   gather(top1, top2, top3, key = "max", value = "pair") %>%
@@ -559,7 +566,7 @@ data.frame(table(crmat[,1] <= 0.1),
 
 While using Harker's method cannot completely lower the CR of all decision-makers to desired levels, it allows researchers to keep a lot more observations; whereas we would have to truncate `r table(crmat[,1] <= 0.1)[1]` samples, now we only have to censor `r table(crmat[,2] <= 0.1)[1]` samples with 1 iteration.
 
-```{r dpi = 300, fig.cap="\\label{fig:figs}Consistency Ratios under different number of iterations with Harker's method"}
+```{r dpi = 300, fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Consistency Ratios under different number of iterations with Harker's method"}
 crmat %>% 
   as.data.frame() %>%
   gather(key = "iter", value = "cr", `0`, 1,2,3,4,5,6,7,8,9,10,11) %>%
@@ -573,7 +580,7 @@ crmat %>%
   theme_minimal()
 ```
 
-```{r dpi = 300, fig.cap="\\label{fig:figs}Individual priority weights with respect to goal (1 iteration)"}
+```{r dpi = 300, fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Individual priority weights with respect to goal (1 iteration)"}
 it <- 1
 thres <- 0.1
 cr.df1 <- data.frame(cr = city.df %>%
