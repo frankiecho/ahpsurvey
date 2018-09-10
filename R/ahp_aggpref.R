@@ -28,7 +28,6 @@
 #' ahp.aggpref(cityahp, atts, method = 'geometric', aggmethod = 'tmean', qt = 0.1)
 #'
 #'@references
-#'
 #'\insertAllCited{}
 #'
 #'@export

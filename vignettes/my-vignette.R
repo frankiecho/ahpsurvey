@@ -79,7 +79,7 @@ city.df %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
   head(3)
 
-## ----dpi=300,fig.cap="\\label{fig:figs}Maximum difference of between eigenvalue and mean aggregation"----
+## ----dpi=300,fig.cap="\\label{fig:figs}Maximum difference of between eigenvalue and mean aggregation", fig.height=4, fig.width=7----
 cityahp <- city.df %>% 
   ahp.mat(atts, negconvert = T)
 eigentrue <- ahp.indpref(cityahp, atts, method = "eigen")
@@ -89,6 +89,7 @@ error %>%
   ggplot(aes(x = id, y = maxdiff)) +
   geom_point() +
   geom_hline(yintercept = 0.05, linetype = "dashed", color = "red") +
+  geom_hline(yintercept = 0, color = "gray50") +
   scale_x_continuous("Respondent ID") +
   scale_y_continuous("Maximum difference") +
   theme_minimal()
@@ -97,7 +98,7 @@ error %>%
 amean <- ahp.aggpref(cityahp, atts, method = "arithmetic")
 amean
 
-## ----dpi = 300,fig.cap="\\label{fig:figs}Changes of aggregated weights based on quantile of data trimmed"----
+## ----dpi = 300,fig.cap="\\label{fig:figs}Changes of aggregated weights based on quantile of data trimmed", fig.height=4, fig.width=7----
 qtresults <- matrix(nrow = 50, ncol = 5, data = NA)
 for (q in 1:50){
   qtresults[q,] <- ahp.aggpref(cityahp, atts, method = "arithmetic", 
@@ -156,7 +157,7 @@ cr <- city.df %>%
   ahp.cr(atts)
 table(cr <= 0.1)
 
-## ---- dpi = 300,fig.cap="\\label{fig:figs}Individual Priorities with respect to goal"----
+## ---- dpi = 300,fig.cap="\\label{fig:figs}Individual Priorities with respect to goal", fig.height=4, fig.width=7----
 thres <- 0.1
 dict <- c("cult" = "Culture", 
           "fam" = "Family", 
@@ -210,7 +211,7 @@ sample_mat[[1]] * t(S)
 
 
 ## ------------------------------------------------------------------------
-error <- ahp.error(sample_mat, atts)
+error <- ahp.error(sample_mat, atts, reciprocal = TRUE)
 error
 
 ## ------------------------------------------------------------------------
@@ -235,7 +236,7 @@ city.df %>%
   ahp.pwerror(atts) %>%
   head()
 
-## ----dpi = 300,fig.cap="\\label{fig:figs}Pairwise comparison and its frequency\n as the most, second-most, and third most inconsistent pairwise comparsion"----
+## ----dpi = 300,fig.cap="\\label{fig:figs}Pairwise comparison and its frequency\n as the most, second-most, and third most inconsistent pairwise comparsion", fig.height=4, fig.width=7----
 cityahp %>%
   ahp.pwerror(atts) %>% 
   gather(top1, top2, top3, key = "max", value = "pair") %>%
@@ -305,7 +306,7 @@ data.frame(table(crmat[,1] <= 0.1),
          "2 Iterations" = "Freq.1", "4 Iterations" = "Freq.2")
 
 
-## ----dpi = 300, fig.cap="\\label{fig:figs}Consistency Ratios under different number of iterations with Harker's method"----
+## ----dpi = 300, fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Consistency Ratios under different number of iterations with Harker's method"----
 crmat %>% 
   as.data.frame() %>%
   gather(key = "iter", value = "cr", `0`, 1,2,3,4,5,6,7,8,9,10,11) %>%
@@ -318,7 +319,7 @@ crmat %>%
   scale_y_continuous("Consistency Ratio") +
   theme_minimal()
 
-## ----dpi = 300, fig.cap="\\label{fig:figs}Individual priority weights with respect to goal (1 iteration)"----
+## ----dpi = 300, fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Individual priority weights with respect to goal (1 iteration)"----
 it <- 1
 thres <- 0.1
 cr.df1 <- data.frame(cr = city.df %>%

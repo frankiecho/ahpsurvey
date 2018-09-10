@@ -1,6 +1,6 @@
 ---
-title: 'Analytic Hierarchy Process for Survey Data in R'
-subtitle: 'Vignettes with the `ahpsurvey` package'
+title: 'Analytic Hierarchy Process for Survey Data in `R`'
+subtitle: 'Vignettes for the `ahpsurvey` package'
 author: "Frankie Cho"
 date: "10 September 2018"
 output:
@@ -32,7 +32,7 @@ vignette: >
 
 # Introduction
 
-The Analytic Hierarchy Process (AHP) is a versatile multi-criteria decision-making tool that allows individuals to rationally weigh attributes and evaluate alternatives presented to them. While most applications of the AHP are focused on implementation at the individual or small-scale, the AHP was increasingly adopted in survey designs, which involve a large number of decision-makers and a great deal of heterogeneity in responses. The tools currently available in `R` for the analysis of AHP data, such as Gluc's ``ahp`` and Dargahi's ``Prize`` packages are excellent tools for performing the AHP at a small scale and offers are excellent in terms of interactivity,  user-friendliness, and for comparing alternatives.
+The Analytic Hierarchy Process (AHP), introduced by @Saaty1987, is a versatile multi-criteria decision-making tool that allows individuals to rationally weigh attributes and evaluate alternatives presented to them. While most applications of the AHP are focused on implementation at the individual or small-scale, the AHP was increasingly adopted in survey designs, which involve a large number of decision-makers and a great deal of heterogeneity in responses. The tools currently available in `R` for the analysis of AHP data, such as the packages ``ahp`` by @Gluc2018 and ``Prize`` by @Dargahi2016, are excellent tools for performing the AHP at a small scale and offers are excellent in terms of interactivity,  user-friendliness, and for comparing alternatives.
 
 However, researchers looking to adopt the AHP in the analysis of survey data often have to manually reformat their data, sometimes even involving dragging and copying across Excel spreadsheets, which is painstaking and prone to human error. Hitherto, there are no good ways of computing and visualising the heterogeneity amongst AHP decision-makers, which is common in survey data. Inconsistent choices are also prevalent in AHP conducted in the survey format, where it is impractical for enumerators to identify and correct for inconsistent responses on the spot when the surveys are delivered in paper format. Even if an electronic version that allows immediate feedback of consistency ratio is used, respondents asked to repeatedly change their answers are likely to be mentally fatigued. Censoring observations with inconsistency is likely to result in a greatly decreased statistical power of the sample, or may lead to unrepresentative samples and nonresponse bias.
 
@@ -153,7 +153,9 @@ Where $a_{i,j}$ represents the pairwise comparison between the attribute $i$ and
 
 The reformatting of the survey data (with one row per individual) into such a matrix necessary for further analysis is cumbersome for researchers. Furthermore, as researchers conducting the AHP as an integrated part of a survey, we typically receive data in the above format: the pairwise comparisons are coded in positive and negative numbers as opposed to reciprocals. In the pairwise comparison of `cult_fam`:
 
-*Culture* 9 8 7 **6** 5 4 3 2 1 2 3 4 5 6 7 8 9 *Family*
+\begin{center}
+\textit{Culture} 9 8 7 \textbf{6} 5 4 3 2 1 2 3 4 5 6 7 8 9 \textit{Family}
+\end{center}
 
 In the case where the decision-maker chose 6, the sensible codebook maker would code it as -6, which denotes that *Culture* is more important than *Family* in 6 units for that decision-maker. For `ahp.mat` to work, the value in A_B variable have to be the importance A has over B in positive values. In this case, the values should be converted from negative to positive, and the negative values would be converted to its reciprocal in the pairwise matrix. When data is coded in the above way, set `negconvert = TRUE`. If the data is already coded in the reciprocal (as opposed to negatives), set `reciprocal = FALSE`.
 
@@ -205,7 +207,11 @@ The ahp.mat function creates a list of pairwise comparison matrices for all deci
 
 ## Individual priority weights
 
-The `ahp.indpref` function computes the individual priorities of the decision-makers, and returns a `data.frame` containing the priority weights of the decision-makers. It takes in the object created from the `ahp.mat` function, the attribute lists, and has two additional arguments.
+The `ahp.indpref` function computes the individual priorities of the decision-makers, and returns a `data.frame` containing the priority weights of the decision-makers. The three arguments are as follows:
+
+* `ahpmat`: The list of matrices created by `ahp.mat`.
+
+* `atts`: a list of attributes in the correct order.
 
 * `method`: It normalises the matrices so that all of the columns add up to 1, and then computes the averages of the row as the priority weights of each attribute. Four modes of finding the averages are available:  
   + ``arithmetic``: the arithmetic mean
@@ -226,6 +232,7 @@ error %>%
   ggplot(aes(x = id, y = maxdiff)) +
   geom_point() +
   geom_hline(yintercept = 0.05, linetype = "dashed", color = "red") +
+  geom_hline(yintercept = 0, color = "gray50") +
   scale_x_continuous("Respondent ID") +
   scale_y_continuous("Maximum difference") +
   theme_minimal()
@@ -517,22 +524,22 @@ sample_mat[[1]] * t(S)
 ## trans 0.805 1.637 0.631 1.152 1.000
 ```
 
-The process is automated in `ahp.error`. `ahp.error` also loops through all pairwise comparison matrices generated by `ahp.mat`, and returns a list of error consistency matrices. The consistency matrices quantifies the inconsistency underlying each pairwise comparison of each decision-maker.
+The process is automated in `ahp.error`. `ahp.error` also loops through all pairwise comparison matrices generated by `ahp.mat`, and returns a list of error consistency matrices. The consistency matrices quantifies the inconsistency underlying each pairwise comparison of each decision-maker. I can also use `reciprocal = TRUE` to put all the errors that are above 1 into the upper triangular matrix. If `reciprocal = FALSE`, the below output will be essentially the same as the matrix above.
 
 
 ```r
-error <- ahp.error(sample_mat, atts)
+error <- ahp.error(sample_mat, atts, reciprocal = TRUE)
 error
 ```
 
 ```
 ## [[1]]
-##        cult   fam house  jobs trans
-## cult  1.000 0.570 1.411 1.002 1.243
-## fam   1.755 1.000 1.156 0.704 0.611
-## house 0.709 0.865 1.000 1.066 1.585
-## jobs  0.998 1.421 0.938 1.000 0.868
-## trans 0.805 1.637 0.631 1.152 1.000
+##       cult  fam house jobs trans
+## cult     1 1.76  1.41 1.00  1.24
+## fam     NA 1.00  1.16 1.42  1.64
+## house   NA   NA  1.00 1.07  1.59
+## jobs    NA   NA    NA 1.00  1.15
+## trans   NA   NA    NA   NA  1.00
 ```
 
 Here I demonstrate how to perform `ahp.error` in our 200 simulated decision-makers and compute the mean consistency error for each pairwise comparison. By using `reciprocal = TRUE`, I put all the errors that are above 1 into the upper triangular matrix so that we can summarise (by taking geometric mean) quickly the average error of each pairwise comparison (larger means more error). 

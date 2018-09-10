@@ -32,9 +32,7 @@ atts <- c('cult', 'fam', 'house', 'jobs', 'trans')
 cityahp <- ahp.mat(df = city200, atts = atts, negconvert = TRUE)
 ahp.aggjudge(cityahp, atts, aggmethod = 'tmean', qt = 0.1)
 
-}
-\references{
-\insertAllCited{}
+
 }
 \author{
 Frankie Cho

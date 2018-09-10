@@ -10,12 +10,12 @@ Status](https://travis-ci.org/frankiecho/ahpsurvey.svg?branch=master)](https://t
 
 The `ahpsurvey` package provides a consistent methodology for
 researchers to reformat data and run the analytic hierarchy process
-(AHP) on data that are formatted with the survey data entry mode. It is
-optimised for performing the AHP with many decision-makers, and provides
-tools and options for researchers to aggregate individual preferences
-and concurrently test multiple aggregation options. It also allows
-researchers to quantify, visualise and correct for inconsistent pairwise
-comparisons.
+(AHP), introduced by Thomas Saaty, on data that are formatted with the
+survey data entry mode. It is optimised for performing the AHP with many
+decision-makers, and provides tools and options for researchers to
+aggregate individual preferences and concurrently test multiple
+aggregation options. It also allows researchers to quantify, visualise
+and correct for inconsistent pairwise comparisons.
 
 ## Installation
 
@@ -117,10 +117,10 @@ An overview of the functions in this package are as follows:
 ## Vignettes
 
 For a detailed example of how the above function works, look no further
-than the vignettes, which are stored in `/vignettes/my-vignette.md/`.
-There, you can find a detailed step-by-step instruction of how to use
-the function using a simulated survey dataset and visualise the output
-using `ggplot2`.
+than the vignettes, which are stored in `/my-vignette.pdf`. There, you
+can find a detailed step-by-step instruction of how to use the function
+using a simulated survey dataset and visualise the output using
+`ggplot2`.
 
 ## Future development
 
@@ -134,6 +134,7 @@ I finish writing up my masters thesis :-(
     in other packages which does this
   - Sensitivity analysis
   - More ways to impute missing data
+  - Fuzzy AHP (or integration with existing packages)
 
 Please let me know if there are any features which could be useful to
 you in a feature request or contribution.

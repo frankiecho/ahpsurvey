@@ -24,9 +24,6 @@
 #' cityahp <- ahp.mat(df = city200, atts = atts, negconvert = TRUE)
 #' ahp.aggjudge(cityahp, atts, aggmethod = 'tmean', qt = 0.1)
 #'
-#'@references
-#'
-#'\insertAllCited{}
 #'
 #'@export
 ahp.aggjudge <- function(ahpmat, atts, aggmethod = "geometric", qt = 0) {
