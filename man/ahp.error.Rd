@@ -11,7 +11,7 @@ ahp.error(ahpmat, atts, reciprocal = FALSE)
 
 \item{atts}{a list of attributes in the correct order}
 
-\item{reciprocal}{whether to remove all numbers lower than 1 and put all numbers above 1 in the upper triangular matrix. Useful for visualising the inconsistency rapidly.}
+\item{reciprocal}{whether to remove all numbers lower than 1 and put all numbers above 1 in the upper triangular matrix. Useful for visualizing the inconsistency rapidly.}
 }
 \value{
 A list of matrices containing \eqn{\epsilon_{ij} = a_{ij}p_{j}/p_{i}} for each decision-maker, with elements from the lower triangle set as NA automatically (since it is essentially equal to the element in the upper triangle).
