@@ -2,7 +2,7 @@
 % Please edit documentation in R/ahp_aggjudge.R
 \name{ahp.aggjudge}
 \alias{ahp.aggjudge}
-\title{Aggregate individual judgements}
+\title{Aggregate individual judgments}
 \usage{
 ahp.aggjudge(ahpmat, atts, aggmethod = "geometric", qt = 0)
 }
@@ -11,7 +11,7 @@ ahp.aggjudge(ahpmat, atts, aggmethod = "geometric", qt = 0)
 
 \item{atts}{a list of attributes in the correct order}
 
-\item{aggmethod}{The method of aggregating the judgements by all decision-makers. Five modes aggregation are available:  \code{arithmetic}: the arithmetic mean; \code{geometric}: the geometric mean (the default); \code{rootmean}: the square root of the sum of the squared value, \code{tmean}: the trimmed mean, \code{tgmean}: trimmed geometric mean. The quantiles trimmed are based on \code{qt}. It can also be set to \code{sd}, where it reports the standard deviation from the arithmetic mean.}
+\item{aggmethod}{The method of aggregating the judgments by all decision-makers. Five modes aggregation are available:  \code{arithmetic}: the arithmetic mean; \code{geometric}: the geometric mean (the default); \code{rootmean}: the square root of the sum of the squared value, \code{tmean}: the trimmed mean, \code{tgmean}: trimmed geometric mean. The quantiles trimmed are based on \code{qt}. It can also be set to \code{sd}, where it reports the standard deviation from the arithmetic mean.}
 
 \item{qt}{specifies the quantile which the top \strong{and} bottom priority weights are trimmed. Used only if \code{aggmethod = 'tmean'} or \code{aggmethod = 'tgmean'}. For example, \code{qt = 0.25} specifies that the aggregation is the arithmetic mean of the values from the 25 to 75 percentile. By default \code{qt = 0}.}
 }
@@ -19,11 +19,11 @@ ahp.aggjudge(ahpmat, atts, aggmethod = "geometric", qt = 0)
 A \code{data.frame} of the aggregated pairwise judgments of all the decision-makers.
 }
 \description{
-Aggregate individual judgements from pairwise comparison matrices
+Aggregate individual judgments from pairwise comparison matrices
 }
 \examples{
 
-## Computes individual judgements with geometric mean and aggregates them
+## Computes individual judgments with geometric mean and aggregates them
 ## with a trimmed arithmetic mean
 
 data(city200)
