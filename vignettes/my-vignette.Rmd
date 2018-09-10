@@ -1,5 +1,5 @@
 ---
-title: 'Analytic Hierarchy Process for Survey Data in R'
+title: 'Analytic Hierarchy Process for Survey Data in `R`'
 subtitle: 'Vignettes for the `ahpsurvey` package'
 author: "Frankie Cho"
 date: "`r format(Sys.time(), '%d %B %Y')`"
