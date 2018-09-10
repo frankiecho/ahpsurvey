@@ -340,7 +340,7 @@ head(city.df[,1:7])
 
 <p>A Saaty scale is composed of 9 items on each end (17 options per pairwise comparison) where decision-makers are asked to indicate how much attribute/ characteristic A is more preferred to B (or vice versa), and how much it is preferred in a 9-point scale. Respondents are asked to make pairwise comparisons for a range of attributes, and indicate their preferences for each of them.</p>
 
-<p>Based on the above scale, a matrix for the \(k^{th}\) individual is obtained:</p>
+<p>Based on the above scale, a pairwise comparison matrix of \(N\) attributes for the \(k^{th}\) individual is obtained:</p>
 
 <p>\[ \mathbf{S_k} =\begin{pmatrix}
                       a_{1,1} & a_{1,2} & \cdots & a_{1,N} \
@@ -355,9 +355,16 @@ head(city.df[,1:7])
 
 <p><em>Culture</em> 9 8 7 <strong>6</strong> 5 4 3 2 1 2 3 4 5 6 7 8 9 <em>Family</em></p>
 
-<p>In the case where the decision-maker chose 6, the sensible codebook maker would code it as -6, which denotes that <em>Culture</em> is more important than <em>Family</em> in 6 units for that decision-maker. For <code>ahp.mat</code> to work, the value in A_B variable have to be the importance A has over B in positive values. In this case, the values should be converted from negative to positive, and the negative values would be converted to its reciprocal in the pairwise matrix. When data is coded in the above way, set <code>negconvert = TRUE</code>.</p>
+<p>In the case where the decision-maker chose 6, the sensible codebook maker would code it as -6, which denotes that <em>Culture</em> is more important than <em>Family</em> in 6 units for that decision-maker. For <code>ahp.mat</code> to work, the value in A_B variable have to be the importance A has over B in positive values. In this case, the values should be converted from negative to positive, and the negative values would be converted to its reciprocal in the pairwise matrix. When data is coded in the above way, set <code>negconvert = TRUE</code>. If the data is already coded in the reciprocal (as opposed to negatives), set <code>reciprocal = FALSE</code>.</p>
 
-<p><code>ahp.mat</code> takes three arguments: the dataframe <code>df</code>, a list of attributes in the correct order <code>atts</code>, and whether to convert all positive values to negative (<code>negconvert</code>, which is logical).</p>
+<p><code>ahp.mat</code> takes four arguments: </p>
+
+<ul>
+<li><p><code>df</code>:  the dataframe</p></li>
+<li><p><code>atts</code>: a list of attributes in the correct order </p></li>
+<li><p><code>negconvert</code>: whether to convert all positive values to negative (logical, defaults to <code>FALSE</code>)</p></li>
+<li><p><code>reciprocal</code>: whether to convert negative values (after <code>negconvert</code>) to its reciprocals (defaults to <code>TRUE</code>).</p></li>
+</ul>
 
 <pre><code class="r">city.df %&gt;%
   ahp.mat(atts = atts, negconvert = TRUE) %&gt;% 
@@ -365,28 +372,28 @@ head(city.df[,1:7])
 </code></pre>
 
 <pre><code>## [[1]]
-##            cult   fam     house  jobs trans
-## cult  1.0000000 0.500 2.0000000 0.500     6
-## fam   2.0000000 1.000 4.0000000 4.000     8
-## house 0.5000000 0.250 1.0000000 0.250     3
-## jobs  2.0000000 0.250 4.0000000 1.000     8
-## trans 0.1666667 0.125 0.3333333 0.125     1
+##        cult   fam house  jobs trans
+## cult  1.000 0.500 2.000 0.500     6
+## fam   2.000 1.000 4.000 4.000     8
+## house 0.500 0.250 1.000 0.250     3
+## jobs  2.000 0.250 4.000 1.000     8
+## trans 0.167 0.125 0.333 0.125     1
 ## 
 ## [[2]]
-##       cult   fam     house      jobs trans
-## cult  1.00 0.500 4.0000000 1.0000000     4
-## fam   2.00 1.000 4.0000000 2.0000000     8
-## house 0.25 0.250 1.0000000 0.2500000     3
-## jobs  1.00 0.500 4.0000000 1.0000000     7
-## trans 0.25 0.125 0.3333333 0.1428571     1
+##       cult   fam house  jobs trans
+## cult  1.00 0.500 4.000 1.000     4
+## fam   2.00 1.000 4.000 2.000     8
+## house 0.25 0.250 1.000 0.250     3
+## jobs  1.00 0.500 4.000 1.000     7
+## trans 0.25 0.125 0.333 0.143     1
 ## 
 ## [[3]]
-##            cult       fam     house      jobs trans
-## cult  1.0000000 0.2500000 2.0000000 1.0000000     3
-## fam   4.0000000 1.0000000 7.0000000 3.0000000     5
-## house 0.5000000 0.1428571 1.0000000 0.2500000     3
-## jobs  1.0000000 0.3333333 4.0000000 1.0000000     6
-## trans 0.3333333 0.2000000 0.3333333 0.1666667     1
+##        cult   fam house  jobs trans
+## cult  1.000 0.250 2.000 1.000     3
+## fam   4.000 1.000 7.000 3.000     5
+## house 0.500 0.143 1.000 0.250     3
+## jobs  1.000 0.333 4.000 1.000     6
+## trans 0.333 0.200 0.333 0.167     1
 </code></pre>
 
 <p>The ahp.mat function creates a list of pairwise comparison matrices for all decision-makers. As seen above, the pairwise matrices resembles the original Saaty criteria weights, which is a good sanity check.</p>
@@ -396,22 +403,22 @@ head(city.df[,1:7])
 <p>The <code>ahp.indpref</code> function computes the individual priorities of the decision-makers, and returns a <code>data.frame</code> containing the priority weights of the decision-makers. It takes in the object created from the <code>ahp.mat</code> function, the attribute lists, and has two additional arguments.</p>
 
 <ul>
-<li><p><code>method</code>: if <code>eigen = FALSE</code>, then the priorities are computed based on the averages of normalised values. Basically it normalises the matrices so that all of the columns add up to 1, and then computes the averages of the row as the priority weights of each attribute. Three modes of finding the averages are available:  </p>
+<li><code>method</code>: It normalises the matrices so that all of the columns add up to 1, and then computes the averages of the row as the priority weights of each attribute. Four modes of finding the averages are available:<br/>
 
 <ul>
 <li><code>arithmetic</code>: the arithmetic mean</li>
 <li><code>geometric</code>: the geometric mean</li>
 <li><code>rootmean</code>: the square root of the sum of the squared value</li>
+<li><code>eigen</code>: the individual priority weights are computed using the Dominant Eigenvalues method described in @Saaty2003</li>
 </ul></li>
-<li><p><code>eigen</code>: if <code>eigen = TRUE</code>, the priority weights are computed using the Dominant Eigenvalues method. The <code>method</code> argument is not evaluated if <code>eigen = TRUE</code>.</p></li>
 </ul>
 
 <p>Here I demonstrate the difference of using arithmetic aggregation and dominant eigenvalue methods. In my own testing with real datasets, a much higher proportion of respondents have at least one attribute with a difference larger than 0.05 due to presence of inconsistent and heterogeneous responses.</p>
 
 <pre><code class="r">cityahp &lt;- city.df %&gt;% 
   ahp.mat(atts, negconvert = T)
-eigentrue &lt;- ahp.indpref(cityahp, atts, eigen = TRUE)
-geom &lt;- ahp.indpref(cityahp, atts, eigen = FALSE, method = &quot;arithmetic&quot;)
+eigentrue &lt;- ahp.indpref(cityahp, atts, method = &quot;eigen&quot;)
+geom &lt;- ahp.indpref(cityahp, atts, method = &quot;arithmetic&quot;)
 error &lt;- data.frame(id = 1:length(cityahp), maxdiff = apply(abs(eigentrue - geom), 1, max))
 error %&gt;%
   ggplot(aes(x = id, y = maxdiff)) +
@@ -426,7 +433,26 @@ error %&gt;%
 
 <h2>Aggregated priority weights</h2>
 
-<p>The <code>ahp.aggpref</code> function computes the aggregated priorities of all decision-makers using the specified methods. Aside from method, it also takes in an additional argument: <code>aggmethod</code>, which tells <code>ahp.aggpref</code> how to aggregate the individual priorities. The options <code>arithmetic</code>, <code>geometric</code> and <code>rootmean</code> works with the same principle, but three another options are given: <code>tmean</code> is given for trimmed mean, <code>tgmean</code> is given for the trimmed geometric mean, and <code>sd</code> returns the standard deviation from the arithmetic mean.</p>
+<p>The <code>ahp.aggpref</code> function computes the aggregated priorities of all decision-makers using the specified methods. The following arguments are given:</p>
+
+<ul>
+<li><p><code>method</code>: Same as <code>ahp.indpref</code>. It normalises the matrices so that all of the columns add up to 1, and then computes the averages of the row as the priority weights of each attribute. Four modes of finding the averages are available:  </p>
+
+<ul>
+<li><code>arithmetic</code>: the arithmetic mean</li>
+<li><code>geometric</code>: the geometric mean</li>
+<li><code>rootmean</code>: the square root of the sum of the squared value</li>
+<li><code>eigen</code>: the individual priority weights are computed using the Dominant Eigenvalues method described in @Saaty2003</li>
+</ul></li>
+<li><p><code>aggmethod</code>: how to aggregate the individual priorities. </p>
+
+<ul>
+<li><code>arithmetic</code>, <code>geometric</code> and <code>rootmean</code> (same principle as <code>method</code>)</li>
+<li><code>tmean</code> trimmed mea</li>
+<li><code>tgmean</code> trimmed geometric mean</li>
+<li><code>sd</code> returns the standard deviation from the arithmetic mean.</li>
+</ul></li>
+</ul>
 
 <p>When <code>tmean</code> or <code>tgmean</code> is specified, <code>ahpsurvey</code> needs an additional argument <code>qt</code>, which specifes the quantile which the top <strong>and</strong> bottom priority weights are trimmed. <code>qt = 0.25</code> specifies that the aggregation is the arithmetic mean of the values from the 25 to 75 percentile. This visualisation offers researchers a good way to determine the amount of priority weights to be trimmed. By default, <code>qt = 0</code>, hence the result you would get by using <code>tmean</code> and <code>tgmean</code> and not specifying <code>qt</code> is the same as <code>arithmetic</code> and <code>geometric</code> respectively.</p>
 
@@ -434,15 +460,18 @@ error %&gt;%
 amean
 </code></pre>
 
-<pre><code>##       cult        fam      house       jobs      trans 
-## 0.16200828 0.43673193 0.07607178 0.28274933 0.04243868
+<pre><code>##   cult    fam  house   jobs  trans 
+## 0.1620 0.4367 0.0761 0.2827 0.0424
 </code></pre>
 
-<p>Two steps were simutaneously conducted in the above command:
-1. Compute the individual priorities of each decision-maker (using <code>method</code>)
-2. Aggregate the priorities (using <code>aggmethod</code>)</p>
+<p>Two steps were simutaneously conducted in the above command:</p>
 
-<p>By default, the two steps rely on the same aggregation method as specified in <code>method</code> (unless when <code>eigen = TRUE</code>, where <code>aggmethod</code> defaults to <code>arithmetic</code>). However, it is possible to specify different aggregation methods for the individual and group level. For instance, one can specify that in the individual level, the arithmetic mean is used to compute the individual priorities; the priorities are aggregated using a trimmed mean by trimming observations higher and lower quantile. </p>
+<ol>
+<li><p>Compute the individual priorities of each decision-maker (using <code>method</code>)</p></li>
+<li><p>Aggregate the priorities (using <code>aggmethod</code>)</p></li>
+</ol>
+
+<p>By default, the two steps rely on the same aggregation method as specified in <code>method</code> (unless when <code>method = &quot;eigen&quot;</code>, where <code>aggmethod</code> defaults to <code>arithmetic</code>). However, it is possible to specify different aggregation methods for the individual and group level. For instance, one can specify that in the individual level, the arithmetic mean is used to compute the individual priorities; the priorities are aggregated using a trimmed mean by trimming observations higher and lower quantile. </p>
 
 <pre><code class="r">qtresults &lt;- matrix(nrow = 50, ncol = 5, data = NA)
 for (q in 1:50){
@@ -495,37 +524,37 @@ t(data.frame(mean, sd))%&gt;% kable()
 </thead><tbody>
 <tr>
 <td align="left">mean</td>
-<td align="right">0.1620083</td>
-<td align="right">0.4367319</td>
-<td align="right">0.0760718</td>
-<td align="right">0.2827493</td>
-<td align="right">0.0424387</td>
+<td align="right">0.162</td>
+<td align="right">0.437</td>
+<td align="right">0.076</td>
+<td align="right">0.283</td>
+<td align="right">0.042</td>
 </tr>
 <tr>
 <td align="left">sd</td>
-<td align="right">0.0333849</td>
-<td align="right">0.0544975</td>
-<td align="right">0.0088232</td>
-<td align="right">0.0482966</td>
-<td align="right">0.0074665</td>
+<td align="right">0.033</td>
+<td align="right">0.054</td>
+<td align="right">0.009</td>
+<td align="right">0.048</td>
+<td align="right">0.007</td>
 </tr>
 </tbody></table>
 
 <h2>Aggregated individual judgements</h2>
 
-<p>Similarly, <code>ahp.aggjudge</code> aggregates the individual judgements of all decision-makers to generate a row-standardised pairwise comparison matrix of all decision-makers. This allows one to compare priorities directly based on the aggregated pairwise judgements of all decision-makers.</p>
+<p>Similarly, <code>ahp.aggjudge</code> aggregates the individual judgements of all decision-makers to generate a row-standardised pairwise comparison matrix of all decision-makers. This allows one to compare priorities directly based on the aggregated pairwise judgements of all decision-makers. It takes the argument <code>aggmethod</code> with the exact same options as <code>ahp.aggpref</code>. </p>
 
 <pre><code class="r">city.df %&gt;%
   ahp.mat(atts = atts, negconvert = TRUE) %&gt;% 
   ahp.aggjudge(atts, aggmethod = &quot;geometric&quot;)
 </code></pre>
 
-<pre><code>##            cult       fam     house      jobs    trans
-## cult  1.0000000 0.2202027 3.0925191 0.4882218 4.638350
-## fam   4.5412708 1.0000000 6.4612364 1.7035125 6.145824
-## house 0.3233610 0.1547691 1.0000000 0.2488201 2.926539
-## jobs  2.0482496 0.5870224 4.0189678 1.0000000 7.039173
-## trans 0.2155939 0.1627121 0.3417005 0.1420621 1.000000
+<pre><code>##        cult   fam house  jobs trans
+## cult  1.000 0.220 3.093 0.488  4.64
+## fam   4.541 1.000 6.461 1.704  6.15
+## house 0.323 0.155 1.000 0.249  2.93
+## jobs  2.048 0.587 4.019 1.000  7.04
+## trans 0.216 0.163 0.342 0.142  1.00
 </code></pre>
 
 <h1>Measuring and visualising consistency</h1>
@@ -536,12 +565,13 @@ t(data.frame(mean, sd))%&gt;% kable()
 
 <p>\[CR = \bigg(\frac{\lambda_{max}-n}{n-1}\bigg)\bigg(\frac{1}{RI}\bigg)\]</p>
 
-<p>Where \(\lambda_{max}\) is the maximum eigenvalue of the pairwise comparison vector and \(n\) is the number of attributes. The \(RI\) when five attributes are present is 1.12. </p>
+<p>Where \(\lambda_{max}\) is the maximum eigenvalue of the pairwise comparison vector and \(n\) is the number of attributes. The \(RI\) when five attributes are present is 1.11. </p>
 
 <p>The RI was derived from @Saaty2007fuzzy, as follows:</p>
 
 <table><thead>
 <tr>
+<th align="left"></th>
 <th align="right">1</th>
 <th align="right">2</th>
 <th align="right">3</th>
@@ -560,6 +590,7 @@ t(data.frame(mean, sd))%&gt;% kable()
 </tr>
 </thead><tbody>
 <tr>
+<td align="left">RI</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0.52</td>
@@ -587,7 +618,7 @@ cr_std &lt;- ahp.cr(sample_mat, atts)
 cr_std
 </code></pre>
 
-<pre><code>## [1] 0.05072865
+<pre><code>## [1] 0.0507
 </code></pre>
 
 <p>The <code>ahp.cr</code> function returns a vector of \(CR\) that can be merged to other dataframes as a measure of the individuals&#39; consistency.</p>
@@ -605,7 +636,7 @@ table(cr &lt;= 0.1)
 
 <h2>Visualising individual priorities and consistency ratios</h2>
 
-<p>The <code>agg.indpref</code> function provides a detailed account of each individuals&#39; priorities and its corresponding weighting. An overlay of the violin density, boxplots and jitter plots is useful in visualising the heterogeneity in weights each respondent gives.</p>
+<p>The <code>ahp.indpref</code> function provides a detailed account of each individuals&#39; priorities and its corresponding weighting. An overlay of the violin density, boxplots and jitter plots is useful in visualising the heterogeneity in weights each respondent gives.</p>
 
 <pre><code class="r">thres &lt;- 0.1
 dict &lt;- c(&quot;cult&quot; = &quot;Culture&quot;, 
@@ -615,7 +646,7 @@ dict &lt;- c(&quot;cult&quot; = &quot;Culture&quot;,
           &quot;trans&quot; = &quot;Transportation&quot;)
 
 cr.df &lt;- city.df %&gt;%
-  ahp.mat(atts, negconvert = T) %&gt;% 
+  ahp.mat(atts, negconvert = TRUE) %&gt;% 
   ahp.cr(atts) %&gt;% 
   data.frame() %&gt;%
   mutate(rowid = 1:length(cr), cr.dum = as.factor(ifelse(cr &lt;= thres, 1, 0))) %&gt;%
@@ -623,7 +654,7 @@ cr.df &lt;- city.df %&gt;%
 
 city.df %&gt;%
   ahp.mat(atts = atts, negconvert = TRUE) %&gt;% 
-  ahp.indpref(atts, eigen = TRUE) %&gt;% 
+  ahp.indpref(atts, method = &quot;eigen&quot;) %&gt;% 
   mutate(rowid = 1:nrow(eigentrue)) %&gt;%
   left_join(cr.df, by = &#39;rowid&#39;) %&gt;%
   gather(cult, fam, house, jobs, trans, key = &quot;var&quot;, value = &quot;pref&quot;) %&gt;%
@@ -670,18 +701,17 @@ city.df %&gt;%
 <p>Consider this matrix of the original pairwise comparison and the resultant priority weights below.</p>
 
 <pre><code>## [[1]]
-##            cult       fam     house      jobs trans
-## cult  1.0000000 0.2000000 3.0000000 0.5000000     5
-## fam   5.0000000 1.0000000 7.0000000 1.0000000     7
-## house 0.3333333 0.1428571 1.0000000 0.2500000     3
-## jobs  2.0000000 1.0000000 4.0000000 1.0000000     7
-## trans 0.2000000 0.1428571 0.3333333 0.1428571     1
+##        cult   fam house  jobs trans
+## cult  1.000 0.200 3.000 0.500     5
+## fam   5.000 1.000 7.000 1.000     7
+## house 0.333 0.143 1.000 0.250     3
+## jobs  2.000 1.000 4.000 1.000     7
+## trans 0.200 0.143 0.333 0.143     1
 </code></pre>
 
 <p>The goal is to compare the above matrix with a perfectly consistent Saaty matrix generated from the priority weights calculated using the dominant eigenvalue method.</p>
 
-<pre><code class="r">options(digits = 3)
-priority &lt;- t(ahp.indpref(sample_mat, atts, eigen = TRUE))
+<pre><code class="r">priority &lt;- t(ahp.indpref(sample_mat, atts, method = &quot;eigen&quot;))
 priority
 </code></pre>
 
@@ -710,9 +740,9 @@ S
 <p>The transposed Saaty matrix is multiplied element-by-element with the original pairwise comparison matrix (or taken its reciprocals if the product is smaller than 1) to generate a measure of how well the pairwise matrix resembles the Saaty matrix. If the matrix perfectly resembles the transposed Saaty matrix, the consistency error matrix (shown below) should very close to 1. This matrix is expressed as the following:</p>
 
 <p>\[\epsilon_{ij} = a_{ij}\frac{p_{j}}{p_{i}}\]
-Where \(a_{ij}\) is the value in the pairwise comparison matrix. The values can be obtained with a simple matrix multiplication of the transpose of pjpi.</p>
+Where \(a_{ij}\) is the value in the pairwise comparison matrix. The values can be obtained with a simple matrix multiplication of the transpose of \(\mathbf{S}\).</p>
 
-<pre><code class="r">sample_mat[[1]] *t(S)
+<pre><code class="r">sample_mat[[1]] * t(S)
 </code></pre>
 
 <pre><code>##        cult   fam house  jobs trans
@@ -738,42 +768,30 @@ error
 ## trans 0.805 1.637 0.631 1.152 1.000
 </code></pre>
 
-<p>Here I demonstrate how to perform <code>ahp.error</code> in our 200 simulated decision-makers and compute the mean consistency error for each pairwise comparison.</p>
-
-<pre><code class="r">cityahp %&gt;%
-  ahp.error(atts) %&gt;%
-  head(2)
-</code></pre>
-
-<pre><code>## [[1]]
-##        cult   fam house  jobs trans
-## cult  1.000 1.342 1.000 0.733 1.197
-## fam   0.745 1.000 0.745 2.187 0.595
-## house 1.000 1.342 1.000 0.733 1.197
-## jobs  1.363 0.457 1.363 1.000 1.088
-## trans 0.836 1.682 0.836 0.919 1.000
-## 
-## [[2]]
-##        cult   fam house  jobs trans
-## cult  1.000 1.342 2.000 1.467 0.798
-## fam   0.745 1.000 0.745 1.093 0.595
-## house 0.500 1.342 1.000 0.733 1.197
-## jobs  0.682 0.915 1.363 1.000 0.952
-## trans 1.253 1.682 0.836 1.051 1.000
-</code></pre>
+<p>Here I demonstrate how to perform <code>ahp.error</code> in our 200 simulated decision-makers and compute the mean consistency error for each pairwise comparison. By using <code>reciprocal = TRUE</code>, I put all the errors that are above 1 into the upper triangular matrix so that we can summarise (by taking geometric mean) quickly the average error of each pairwise comparison (larger means more error). </p>
 
 <pre><code class="r">gm_mean &lt;- function(x, na.rm=TRUE){
   exp(sum(log(x[x &gt; 0]), na.rm=na.rm) / length(x))
 }
 
 mat &lt;- cityahp %&gt;%
-  ahp.error(atts) %&gt;%
+  ahp.error(atts, reciprocal = TRUE) %&gt;%
   unlist() %&gt;%
   as.numeric() %&gt;%
   array(dim=c(length(atts), length(atts), length(cityahp))) %&gt;%
   apply(c(1,2), gm_mean)
 
 colnames(mat) &lt;- rownames(mat) &lt;- atts
+
+mat
+</code></pre>
+
+<pre><code>##       cult  fam house jobs trans
+## cult     1 1.89  1.55 1.92  1.29
+## fam      1 1.00  1.33 1.59  2.19
+## house    1 1.00  1.00 1.37  1.24
+## jobs     1 1.00  1.00 1.00  1.13
+## trans    1 1.00  1.00 1.00  1.00
 </code></pre>
 
 <p>The above matrix is a quick way for revealing inconsistencies within the data, but it is not the best way as it can be biased. If one or more decision-maker makes an incredibly inconsistent pairwise comparison, the consistency error for that pairwise comparison will be very high, which biases the mean error consistency of that pairwise comparison upwards even if many other decision-makers are making perfectly consistent choices. </p>
@@ -962,7 +980,7 @@ fam.mat[[1]] %&gt;% kable()
 <ol>
 <li>Find the pairwise comparison with the maximum error (the \(i^{th}\) and \(j^{th}\) element)</li>
 <li>Duplicate the matrix and replace the pairwise comparison in the new matrix with the maximum error with 0, and its two corresponding diagonal entries with 2</li>
-<li>Compute new weights \(w_i\) and \(w_j\) (as in <code>ahp.indpref</code> with <code>eigen = TRUE</code>)</li>
+<li>Compute new weights \(w_i\) and \(w_j\) (as in <code>ahp.indpref</code> with <code>method = &quot;eigen&quot;</code>)</li>
 <li>Replace the pairwise comparison with \(\frac{w_i}{w_j}\) and \(\frac{w_j}{w_i}\)</li>
 </ol>
 
@@ -1093,7 +1111,7 @@ fam.mat[[1]] %&gt;% kable()
 <ul>
 <li><p><code>round</code> is logical and tells <code>ahp.harker</code> whether to convert the newly replaced values to  integers and its reciprocals, and can be set to <code>TRUE</code> if desired.</p></li>
 <li><p><code>iterations</code> denotes how many pairwise comparisons should be changed. For example, if <code>iterations = 3</code>, <code>ahp.harker</code> changes the first, second, and third most inconsistent pairwise comparisons using that method. Researchers should think carefully how many pairwise comparisons should be replaced, as every time a pairwise comparison is replaced, some information is inevitably lost. Note that the maximum number of iterations is capped at \(iterations \leq \frac{1}{2}n(n-1)\) with \(n\) being the number of attributes.</p></li>
-<li><p><code>stopcr</code>: The stopping Consistency Ratio. It complements <code>iter</code> by giving <code>iter</code> a criteria to stop when a matrix is sufficiently consistent. <code>ahp.harker3</code> will continue looping and replacing more elements of the pairwise comparison matrices until the consistency ratio of the new matrix is lower than <code>stopcr</code>, or the maximum number of iterations is reached, and will stop and move onto the next individual. When <code>stopcr</code> is set, the number of replaced elements will differ amongst each decision-maker. Thus, it is advised that the analyst set <code>printiter = TRUE</code> to see how many iterations has the pairwise matrix of that individual has been modified by the algorithm.</p></li>
+<li><p><code>stopcr</code>: The stopping Consistency Ratio. It complements <code>iterations</code> by giving <code>iterations</code> a criteria to stop when a matrix is sufficiently consistent. <code>ahp.harker</code> will continue looping and replacing more elements of the pairwise comparison matrices until the consistency ratio of the new matrix is lower than <code>stopcr</code>, or the maximum number of iterations is reached, and will stop and move onto the next individual. When <code>stopcr</code> is set, the number of replaced elements will differ amongst each decision-maker. Thus, it is advised that the analyst set <code>printiter = TRUE</code> to see how many iterations has the pairwise matrix of that individual has been modified by the algorithm.</p></li>
 <li><p><code>limit</code>: In many cases, the algorithm will intend to replace a value with a number higher than 9 or lower than 1/9. <code>limit</code> caps the maximum and minimum value of the replacement to 9 and 1/9 respectively.</p></li>
 <li><p><code>printiter</code> is a logical argument of whether the number of iterations taken for each pairwise matrix is reported or not. Generally it is not needed if <code>stopcr</code> is not specified. When <code>stopcr</code> is specified, this is a good way of identifying how many pairwise comparisons are actually replaced by the algorithm for each decision maker. The printout above shows <code>&quot;Ind 1 Iterations: 1&quot;</code>, which shows that although I specified <code>iterations = 10</code>, individual 1 (<code>Ind 1</code>) was only iterated one time before it reached the target consistency ratio, 0.1. Only one element was replaced.</p></li>
 </ul>
@@ -1161,7 +1179,7 @@ cr.df2 &lt;- cr.df1 %&gt;%
 city.df %&gt;%
   ahp.mat(atts = atts, negconvert = TRUE) %&gt;% 
   ahp.harker(atts, iterations = it, stopcr = 0.1, limit = T, round = T, printiter = F) %&gt;%
-  ahp.indpref(atts, eigen = TRUE) %&gt;% 
+  ahp.indpref(atts, method = &quot;eigen&quot;) %&gt;% 
   mutate(rowid = 1:nrow(city.df)) %&gt;%
   left_join(cr.df2, by = &#39;rowid&#39;) %&gt;%
   gather(cult, fam, house, jobs, trans, key = &quot;var&quot;, value = &quot;pref&quot;) %&gt;%
@@ -1187,28 +1205,28 @@ city.df %&gt;%
 <pre><code class="r">options(scipen = 99)
 inconsistent &lt;- city.df %&gt;%
   ahp.mat(atts = atts, negconvert = TRUE) %&gt;% 
-  ahp.aggpref(atts, eigen = TRUE)
+  ahp.aggpref(atts, method = &quot;eigen&quot;)
 
 consistent &lt;- city.df %&gt;%
   ahp.mat(atts = atts, negconvert = TRUE) %&gt;% 
   ahp.harker(atts, iterations = 5, stopcr = 0.1, limit = T, round = T, printiter = F) %&gt;%
-  ahp.aggpref(atts, eigen = TRUE)
+  ahp.aggpref(atts, method = &quot;eigen&quot;)
 
-true &lt;- t(ahp.indpref(sample_mat, atts, eigen = TRUE))
+true &lt;- t(ahp.indpref(sample_mat, atts, method = &quot;eigen&quot;))
 
-aggpref.df &lt;- data.frame(true,inconsistent,consistent) %&gt;%
+aggpref.df &lt;- data.frame(Attribute = atts, true,inconsistent,consistent) %&gt;%
   mutate(error.incon = abs(true - inconsistent),
          error.con = abs(true - consistent))
 
 aggpref.df
 </code></pre>
 
-<pre><code>##     true inconsistent consistent error.incon error.con
-## 1 0.1522       0.1526     0.1427    0.000443   0.00945
-## 2 0.4335       0.4483     0.4388    0.014818   0.00537
-## 3 0.0716       0.0705     0.0698    0.001031   0.00178
-## 4 0.3050       0.2758     0.2886    0.029215   0.01638
-## 5 0.0378       0.0397     0.0424    0.001835   0.00454
+<pre><code>##   Attribute   true inconsistent consistent error.incon error.con
+## 1      cult 0.1522       0.1526     0.1427    0.000443   0.00945
+## 2       fam 0.4335       0.4483     0.4388    0.014818   0.00537
+## 3     house 0.0716       0.0705     0.0698    0.001031   0.00178
+## 4      jobs 0.3050       0.2758     0.2886    0.029215   0.01638
+## 5     trans 0.0378       0.0397     0.0424    0.001835   0.00454
 </code></pre>
 
 <p>Here I present the aggregated weights of the pairwise matrices without and with treatment with Harker&#39;s method, the aggregated priorities derived from the true weights of the sample, as well as the deviation of the priorities from the true weights. Because improving the consistency of the matrix does not necessarily increase the validity of the matrix, it is imperative that researchers consider other ways to improve consistency, ideally asking respondents to reconsider their choices, whenever inconsistency arises. </p>

@@ -6,6 +6,7 @@ library(dplyr)
 library(ggplot2)
 library(scales)
 library(knitr)
+options(digits = 3)
 
 ## ------------------------------------------------------------------------
 library(ahpsurvey)
@@ -81,8 +82,8 @@ city.df %>%
 ## ----dpi=300,fig.cap="\\label{fig:figs}Maximum difference of between eigenvalue and mean aggregation"----
 cityahp <- city.df %>% 
   ahp.mat(atts, negconvert = T)
-eigentrue <- ahp.indpref(cityahp, atts, eigen = TRUE)
-geom <- ahp.indpref(cityahp, atts, eigen = FALSE, method = "arithmetic")
+eigentrue <- ahp.indpref(cityahp, atts, method = "eigen")
+geom <- ahp.indpref(cityahp, atts, method = "arithmetic")
 error <- data.frame(id = 1:length(cityahp), maxdiff = apply(abs(eigentrue - geom), 1, max))
 error %>%
   ggplot(aes(x = id, y = maxdiff)) +
@@ -139,8 +140,8 @@ city.df %>%
 ## ----echo=FALSE----------------------------------------------------------
 rownum <- seq(1:15)
 RI <- t(data.frame(c(0,0,0.52,0.89,1.11,1.25,1.35,1.40,1.45,1.49, 1.52, 1.54, 1.56, 1.58, 1.59)))
-rownames(RI) <- NULL
-colnames(RI) <- seq(1:15)
+rownames(RI) <- "RI"
+colnames(RI) <- 1:15
 RI%>% kable()
 
 ## ------------------------------------------------------------------------
@@ -164,7 +165,7 @@ dict <- c("cult" = "Culture",
           "trans" = "Transportation")
 
 cr.df <- city.df %>%
-  ahp.mat(atts, negconvert = T) %>% 
+  ahp.mat(atts, negconvert = TRUE) %>% 
   ahp.cr(atts) %>% 
   data.frame() %>%
   mutate(rowid = 1:length(cr), cr.dum = as.factor(ifelse(cr <= thres, 1, 0))) %>%
@@ -172,7 +173,7 @@ cr.df <- city.df %>%
 
 city.df %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
-  ahp.indpref(atts, eigen = TRUE) %>% 
+  ahp.indpref(atts, method = "eigen") %>% 
   mutate(rowid = 1:nrow(eigentrue)) %>%
   left_join(cr.df, by = 'rowid') %>%
   gather(cult, fam, house, jobs, trans, key = "var", value = "pref") %>%
@@ -196,8 +197,8 @@ city.df %>%
 sample_mat
 
 ## ------------------------------------------------------------------------
-options(digits = 3)
-priority <- t(ahp.indpref(sample_mat, atts, eigen = TRUE))
+
+priority <- t(ahp.indpref(sample_mat, atts, method = "eigen"))
 priority
 
 ## ------------------------------------------------------------------------
@@ -205,7 +206,7 @@ S <- priority %*% t((priority)^-1)
 S
 
 ## ------------------------------------------------------------------------
-sample_mat[[1]] *t(S)
+sample_mat[[1]] * t(S)
 
 
 ## ------------------------------------------------------------------------
@@ -213,23 +214,20 @@ error <- ahp.error(sample_mat, atts)
 error
 
 ## ------------------------------------------------------------------------
-cityahp %>%
-  ahp.error(atts) %>%
-  head(2)
-
-## ------------------------------------------------------------------------
 gm_mean <- function(x, na.rm=TRUE){
   exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
 }
 
 mat <- cityahp %>%
-  ahp.error(atts) %>%
+  ahp.error(atts, reciprocal = TRUE) %>%
   unlist() %>%
   as.numeric() %>%
   array(dim=c(length(atts), length(atts), length(cityahp))) %>%
   apply(c(1,2), gm_mean)
 
 colnames(mat) <- rownames(mat) <- atts
+
+mat
 
 ## ------------------------------------------------------------------------
 city.df %>%
@@ -335,7 +333,7 @@ cr.df2 <- cr.df1 %>%
 city.df %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
   ahp.harker(atts, iterations = it, stopcr = 0.1, limit = T, round = T, printiter = F) %>%
-  ahp.indpref(atts, eigen = TRUE) %>% 
+  ahp.indpref(atts, method = "eigen") %>% 
   mutate(rowid = 1:nrow(city.df)) %>%
   left_join(cr.df2, by = 'rowid') %>%
   gather(cult, fam, house, jobs, trans, key = "var", value = "pref") %>%
@@ -357,16 +355,16 @@ city.df %>%
 options(scipen = 99)
 inconsistent <- city.df %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
-  ahp.aggpref(atts, eigen = TRUE)
+  ahp.aggpref(atts, method = "eigen")
 
 consistent <- city.df %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
   ahp.harker(atts, iterations = 5, stopcr = 0.1, limit = T, round = T, printiter = F) %>%
-  ahp.aggpref(atts, eigen = TRUE)
+  ahp.aggpref(atts, method = "eigen")
 
-true <- t(ahp.indpref(sample_mat, atts, eigen = TRUE))
+true <- t(ahp.indpref(sample_mat, atts, method = "eigen"))
 
-aggpref.df <- data.frame(true,inconsistent,consistent) %>%
+aggpref.df <- data.frame(Attribute = atts, true,inconsistent,consistent) %>%
   mutate(error.incon = abs(true - inconsistent),
          error.con = abs(true - consistent))
 

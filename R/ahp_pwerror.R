@@ -33,7 +33,7 @@
 #'@export
 #'
 ahp.pwerror <- function(ahpmat, atts, npw = 3) {
-    indpref.df <- ahp.indpref(ahpmat, atts, eigen = TRUE)
+    indpref.df <- ahp.indpref(ahpmat, atts, method = "eigen")
     respmat <- ahpmat
     conserror <- list()
     topincons <- list()

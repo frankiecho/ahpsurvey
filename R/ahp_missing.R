@@ -99,7 +99,7 @@ ahp.missing <- function(ahpmat, atts, round = FALSE, limit = FALSE) {
         
         .Blist <- list(.B)
         ## Calculate weights of .Blist
-        .Bweights <- ahp.indpref(.Blist, atts, eigen = TRUE)
+        .Bweights <- ahp.indpref(.Blist, atts, method = "eigen")
         
         for (id in 1:nmiss) {
             

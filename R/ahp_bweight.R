@@ -21,6 +21,6 @@ ahp.bweight <- function(currentmat, atts, maxdf, nelement) {
     }
     
     ## Calculate weights of .Blist
-    .Bweights <- ahp.indpref(list(.B), atts, eigen = TRUE)
+    .Bweights <- ahp.indpref(list(.B), atts, method = "eigen")
     .Bweights
 }
