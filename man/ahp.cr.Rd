@@ -19,7 +19,7 @@ The \code{ahp.cr} function calculates the consistency ratio of each decision-mak
 
 \deqn{CR = (\lambda-n)/((n-1)(RI))}
 
-Where \eqn{\lambda} is the maximum eigenvalue of the pairwise comparison matrix, \eqn{n} is the number of attributes, and RI is the random index. Following \insertCite{Saaty2007fuzzy;textual}{ahpsurvey}, the RI is a function of \eqn{n} and is the consistency ratio of randomly generated pairwise comparison matrices. The first seven random indices from n=1 to n=7 are given as follows: \code{0,0,0.52,0.89,1.11,1.25,1.35}.
+Where \eqn{\lambda} is the maximum eigenvalue of the pairwise comparison matrix, \eqn{n} is the number of attributes, and RI is the random index. Following \insertCite{Saaty2007fuzzy;textual}{ahpsurvey}, the RI is a function of \eqn{n} and is the consistency ratio of randomly generated pairwise comparison matrices.
 }
 \examples{
 

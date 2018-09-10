@@ -17,7 +17,7 @@ ahp.indpref(ahpmat, atts, method = "geometric")
 A \code{data.frame} of the individual preferences of all the decision-makers.
 }
 \description{
-\code{ahp.indpref} computes the individual preferences of the decision-makers, and returns a data.frame containing the preference weights of the decision-makers. It takes in the object created from the ahp.mat function, the attribute lists, and has two additional arguments.
+\code{ahp.indpref} computes the individual preferences of the decision-makers, and returns a \code{data.frame} containing the preference weights of the decision-makers.
 }
 \examples{
 
