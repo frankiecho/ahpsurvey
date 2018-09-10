@@ -1,3 +1,8 @@
+# ahpsurvey 0.2.0
+
+Removed the `eigen` option in the `ahp.indpref` and `ahp.aggpref` functions -- now users have to specify `eigen` with `method = "eigen"`.
+
+
 # ahpsurvey 0.1.0
 
 * Fresh release

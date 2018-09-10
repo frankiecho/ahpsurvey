@@ -3,8 +3,8 @@
 
 # ahpsurvey
 
-Date: 8 September 2018  
-Version: 0.1.0
+[![Build
+Status](https://travis-ci.org/frankiecho/ahpsurvey.svg?branch=master)](https://travis-ci.org/frankiecho/ahpsurvey)
 
 ## Overview
 
