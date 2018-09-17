@@ -5,6 +5,12 @@
 
 [![Build
 Status](https://travis-ci.org/frankiecho/ahpsurvey.svg?branch=master)](https://travis-ci.org/frankiecho/ahpsurvey)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/)
+[![Rdoc](http://www.rdocumentation.org/badges/version/ahpsurvey)](http://www.rdocumentation.org/packages/ahpsurvey)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
+[![CRAN\_time\_from\_release](http://www.r-pkg.org/badges/ago/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
+[![metacran
+downloads](http://cranlogs.r-pkg.org/badges/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
 
 ## Overview
 
@@ -19,15 +25,21 @@ and correct for inconsistent pairwise comparisons.
 
 ## Installation
 
-You can install `ahpsurvey` from Github with:
+Install `ahpsurvey` directly from CRAN:
+
+``` r
+install.packages("ahpsurvey")
+#> Installing package into '/Users/chohinting/Library/R/3.5/library'
+#> (as 'lib' is unspecified)
+#> installing the source package 'ahpsurvey'
+```
+
+Or, install the development version of `ahpsurvey` from Github with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("frankiecho/ahpsurvey")
 ```
-
-A CRAN submission is under way and a direct CRAN download will be
-available in the near future.
 
 ## Usage
 
