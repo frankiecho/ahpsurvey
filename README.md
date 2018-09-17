@@ -9,8 +9,6 @@ Status](https://travis-ci.org/frankiecho/ahpsurvey.svg?branch=master)](https://t
 [![Rdoc](http://www.rdocumentation.org/badges/version/ahpsurvey)](http://www.rdocumentation.org/packages/ahpsurvey)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
 [![CRAN\_time\_from\_release](http://www.r-pkg.org/badges/ago/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
-[![metacran
-downloads](http://cranlogs.r-pkg.org/badges/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
 
 ## Overview
 

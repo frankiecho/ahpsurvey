@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 
 # ahpsurvey
 
-[![Build Status](https://travis-ci.org/frankiecho/ahpsurvey.svg?branch=master)](https://travis-ci.org/frankiecho/ahpsurvey) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![Rdoc](http://www.rdocumentation.org/badges/version/ahpsurvey)](http://www.rdocumentation.org/packages/ahpsurvey) [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey) [![CRAN_time_from_release](http://www.r-pkg.org/badges/ago/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey) [![metacran downloads](http://cranlogs.r-pkg.org/badges/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
+[![Build Status](https://travis-ci.org/frankiecho/ahpsurvey.svg?branch=master)](https://travis-ci.org/frankiecho/ahpsurvey) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![Rdoc](http://www.rdocumentation.org/badges/version/ahpsurvey)](http://www.rdocumentation.org/packages/ahpsurvey) [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey) [![CRAN_time_from_release](http://www.r-pkg.org/badges/ago/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey) 
 
 
 ## Overview
