@@ -1,6 +1,6 @@
 ---
 title: 'Analytic Hierarchy Process for Survey Data in `R`'
-subtitle: 'Vignettes for the `ahpsurvey` package'
+subtitle: 'Vignettes for the `ahpsurvey` package (ver 0.2.1)'
 author: "Frankie Cho"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
@@ -38,6 +38,7 @@ library(scales)
 library(knitr)
 options(digits = 3)
 ```
+\newpage
 
 # Introduction
 
@@ -46,6 +47,14 @@ The Analytic Hierarchy Process (AHP), introduced by @Saaty1987, is a versatile m
 However, researchers looking to adopt the AHP in the analysis of survey data often have to manually reformat their data, sometimes even involving dragging and copying across Excel spreadsheets, which is painstaking and prone to human error. Hitherto, there are no good ways of computing and visualising the heterogeneity amongst AHP decision-makers, which is common in survey data. Inconsistent choices are also prevalent in AHP conducted in the survey format, where it is impractical for enumerators to identify and correct for inconsistent responses on the spot when the surveys are delivered in paper format. Even if an electronic version that allows immediate feedback of consistency ratio is used, respondents asked to repeatedly change their answers are likely to be mentally fatigued. Censoring observations with inconsistency is likely to result in a greatly decreased statistical power of the sample, or may lead to unrepresentative samples and nonresponse bias.
 
 The ``ahpsurvey`` package provides a workflow for researchers to quantify and visualise inconsistent pairwise comparisons that aids researchers in improving the AHP design and adopting appropriate analytical methods for the AHP.
+
+Install the package directly from CRAN:
+
+```{r eval=FALSE}
+install.packages("ahpsurvey")
+```
+
+\newpage
 
 # Calculating priority weights
 ## Random data generation
@@ -286,7 +295,7 @@ city.df %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
   ahp.aggjudge(atts, aggmethod = "geometric")
 ```
-
+\newpage
 # Measuring and visualising consistency
 
 ## Measuring consistency
@@ -366,6 +375,7 @@ city.df %>%
                            round(mean(cr),3)))+
   theme_minimal()
 ```
+\newpage
 
 # Dealing with inconsistent and missing data
 
@@ -685,6 +695,7 @@ list(ahp.cr(actual, atts)[[8]],ahp.cr(imputed, atts)[[8]])
 ```
 
 Here, similar to `ahp.harker`, `ahp.missing` replaces the NA values in the pairwise comparison matrices with the most consistent pairwise choice available, thus the consistency ratio is increased after imputing missing values. The randomness and inconsistency of each decision-maker cannot be accounted for in the algorithm. Missing value imputation should be avoided whenever possible, but is a valid alternative if missing values are reasonably small in number.
+\newpage
 
 # Additional resources
 
@@ -701,6 +712,7 @@ The `city200` dataset contains a survey-formatted pairwise comparison matrix of 
 data(city200)
 head(city200)[,1:8]
 ```
+\newpage
 
 # References
 
