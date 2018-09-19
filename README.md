@@ -9,6 +9,7 @@ Status](https://travis-ci.org/frankiecho/ahpsurvey.svg?branch=master)](https://t
 [![Rdoc](http://www.rdocumentation.org/badges/version/ahpsurvey)](http://www.rdocumentation.org/packages/ahpsurvey)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
 [![CRAN\_time\_from\_release](http://www.r-pkg.org/badges/ago/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
+[![CRAN\_downloads](https://cranlogs.r-pkg.org/badges/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
 
 ## Overview
 
@@ -26,7 +27,7 @@ and correct for inconsistent pairwise comparisons.
 Install `ahpsurvey` directly from CRAN:
 
 ``` r
-install.packages("ahpsurvey")
+install.packages("ahpsurvey",repos = "http://cran.us.r-project.org")
 #> Installing package into '/Users/chohinting/Library/R/3.5/library'
 #> (as 'lib' is unspecified)
 #> installing the source package 'ahpsurvey'
