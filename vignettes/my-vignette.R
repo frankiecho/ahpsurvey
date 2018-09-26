@@ -8,6 +8,9 @@ library(scales)
 library(knitr)
 options(digits = 3)
 
+## ----eval=FALSE----------------------------------------------------------
+#  install.packages("ahpsurvey")
+
 ## ------------------------------------------------------------------------
 library(ahpsurvey)
 

@@ -1,31 +1,17 @@
 ---
 title: 'Analytic Hierarchy Process for Survey Data in `R`'
-subtitle: 'Vignettes for the `ahpsurvey` package (ver 0.2.1)'
+subtitle: 'Vignettes for the `ahpsurvey` package (ver 0.2.2)'
 author: "Frankie Cho"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
-  pdf_document:
-    df_print: kable
-    fig_caption: yes
-    highlight: tango
-    number_sections: yes
-    toc: yes
-    toc_depth: 2
-  rmarkdown::html_vignette:
-  github_document:
-    toc: true
-    toc_depth: 2
-    html_preview: true
-    fig_width: 5
-    fig_height: 3
-    dev: jpeg
+  rmarkdown::html_vignette
 header-includes: \usepackage{amsmath}
 email: htcho@connect.hku.hk
 bibliography: REFERENCES_vig.bib
 vignette: >
+  %\VignetteEngine{knitr::rmarkdown} 
   %\VignetteIndexEntry{full} 
   %\usepackage[utf8]{inputenc}
-  %\VignetteEngine{knitr::knitr} 
 ---
 
 ```{r setup, include=FALSE, eval=TRUE}
@@ -200,7 +186,7 @@ The `ahp.indpref` function computes the individual priorities of the decision-ma
 
 Here I demonstrate the difference of using arithmetic aggregation and dominant eigenvalue methods. In my own testing with real datasets, a much higher proportion of respondents have at least one attribute with a difference larger than 0.05 due to presence of inconsistent and heterogeneous responses.
 
-```{r dpi=300,fig.cap="\\label{fig:figs}Maximum difference of between eigenvalue and mean aggregation", fig.height=4, fig.width=7}
+```{r ,fig.cap="\\label{fig:figs}Maximum difference of between eigenvalue and mean aggregation", fig.height=4, fig.width=7}
 cityahp <- city.df %>% 
   ahp.mat(atts, negconvert = T)
 eigentrue <- ahp.indpref(cityahp, atts, method = "eigen")
@@ -247,7 +233,7 @@ Two steps were simutaneously conducted in the above command:
 
 By default, the two steps rely on the same aggregation method as specified in `method` (unless when `method = "eigen"`, where `aggmethod` defaults to `arithmetic`). However, it is possible to specify different aggregation methods for the individual and group level. For instance, one can specify that in the individual level, the arithmetic mean is used to compute the individual priorities; the priorities are aggregated using a trimmed mean by trimming observations higher and lower quantile. 
 
-```{r dpi = 300,fig.cap="\\label{fig:figs}Changes of aggregated weights based on quantile of data trimmed", fig.height=4, fig.width=7}
+```{r,fig.cap="\\label{fig:figs}Changes of aggregated weights based on quantile of data trimmed", fig.height=4, fig.width=7}
 qtresults <- matrix(nrow = 50, ncol = 5, data = NA)
 for (q in 1:50){
   qtresults[q,] <- ahp.aggpref(cityahp, atts, method = "arithmetic", 
@@ -338,7 +324,7 @@ table(cr <= 0.1)
 
 The `ahp.indpref` function provides a detailed account of each individuals' priorities and its corresponding weighting. An overlay of the violin density, boxplots and jitter plots is useful in visualising the heterogeneity in weights each respondent gives.
 
-```{r, dpi = 300,fig.cap="\\label{fig:figs}Individual Priorities with respect to goal", fig.height=4, fig.width=7}
+```{r,fig.cap="\\label{fig:figs}Individual Priorities with respect to goal", fig.height=4, fig.width=7}
 thres <- 0.1
 dict <- c("cult" = "Culture", 
           "fam" = "Family", 
@@ -468,7 +454,7 @@ city.df %>%
 
 A better way to visualise the pairwise comparisons is a bar chart:
 
-```{r dpi = 300,fig.cap="\\label{fig:figs}Pairwise comparison and its frequency\n as the most, second-most, and third most inconsistent pairwise comparsion", fig.height=4, fig.width=7}
+```{r,fig.cap="\\label{fig:figs}Pairwise comparison and its frequency\n as the most, second-most, and third most inconsistent pairwise comparsion", fig.height=4, fig.width=7}
 cityahp %>%
   ahp.pwerror(atts) %>% 
   gather(top1, top2, top3, key = "max", value = "pair") %>%
@@ -576,7 +562,7 @@ data.frame(table(crmat[,1] <= 0.1),
 
 While using Harker's method cannot completely lower the CR of all decision-makers to desired levels, it allows researchers to keep a lot more observations; whereas we would have to truncate `r table(crmat[,1] <= 0.1)[1]` samples, now we only have to censor `r table(crmat[,2] <= 0.1)[1]` samples with 1 iteration.
 
-```{r dpi = 300, fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Consistency Ratios under different number of iterations with Harker's method"}
+```{r, fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Consistency Ratios under different number of iterations with Harker's method"}
 crmat %>% 
   as.data.frame() %>%
   gather(key = "iter", value = "cr", `0`, 1,2,3,4,5,6,7,8,9,10,11) %>%
@@ -590,7 +576,7 @@ crmat %>%
   theme_minimal()
 ```
 
-```{r dpi = 300, fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Individual priority weights with respect to goal (1 iteration)"}
+```{r, fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Individual priority weights with respect to goal (1 iteration)"}
 it <- 1
 thres <- 0.1
 cr.df1 <- data.frame(cr = city.df %>%

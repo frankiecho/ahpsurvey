@@ -1,9 +1,19 @@
 ---
-title: 'Analytic Hierarchy Process for Survey Data in `R`'
-subtitle: 'Vignettes for the `ahpsurvey` package'
+title: "Analytic Hierarchy Process for Survey Data in `R`"
 author: "Frankie Cho"
-date: "10 September 2018"
+date: "26 September 2018"
 output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '2'
+  github_document:
+    dev: jpeg
+    fig_height: 3
+    fig_width: 5
+    html_preview: yes
+    toc: yes
+    toc_depth: 2
   pdf_document:
     df_print: kable
     fig_caption: yes
@@ -11,24 +21,17 @@ output:
     number_sections: yes
     toc: yes
     toc_depth: 2
-  rmarkdown::html_vignette:
-  github_document:
-    toc: true
-    toc_depth: 2
-    html_preview: true
-    fig_width: 5
-    fig_height: 3
-    dev: jpeg
+  rmarkdown::html_vignette: null
 header-includes: \usepackage{amsmath}
 email: htcho@connect.hku.hk
+subtitle: Vignettes for the `ahpsurvey` package (ver 0.2.1)
 bibliography: REFERENCES_vig.bib
-vignette: >
-  %\VignetteIndexEntry{full} 
-  %\usepackage[utf8]{inputenc}
-  %\VignetteEngine{knitr::knitr} 
+vignette: "%\\VignetteIndexEntry{full}  %\\usepackage[utf8]{inputenc} %\\VignetteEngine{knitr::knitr}
+  \n"
 ---
 
 
+\newpage
 
 # Introduction
 
@@ -37,6 +40,15 @@ The Analytic Hierarchy Process (AHP), introduced by @Saaty1987, is a versatile m
 However, researchers looking to adopt the AHP in the analysis of survey data often have to manually reformat their data, sometimes even involving dragging and copying across Excel spreadsheets, which is painstaking and prone to human error. Hitherto, there are no good ways of computing and visualising the heterogeneity amongst AHP decision-makers, which is common in survey data. Inconsistent choices are also prevalent in AHP conducted in the survey format, where it is impractical for enumerators to identify and correct for inconsistent responses on the spot when the surveys are delivered in paper format. Even if an electronic version that allows immediate feedback of consistency ratio is used, respondents asked to repeatedly change their answers are likely to be mentally fatigued. Censoring observations with inconsistency is likely to result in a greatly decreased statistical power of the sample, or may lead to unrepresentative samples and nonresponse bias.
 
 The ``ahpsurvey`` package provides a workflow for researchers to quantify and visualise inconsistent pairwise comparisons that aids researchers in improving the AHP design and adopting appropriate analytical methods for the AHP.
+
+Install the package directly from CRAN:
+
+
+```r
+install.packages("ahpsurvey")
+```
+
+\newpage
 
 # Calculating priority weights
 ## Random data generation
@@ -238,7 +250,7 @@ error %>%
   theme_minimal()
 ```
 
-![\label{fig:figs}Maximum difference of between eigenvalue and mean aggregation](figure/unnamed-chunk-6-1.png)
+![\label{fig:figs}Maximum difference of between eigenvalue and mean aggregation](figure/unnamed-chunk-7-1.png)
 
 ## Aggregated priority weights
 
@@ -303,7 +315,7 @@ qtresults %>%
   theme_minimal()
 ```
 
-![\label{fig:figs}Changes of aggregated weights based on quantile of data trimmed](figure/unnamed-chunk-8-1.png)
+![\label{fig:figs}Changes of aggregated weights based on quantile of data trimmed](figure/unnamed-chunk-9-1.png)
 
 It is also possible to quantify the heterogeneity amongst decision-makers' priorities, information possibly lost by group aggregation. This is specified using `aggmethod = "sd"`:
 
@@ -346,7 +358,7 @@ city.df %>%
 ## jobs  2.048 0.587 4.019 1.000  7.04
 ## trans 0.216 0.163 0.342 0.142  1.00
 ```
-
+\newpage
 # Measuring and visualising consistency
 
 ## Measuring consistency
@@ -437,7 +449,8 @@ city.df %>%
   theme_minimal()
 ```
 
-![\label{fig:figs}Individual Priorities with respect to goal](figure/unnamed-chunk-14-1.png)
+![\label{fig:figs}Individual Priorities with respect to goal](figure/unnamed-chunk-15-1.png)
+\newpage
 
 # Dealing with inconsistent and missing data
 
@@ -623,7 +636,7 @@ cityahp %>%
 ```
 
 ![\label{fig:figs}Pairwise comparison and its frequency
- as the most, second-most, and third most inconsistent pairwise comparsion](figure/unnamed-chunk-22-1.png)
+ as the most, second-most, and third most inconsistent pairwise comparsion](figure/unnamed-chunk-23-1.png)
 
 The results are favorable -- the frequency which a pairwise comparison is the most inconsistent for that decision-maker is reflective of the degree of randomness I have used to generate the dataset. The cult_fam, cult_jobs and fam_trans are assigned the highest standard deviations for the normal random draw, which partly contributes to its high frequency of being in the most inconsistent pairwise comparison in the chart.
 
@@ -782,7 +795,7 @@ crmat %>%
   theme_minimal()
 ```
 
-![\label{fig:figs}Consistency Ratios under different number of iterations with Harker's method](figure/unnamed-chunk-27-1.png)
+![\label{fig:figs}Consistency Ratios under different number of iterations with Harker's method](figure/unnamed-chunk-28-1.png)
 
 
 ```r
@@ -819,7 +832,7 @@ city.df %>%
   theme_minimal()
 ```
 
-![\label{fig:figs}Individual priority weights with respect to goal (1 iteration)](figure/unnamed-chunk-28-1.png)
+![\label{fig:figs}Individual priority weights with respect to goal (1 iteration)](figure/unnamed-chunk-29-1.png)
 
 Let's take a look at how applying Harker's method affects the overall aggregated priorities of the population.
 
@@ -972,6 +985,7 @@ list(ahp.cr(actual, atts)[[8]],ahp.cr(imputed, atts)[[8]])
 ```
 
 Here, similar to `ahp.harker`, `ahp.missing` replaces the NA values in the pairwise comparison matrices with the most consistent pairwise choice available, thus the consistency ratio is increased after imputing missing values. The randomness and inconsistency of each decision-maker cannot be accounted for in the algorithm. Missing value imputation should be avoided whenever possible, but is a valid alternative if missing values are reasonably small in number.
+\newpage
 
 # Additional resources
 
@@ -1014,6 +1028,7 @@ head(city200)[,1:8]
 ## 5          4
 ## 6          4
 ```
+\newpage
 
 # References
 
