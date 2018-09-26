@@ -54,6 +54,7 @@ ahp.missing <- function(ahpmat, atts, round = FALSE, limit = FALSE) {
         .NArows <- which(is.na(respmat[[ind]]) == TRUE, arr.ind = TRUE) %>% data.frame() %>% 
             dplyr::filter(row > col)
         
+        ## Moves onto the next matrix if there is no 
         if(nrow(.NArows) == 0) next
         
         ## Give an error if there is one or more variable with no occurences and move onto the

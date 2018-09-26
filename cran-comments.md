@@ -3,7 +3,7 @@
 * Ubuntu 12.04 (on travis-ci), R-oldrel, R-release, R-devel
 * win-builder (devel and release)
 
-(tested on 10 Sep 2018 with 0.2.1)
+(tested on 26 Sep 2018 with 0.2.2)
 
 ## R CMD check results
 0 ERRORs | 0 WARNINGs | 0 NOTES (on local system)

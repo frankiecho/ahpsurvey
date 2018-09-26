@@ -1,7 +1,10 @@
 ---
 title: 'Analytic Hierarchy Process for Survey Data in `R`'
 subtitle: 'Vignettes for the `ahpsurvey` package (ver 0.2.2)'
-author: "Frankie Cho"
+author: 
+- name: Frankie Cho
+  affiliation: Department of Geography, The University of Hong Kong, Pokfulam Road, Hong Kong
+  email: htcho@connect.hku.hk
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
   rmarkdown::html_vignette

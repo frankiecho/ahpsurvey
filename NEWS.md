@@ -1,3 +1,9 @@
+## ahpsurvey 0.2.2
+
+* Fixed a bug where `ahp.missing` throws an error when a mix of complete and incomplete pairwise matrices is passed through it.
+
+* Fixed the html vignette file
+
 ## ahpsurvey 0.2.1
 
 Responded to CRAN maintainer Uwe Ligges's comments:
