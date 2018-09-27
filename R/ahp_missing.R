@@ -68,8 +68,8 @@ ahp.missing <- function(ahpmat, atts, round = FALSE, limit = FALSE) {
         .colfreq <- max(.colfreq$n)
         
         if (.rowfreq >= length(atts) - 1 | .colfreq >= length(atts) - 1) {
-            print(paste("Error: Ind", ind, "has one or more attribute(s) with no comparisons. The NA values are not replaced for this decision-maker."))
-            break
+            warning(paste("Warning: Ind", ind, "has one or more attribute(s) with no comparisons. The NA values are not replaced for this decision-maker."))
+            next
         }
         
         nmiss <- nrow(.NArows)
