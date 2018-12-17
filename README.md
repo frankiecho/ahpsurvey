@@ -28,9 +28,6 @@ Install `ahpsurvey` directly from CRAN:
 
 ``` r
 install.packages("ahpsurvey",repos = "http://cran.us.r-project.org")
-#> Installing package into '/Users/chohinting/Library/R/3.5/library'
-#> (as 'lib' is unspecified)
-#> installing the source package 'ahpsurvey'
 ```
 
 Or, install the development version of `ahpsurvey` from Github with:
@@ -42,9 +39,10 @@ devtools::install_github("frankiecho/ahpsurvey")
 
 ## Usage
 
-Here, we have the simulated survey data of pairwise comparisons of 200
-decision-makers who responded to a survey about the attributes they
-think is important when choosing a city to live in.
+The `ahpsurvey` allows one to input a `data.frame` consisting of
+pairwise comparisons and output an informative output of the aggregated
+priorities of all observations, the individual priorities, consistency
+ratios, and the most inconsistent pairwise comparisons.
 
 ``` r
 library(ahpsurvey)
@@ -68,42 +66,31 @@ city200 %>% head()
 #> 6          4          -3         -6
 ```
 
-`ahpsurvey` allows us to convert this `data.frame` into a usable list of
-pairwise comparison matrices for our further action:
-
 ``` r
 ## Define the attributes used
-atts <- c("cult", "fam", "house", "jobs", "trans")
-
-city200 %>%
-  ahp.mat(atts = atts, negconvert = TRUE) %>%
-  head(2)
-#> [[1]]
-#>            cult   fam     house  jobs trans
-#> cult  1.0000000 0.500 2.0000000 0.500     6
-#> fam   2.0000000 1.000 4.0000000 4.000     8
-#> house 0.5000000 0.250 1.0000000 0.250     3
-#> jobs  2.0000000 0.250 4.0000000 1.000     8
-#> trans 0.1666667 0.125 0.3333333 0.125     1
-#> 
-#> [[2]]
-#>       cult   fam     house      jobs trans
-#> cult  1.00 0.500 4.0000000 1.0000000     4
-#> fam   2.00 1.000 4.0000000 2.0000000     8
-#> house 0.25 0.250 1.0000000 0.2500000     3
-#> jobs  1.00 0.500 4.0000000 1.0000000     7
-#> trans 0.25 0.125 0.3333333 0.1428571     1
+output <- ahp(city200, atts <- c("cult", "fam", "house", "jobs", "trans"), agg = TRUE)
+#> [1] "Number of observations censored = 0"
+output$aggpref
+#>          AggPref  SD.AggPref
+#> cult  0.12854262 0.023635824
+#> fam   0.04504868 0.009692622
+#> house 0.26200680 0.022558607
+#> jobs  0.06650508 0.014179795
+#> trans 0.49136376 0.031222900
 ```
 
-And can calculate the aggregated individual preferences of the 200
-decision-makers using that list:
+And can show the detailed individual preferences of the 200
+decision-makers and the consistency ratio using that list:
 
 ``` r
-city200 %>%
-  ahp.mat(atts = atts, negconvert = TRUE) %>%
-  ahp.aggpref(atts = atts)
-#>       cult        fam      house       jobs      trans 
-#> 0.15265560 0.44012225 0.07217919 0.28341600 0.03911341
+head(output$indpref)[1:6]
+#>         cult        fam     house       jobs     trans         CR
+#> 1 0.10761277 0.04612377 0.2152255 0.08437354 0.5466644 0.06125366
+#> 2 0.09177621 0.05220755 0.2594281 0.08101136 0.5155767 0.02962755
+#> 3 0.13185431 0.04562216 0.2621857 0.09615389 0.4641839 0.06327989
+#> 4 0.14626347 0.03870857 0.2828326 0.04802916 0.4841662 0.09308731
+#> 5 0.13432443 0.05633827 0.2734946 0.05194258 0.4839001 0.10604443
+#> 6 0.13652862 0.04754130 0.2923949 0.06970992 0.4538253 0.10740624
 ```
 
 Further arguments allow you to specify the aggregation method, impute
@@ -113,6 +100,7 @@ missing values and identify and correct inconsistent responses.
 
 An overview of the functions in this package are as follows:
 
+  - `ahp`: A canned AHP routine
   - `ahp.mat`: Generate AHP pairwise matrices from survey data
   - `ahp.indpref`: Priority weights of individual decision-makers
   - `ahp.aggpref`: Aggregate individual priorities (AIP)

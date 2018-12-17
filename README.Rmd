@@ -25,7 +25,7 @@ The `ahpsurvey` package provides a consistent methodology for researchers to ref
 
 Install `ahpsurvey` directly from CRAN:
 
-```{r}
+```{r, eval = FALSE}
 install.packages("ahpsurvey",repos = "http://cran.us.r-project.org")
 ```
 
@@ -38,7 +38,7 @@ devtools::install_github("frankiecho/ahpsurvey")
 
 ## Usage
 
-Here, we have the simulated survey data of pairwise comparisons of 200 decision-makers who responded to a survey about the attributes they think is important when choosing a city to live in.
+The `ahpsurvey` allows one to input a `data.frame` consisting of pairwise comparisons and output an informative output of the aggregated priorities of all observations, the individual priorities, consistency ratios, and the most inconsistent pairwise comparisons.
 
 ```{r example}
 library(ahpsurvey)
@@ -48,23 +48,18 @@ data(city200)
 city200 %>% head()
 ```
 
-`ahpsurvey` allows us to convert this `data.frame` into a usable list of pairwise comparison matrices for our further action:
+Take a `data.frame` like that above and calculate the aggregated priorities of the 200 decision-makers.
 
 ```{r}
 ## Define the attributes used
-atts <- c("cult", "fam", "house", "jobs", "trans")
-
-city200 %>%
-  ahp.mat(atts = atts, negconvert = TRUE) %>%
-  head(2)
+output <- ahp(city200, atts <- c("cult", "fam", "house", "jobs", "trans"), negconvert = TRUE, agg = TRUE)
+output$aggpref
 ```
 
-And can calculate the aggregated individual preferences of the 200 decision-makers using that list:
+And can show the detailed individual priorities of the 200 decision-makers and the consistency ratio of each decision-maker using that list:
 
 ```{r}
-city200 %>%
-  ahp.mat(atts = atts, negconvert = TRUE) %>%
-  ahp.aggpref(atts = atts)
+head(output$indpref)[1:6]
 ```
 
 Further arguments allow you to specify the aggregation method, impute missing values and identify and correct inconsistent responses.
@@ -73,6 +68,7 @@ Further arguments allow you to specify the aggregation method, impute missing va
 
 An overview of the functions in this package are as follows:
 
+* `ahp`: A canned AHP routine
 * `ahp.mat`: Generate AHP pairwise matrices from survey data
 * `ahp.indpref`: Priority weights of individual decision-makers
 * `ahp.aggpref`: Aggregate individual priorities (AIP)
