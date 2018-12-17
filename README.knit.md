@@ -4,13 +4,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "README-"
-)
-```
+
 
 # ahpsurvey
 
@@ -25,13 +19,15 @@ The `ahpsurvey` package provides a consistent methodology for researchers to ref
 
 Install `ahpsurvey` directly from CRAN:
 
-```{r, eval = FALSE}
+
+```r
 install.packages("ahpsurvey",repos = "http://cran.us.r-project.org")
 ```
 
 Or, install the development version of `ahpsurvey` from Github with:
 
-```{r gh-installation, eval = FALSE}
+
+```r
 # install.packages("devtools")
 devtools::install_github("frankiecho/ahpsurvey")
 ```
@@ -40,26 +36,57 @@ devtools::install_github("frankiecho/ahpsurvey")
 
 The `ahpsurvey` allows one to input a `data.frame` consisting of pairwise comparisons data collected through questionnaires and output an informative output of the aggregated priorities of all observations, the individual priorities, consistency ratios, and the most inconsistent pairwise comparisons.
 
-```{r example}
+
+```r
 library(ahpsurvey)
 library(magrittr)
 
 data(city200)
 city200 %>% head()
+#>   cult_fam cult_house cult_jobs cult_trans fam_house fam_jobs fam_trans
+#> 1        2         -2         2         -6        -4       -4        -8
+#> 2        2         -4         1         -4        -4       -2        -8
+#> 3        4         -2         1         -3        -7       -3        -5
+#> 4        8         -4         3         -4        -8        1        -7
+#> 5        3         -3         5         -6        -8        1        -4
+#> 6        6         -4         2         -4        -7       -2        -4
+#>   house_jobs house_trans jobs_trans
+#> 1          4          -3         -8
+#> 2          4          -3         -7
+#> 3          4          -3         -6
+#> 4          4          -3         -9
+#> 5          4          -3         -6
+#> 6          4          -3         -6
 ```
 
 Take a `data.frame` like that above and calculate the aggregated priorities of the 200 decision-makers.
 
-```{r}
+
+```r
 ## Define the attributes used
 output <- ahp(city200, atts <- c("cult", "fam", "house", "jobs", "trans"), negconvert = TRUE, agg = TRUE)
+#> [1] "Number of observations censored = 0"
 output$aggpref
+#>          AggPref  SD.AggPref
+#> cult  0.15261018 0.033564038
+#> fam   0.44827276 0.057695635
+#> house 0.07052519 0.008844754
+#> jobs  0.27579123 0.053734270
+#> trans 0.03965027 0.006700507
 ```
 
 And can show the detailed individual priorities of the 200 decision-makers and the consistency ratio of each decision-maker using that list:
 
-```{r}
+
+```r
 head(output$indpref)[1:6]
+#>        cult       fam      house      jobs      trans         CR
+#> 1 0.1709466 0.4587181 0.08547330 0.2507636 0.03409845 0.06125366
+#> 2 0.2291009 0.3935620 0.08292558 0.2531962 0.04121537 0.02962755
+#> 3 0.1540045 0.4921905 0.08239372 0.2213908 0.05002052 0.06327989
+#> 4 0.1242495 0.4634863 0.06162027 0.3159930 0.03465092 0.09308731
+#> 5 0.1521676 0.3556904 0.07239889 0.3748108 0.04493236 0.10604443
+#> 6 0.1536560 0.4738939 0.07106456 0.2516808 0.04970479 0.10740624
 ```
 
 Further arguments allow you to specify the aggregation method, impute missing values and identify and correct inconsistent responses.

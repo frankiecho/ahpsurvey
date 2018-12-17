@@ -40,9 +40,10 @@ devtools::install_github("frankiecho/ahpsurvey")
 ## Usage
 
 The `ahpsurvey` allows one to input a `data.frame` consisting of
-pairwise comparisons and output an informative output of the aggregated
-priorities of all observations, the individual priorities, consistency
-ratios, and the most inconsistent pairwise comparisons.
+pairwise comparisons data collected through questionnaires and output an
+informative output of the aggregated priorities of all observations, the
+individual priorities, consistency ratios, and the most inconsistent
+pairwise comparisons.
 
 ``` r
 library(ahpsurvey)
@@ -66,31 +67,35 @@ city200 %>% head()
 #> 6          4          -3         -6
 ```
 
+Take a `data.frame` like that above and calculate the aggregated
+priorities of the 200 decision-makers.
+
 ``` r
 ## Define the attributes used
-output <- ahp(city200, atts <- c("cult", "fam", "house", "jobs", "trans"), agg = TRUE)
+output <- ahp(city200, atts <- c("cult", "fam", "house", "jobs", "trans"), negconvert = TRUE, agg = TRUE)
 #> [1] "Number of observations censored = 0"
 output$aggpref
 #>          AggPref  SD.AggPref
-#> cult  0.12854262 0.023635824
-#> fam   0.04504868 0.009692622
-#> house 0.26200680 0.022558607
-#> jobs  0.06650508 0.014179795
-#> trans 0.49136376 0.031222900
+#> cult  0.15261018 0.033564038
+#> fam   0.44827276 0.057695635
+#> house 0.07052519 0.008844754
+#> jobs  0.27579123 0.053734270
+#> trans 0.03965027 0.006700507
 ```
 
-And can show the detailed individual preferences of the 200
-decision-makers and the consistency ratio using that list:
+And can show the detailed individual priorities of the 200
+decision-makers and the consistency ratio of each decision-maker using
+that list:
 
 ``` r
 head(output$indpref)[1:6]
-#>         cult        fam     house       jobs     trans         CR
-#> 1 0.10761277 0.04612377 0.2152255 0.08437354 0.5466644 0.06125366
-#> 2 0.09177621 0.05220755 0.2594281 0.08101136 0.5155767 0.02962755
-#> 3 0.13185431 0.04562216 0.2621857 0.09615389 0.4641839 0.06327989
-#> 4 0.14626347 0.03870857 0.2828326 0.04802916 0.4841662 0.09308731
-#> 5 0.13432443 0.05633827 0.2734946 0.05194258 0.4839001 0.10604443
-#> 6 0.13652862 0.04754130 0.2923949 0.06970992 0.4538253 0.10740624
+#>        cult       fam      house      jobs      trans         CR
+#> 1 0.1709466 0.4587181 0.08547330 0.2507636 0.03409845 0.06125366
+#> 2 0.2291009 0.3935620 0.08292558 0.2531962 0.04121537 0.02962755
+#> 3 0.1540045 0.4921905 0.08239372 0.2213908 0.05002052 0.06327989
+#> 4 0.1242495 0.4634863 0.06162027 0.3159930 0.03465092 0.09308731
+#> 5 0.1521676 0.3556904 0.07239889 0.3748108 0.04493236 0.10604443
+#> 6 0.1536560 0.4738939 0.07106456 0.2516808 0.04970479 0.10740624
 ```
 
 Further arguments allow you to specify the aggregation method, impute
