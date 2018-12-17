@@ -1,3 +1,9 @@
+## ahpsurvey 0.3.0
+
+* Added a new canned routine, `ahp`, which provides a detailed output using some of the best functions in `ahpsurvey`.
+
+* Edited wording in the documentation to make it a bit more consistent.
+
 ## ahpsurvey 0.2.2
 
 * Fixed a bug where `ahp.missing` throws an error when a mix of complete and incomplete pairwise matrices is passed through it.
