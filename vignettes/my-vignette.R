@@ -14,56 +14,6 @@ options(digits = 3)
 ## ------------------------------------------------------------------------
 library(ahpsurvey)
 
-## ------------------------------------------------------------------------
-## Defining attributes
-set.seed(42)
-atts <- c("cult", "fam", "house", "jobs", "trans")
-
-colnames <- c("cult_fam", "cult_house", "cult_jobs", "cult_trans",
-              "fam_house", "fam_jobs", "fam_trans",
-              "house_jobs", "house_trans",
-              "jobs_trans")
-
-## True weights derived from Saaty's example
-weight <- c(5,-3,2,-5,
-            -7,-1,-7,
-            4,-3,
-            -7)
-
-## Defining the saaty scale
-saatyscale <- c(-9:-2, 1:9)
-nobs <- 200
-
-## saatyprob creates a list of probabilities in the saaty scale for being sampled given
-## the position of the weight in the weight list (x) and standard deviation (sd)
-
-saatyprob <- function(x, sd) dnorm(saatyscale, mean = weight[x], sd = sd) 
-
-## Standard deviation set on saatyprob(x, *sd*)
-cult_fam <- sample(saatyscale, nobs, prob = saatyprob(1, 2), replace = TRUE)
-cult_house <- sample(saatyscale, nobs, prob = saatyprob(2, 1), replace = TRUE)
-cult_jobs <- sample(saatyscale, nobs, prob = saatyprob(3, 2), replace = TRUE)
-cult_trans <- sample(saatyscale, nobs, prob = saatyprob(4, 1.5), replace = TRUE)
-fam_house <- sample(saatyscale, nobs, prob = saatyprob(5, 2), replace = TRUE)
-fam_jobs <- sample(saatyscale, nobs, prob = saatyprob(6, 1.5), replace = TRUE)
-fam_trans <- sample(saatyscale, nobs, prob = saatyprob(7, 2.5), replace = TRUE)
-house_jobs <- sample(saatyscale, nobs, prob = saatyprob(8, 0.5), replace = TRUE)
-house_trans <- sample(saatyscale, nobs, prob = saatyprob(9, 0.5), replace = TRUE)
-jobs_trans <- sample(saatyscale, nobs, prob = saatyprob(10, 1), replace = TRUE)
-
-city.df <- data.frame(fam_house, cult_house, cult_jobs, cult_trans,
-                      cult_fam, fam_jobs, fam_trans,
-                      house_jobs, house_trans,
-                      jobs_trans)
-head(city.df[,1:7])
-
-## ------------------------------------------------------------------------
-city.df <- city.df %>%
-  select(cult_fam, cult_house, cult_jobs, cult_trans,
-         fam_house, fam_jobs, fam_trans,
-         house_jobs, house_trans,
-         jobs_trans)
-
 ## ----echo= FALSE---------------------------------------------------------
 Rating <- as.character(1:9)
 Definition <- c("Two characteristics are equally important",
@@ -78,12 +28,17 @@ Definition <- c("Two characteristics are equally important",
 data.frame(Rating, Definition) %>% kable()
 
 ## ------------------------------------------------------------------------
-city.df %>%
+atts <- c("cult", "fam", "house", "jobs", "trans")
+data(city200)
+head(city200)
+
+## ------------------------------------------------------------------------
+city200 %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
   head(3)
 
-## ----dpi=300,fig.cap="\\label{fig:figs}Maximum difference of between eigenvalue and mean aggregation", fig.height=4, fig.width=7----
-cityahp <- city.df %>% 
+## ----fig.cap="\\label{fig:figs}Maximum difference of between eigenvalue and mean aggregation", fig.height=4, fig.width=7----
+cityahp <- city200 %>% 
   ahp.mat(atts, negconvert = T)
 eigentrue <- ahp.indpref(cityahp, atts, method = "eigen")
 geom <- ahp.indpref(cityahp, atts, method = "arithmetic")
@@ -101,7 +56,7 @@ error %>%
 amean <- ahp.aggpref(cityahp, atts, method = "arithmetic")
 amean
 
-## ----dpi = 300,fig.cap="\\label{fig:figs}Changes of aggregated weights based on quantile of data trimmed", fig.height=4, fig.width=7----
+## ----fig.cap="\\label{fig:figs}Changes of aggregated weights based on quantile of data trimmed", fig.height=4, fig.width=7----
 qtresults <- matrix(nrow = 50, ncol = 5, data = NA)
 for (q in 1:50){
   qtresults[q,] <- ahp.aggpref(cityahp, atts, method = "arithmetic", 
@@ -126,18 +81,18 @@ qtresults %>%
   theme_minimal()
 
 ## ------------------------------------------------------------------------
-mean <- city.df %>%
+mean <- city200 %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
   ahp.aggpref(atts, method = "arithmetic")
 
-sd <- city.df %>%
+sd <- city200 %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
   ahp.aggpref(atts, method = "arithmetic", aggmethod = "sd")
 
 t(data.frame(mean, sd))%>% kable()
 
 ## ------------------------------------------------------------------------
-city.df %>%
+city200 %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
   ahp.aggjudge(atts, aggmethod = "geometric")
 
@@ -149,18 +104,22 @@ colnames(RI) <- 1:15
 RI%>% kable()
 
 ## ------------------------------------------------------------------------
+weight <- c(5,-3,2,-5,
+            -7,-1,-7,
+            4,-3,
+            -7)
 sample_mat <- ahp.mat(t(weight), atts, negconvert = TRUE)
 
 cr_std <- ahp.cr(sample_mat, atts)
 cr_std
 
 ## ------------------------------------------------------------------------
-cr <- city.df %>%
+cr <- city200 %>%
   ahp.mat(atts, negconvert = T) %>% 
   ahp.cr(atts)
 table(cr <= 0.1)
 
-## ---- dpi = 300,fig.cap="\\label{fig:figs}Individual Priorities with respect to goal", fig.height=4, fig.width=7----
+## ----fig.cap="\\label{fig:figs}Individual priorities with respect to goal", fig.height=4, fig.width=7----
 thres <- 0.1
 dict <- c("cult" = "Culture", 
           "fam" = "Family", 
@@ -168,14 +127,14 @@ dict <- c("cult" = "Culture",
           "jobs" = "Jobs", 
           "trans" = "Transportation")
 
-cr.df <- city.df %>%
+cr.df <- city200 %>%
   ahp.mat(atts, negconvert = TRUE) %>% 
   ahp.cr(atts) %>% 
   data.frame() %>%
   mutate(rowid = 1:length(cr), cr.dum = as.factor(ifelse(cr <= thres, 1, 0))) %>%
   select(cr.dum, rowid)
 
-city.df %>%
+city200 %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
   ahp.indpref(atts, method = "eigen") %>% 
   mutate(rowid = 1:nrow(eigentrue)) %>%
@@ -193,7 +152,7 @@ city.df %>%
   scale_color_discrete(breaks = c(0,1), 
                        labels = c(paste("CR >", thres), 
                                   paste("CR <", thres))) +
-  labs(NULL, caption = paste("n =", nrow(city.df), ",", "Mean CR =",
+  labs(NULL, caption = paste("n =", nrow(city200), ",", "Mean CR =",
                            round(mean(cr),3)))+
   theme_minimal()
 
@@ -202,11 +161,11 @@ sample_mat
 
 ## ------------------------------------------------------------------------
 
-priority <- t(ahp.indpref(sample_mat, atts, method = "eigen"))
-priority
+preference <- t(ahp.indpref(sample_mat, atts, method = "eigen"))
+preference
 
 ## ------------------------------------------------------------------------
-S <- priority %*% t((priority)^-1)
+S <- preference %*% t((preference)^-1)
 S
 
 ## ------------------------------------------------------------------------
@@ -234,12 +193,12 @@ colnames(mat) <- rownames(mat) <- atts
 mat
 
 ## ------------------------------------------------------------------------
-city.df %>%
+city200 %>%
   ahp.mat(atts) %>%
   ahp.pwerror(atts) %>%
   head()
 
-## ----dpi = 300,fig.cap="\\label{fig:figs}Pairwise comparison and its frequency\n as the most, second-most, and third most inconsistent pairwise comparsion", fig.height=4, fig.width=7----
+## ----fig.cap="\\label{fig:figs}Pairwise comparison and its frequency\n as the most, second-most, and third most inconsistent pairwise comparsion", fig.height=4, fig.width=7----
 cityahp %>%
   ahp.pwerror(atts) %>% 
   gather(top1, top2, top3, key = "max", value = "pair") %>%
@@ -289,12 +248,12 @@ colnames(crmat) <- 0:10
 
 atts <- c("cult", "fam", "house", "jobs", "trans")
 
-crmat[,1] <- city.df %>%
+crmat[,1] <- city200 %>%
     ahp.mat(atts, negconvert = TRUE) %>%
     ahp.cr(atts)
 
 for (it in 1:10){
-  crmat[,it+1] <- city.df %>%
+  crmat[,it+1] <- city200 %>%
     ahp.mat(atts, negconvert = TRUE) %>%
     ahp.harker(atts, iterations = it, stopcr = 0.1, 
                limit = T, round = T, printiter = F) %>%
@@ -309,7 +268,7 @@ data.frame(table(crmat[,1] <= 0.1),
          "2 Iterations" = "Freq.1", "4 Iterations" = "Freq.2")
 
 
-## ----dpi = 300, fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Consistency Ratios under different number of iterations with Harker's method"----
+## ---- fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Consistency Ratios under different number of iterations with Harker's method"----
 crmat %>% 
   as.data.frame() %>%
   gather(key = "iter", value = "cr", `0`, 1,2,3,4,5,6,7,8,9,10,11) %>%
@@ -322,23 +281,23 @@ crmat %>%
   scale_y_continuous("Consistency Ratio") +
   theme_minimal()
 
-## ----dpi = 300, fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Individual priority weights with respect to goal (1 iteration)"----
+## ---- fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Individual preference weights with respect to goal (1 iteration)"----
 it <- 1
 thres <- 0.1
-cr.df1 <- data.frame(cr = city.df %>%
+cr.df1 <- data.frame(cr = city200 %>%
   ahp.mat(atts, negconvert = TRUE) %>%
   ahp.harker(atts, iterations = it, stopcr = 0.1, limit = T, round = T, printiter = F) %>%
   ahp.cr(atts))
 
 cr.df2 <- cr.df1 %>%
-  mutate(rowid = 1:nrow(city.df), cr.dum = as.factor(ifelse(. <= thres, 1, 0))) %>%
+  mutate(rowid = 1:nrow(city200), cr.dum = as.factor(ifelse(. <= thres, 1, 0))) %>%
   select(cr.dum, rowid)
 
-city.df %>%
+city200 %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
   ahp.harker(atts, iterations = it, stopcr = 0.1, limit = T, round = T, printiter = F) %>%
   ahp.indpref(atts, method = "eigen") %>% 
-  mutate(rowid = 1:nrow(city.df)) %>%
+  mutate(rowid = 1:nrow(city200)) %>%
   left_join(cr.df2, by = 'rowid') %>%
   gather(cult, fam, house, jobs, trans, key = "var", value = "pref") %>%
   ggplot(aes(x = var, y = pref)) + 
@@ -352,16 +311,16 @@ city.df %>%
   scale_color_discrete(breaks = c(0,1), 
                        labels = c(paste("CR >", thres), 
                                   paste("CR <", thres))) +
-  labs(NULL, caption =paste("n =",nrow(city.df), ",", "Mean CR =",round(mean(cr),3)))+
+  labs(NULL, caption =paste("n =",nrow(city200), ",", "Mean CR =",round(mean(cr),3)))+
   theme_minimal()
 
 ## ------------------------------------------------------------------------
 options(scipen = 99)
-inconsistent <- city.df %>%
+inconsistent <- city200 %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
   ahp.aggpref(atts, method = "eigen")
 
-consistent <- city.df %>%
+consistent <- city200 %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
   ahp.harker(atts, iterations = 5, stopcr = 0.1, limit = T, round = T, printiter = F) %>%
   ahp.aggpref(atts, method = "eigen")
@@ -375,7 +334,7 @@ aggpref.df <- data.frame(Attribute = atts, true,inconsistent,consistent) %>%
 aggpref.df
 
 ## ------------------------------------------------------------------------
-missing.df <- city.df[1:10,]
+missing.df <- city200[1:10,]
 for (i in 1:10){
   missing.df[i, round(runif(1,1,10))] <- NA
   if (i > 7){
@@ -390,7 +349,7 @@ imputed <- missing.df %>%
   ahp.mat(atts, negconvert = TRUE) %>%
   ahp.missing(atts, round = T, limit = T)
 
-actual <- city.df %>% 
+actual <- city200 %>% 
   ahp.mat(atts, negconvert = TRUE)
 
 list(actual[[5]],imputed[[5]])
@@ -406,10 +365,61 @@ list(actual[[8]],imputed[[8]])
 list(ahp.cr(actual, atts)[[8]],ahp.cr(imputed, atts)[[8]])
 
 ## ------------------------------------------------------------------------
-data(city1)
-city1[,1:8]
+canned <- ahp(df = city200, 
+              atts = c('cult', 'fam', 'house', 'jobs', 'trans'), 
+              negconvert = TRUE, 
+              reciprocal = TRUE,
+              method = 'arithmetic', 
+              aggmethod = "arithmetic", 
+              qt = 0.2,
+              censorcr = 0.1,
+              agg = TRUE)
+head(canned$indpref)
+
 
 ## ------------------------------------------------------------------------
-data(city200)
-head(city200)[,1:8]
+canned$aggpref
+
+## ------------------------------------------------------------------------
+## Defining attributes
+set.seed(42)
+atts <- c("cult", "fam", "house", "jobs", "trans")
+
+colnames <- c("cult_fam", "cult_house", "cult_jobs", "cult_trans",
+              "fam_house", "fam_jobs", "fam_trans",
+              "house_jobs", "house_trans",
+              "jobs_trans")
+
+## True weights derived from Saaty's example
+weight <- c(5,-3,2,-5,
+            -7,-1,-7,
+            4,-3,
+            -7)
+
+## Defining the saaty scale
+saatyscale <- c(-9:-2, 1:9)
+nobs <- 200
+
+## saatyprob creates a list of probabilities in the saaty scale for being sampled given
+## the position of the weight in the weight list (x) and standard deviation (sd)
+
+saatyprob <- function(x, sd) dnorm(saatyscale, mean = weight[x], sd = sd) 
+
+## Standard deviation set on saatyprob(x, *sd*)
+cult_fam <- sample(saatyscale, nobs, prob = saatyprob(1, 2), replace = TRUE)
+cult_house <- sample(saatyscale, nobs, prob = saatyprob(2, 1), replace = TRUE)
+cult_jobs <- sample(saatyscale, nobs, prob = saatyprob(3, 2), replace = TRUE)
+cult_trans <- sample(saatyscale, nobs, prob = saatyprob(4, 1.5), replace = TRUE)
+fam_house <- sample(saatyscale, nobs, prob = saatyprob(5, 2), replace = TRUE)
+fam_jobs <- sample(saatyscale, nobs, prob = saatyprob(6, 1.5), replace = TRUE)
+fam_trans <- sample(saatyscale, nobs, prob = saatyprob(7, 2.5), replace = TRUE)
+house_jobs <- sample(saatyscale, nobs, prob = saatyprob(8, 0.5), replace = TRUE)
+house_trans <- sample(saatyscale, nobs, prob = saatyprob(9, 0.5), replace = TRUE)
+jobs_trans <- sample(saatyscale, nobs, prob = saatyprob(10, 1), replace = TRUE)
+
+city200 <- data.frame(cult_fam, cult_house, cult_jobs, cult_trans,
+                      fam_house, fam_jobs, fam_trans,
+                      house_jobs, house_trans,
+                      jobs_trans)
+head(city200[,1:7])
 
