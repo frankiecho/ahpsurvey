@@ -14,10 +14,10 @@ ahp.indpref(ahpmat, atts, method = "geometric")
 \item{method}{if \code{method = "eigen"}, the individual priority weights are computed using the Dominant Eigenvalues method described in \insertCite{Saaty2003;textual}{ahpsurvey}. Otherwise, then the priorities are computed based on the averages of normalized values. Basically it normalizes the matrices so that all of the columns add up to 1, and then computes the averages of the row as the priority weights of each attribute. Three other modes of finding the averages are available:  \code{arithmetic}: the arithmetic mean; \code{geometric}: the geometric mean (the default); \code{rootmean}: the square root of the sum of the squared value.}
 }
 \value{
-A \code{data.frame} of the individual preferences of all the decision-makers.
+A \code{data.frame} of the individual priorities of all the decision-makers.
 }
 \description{
-\code{ahp.indpref} computes the individual preferences of the decision-makers, and returns a \code{data.frame} containing the preference weights of the decision-makers.
+\code{ahp.indpref} computes the individual priorities of the decision-makers, and returns a \code{data.frame} containing the priority weights of the decision-makers.
 }
 \examples{
 

@@ -10,8 +10,8 @@
 #' @param aggmethod how to aggregate the individual priorities. By default `aggmethod = method`. Apart from the methods offered in `method`, `aggmethod` also permits three other options: `tmean` computes the trimmed arithmetic mean, `tgmean` computes the trimmed geometric mean (both with quantiles trimmed based on `qt`), and `sd` computes the standard deviation from the arithmetic mean. If `method = "eigen"` and `aggmethod` is not specified, `aggmethod` defaults to `"geometric"`.
 #' @param qt specifies the quantile which the top **and** bottom priority weights are trimmed. Used only if `aggmethod = 'tmean'` or `aggmethod = 'tgmean'`. For example, `qt = 0.25` specifies that the aggregation is the arithmetic mean of the values from the 25 to 75 percentile. By default `qt = 0`.
 #'
-#' @return A `data.frame` of the aggregated preferences of all the decision-makers.
-#'@include ahp_mat.R
+#' @return A `data.frame` of the aggregated priorities of all the decision-makers.
+#' @include ahp_mat.R
 #'
 #'
 #' @examples

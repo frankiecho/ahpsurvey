@@ -13,7 +13,7 @@ ahp.aggjudge(ahpmat, atts, aggmethod = "geometric", qt = 0)
 
 \item{aggmethod}{The method of aggregating the judgments by all decision-makers. Five modes aggregation are available:  \code{arithmetic}: the arithmetic mean; \code{geometric}: the geometric mean (the default); \code{rootmean}: the square root of the sum of the squared value, \code{tmean}: the trimmed mean, \code{tgmean}: trimmed geometric mean. The quantiles trimmed are based on \code{qt}. It can also be set to \code{sd}, where it reports the standard deviation from the arithmetic mean.}
 
-\item{qt}{specifies the quantile which the top \strong{and} bottom priority weights are trimmed. Used only if \code{aggmethod = 'tmean'} or \code{aggmethod = 'tgmean'}. For example, \code{qt = 0.25} specifies that the aggregation is the arithmetic mean of the values from the 25 to 75 percentile. By default \code{qt = 0}.}
+\item{qt}{specifies the quantile which the top \strong{and} bottom preference weights are trimmed. Used only if \code{aggmethod = 'tmean'} or \code{aggmethod = 'tgmean'}. For example, \code{qt = 0.25} specifies that the aggregation is the arithmetic mean of the values from the 25 to 75 percentile. By default \code{qt = 0}.}
 }
 \value{
 A \code{data.frame} of the aggregated pairwise judgments of all the decision-makers.

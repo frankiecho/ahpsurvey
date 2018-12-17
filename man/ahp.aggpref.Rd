@@ -19,7 +19,7 @@ ahp.aggpref(ahpmat, atts, method = "geometric", aggmethod = method,
 \item{qt}{specifies the quantile which the top \strong{and} bottom priority weights are trimmed. Used only if \code{aggmethod = 'tmean'} or \code{aggmethod = 'tgmean'}. For example, \code{qt = 0.25} specifies that the aggregation is the arithmetic mean of the values from the 25 to 75 percentile. By default \code{qt = 0}.}
 }
 \value{
-A \code{data.frame} of the aggregated preferences of all the decision-makers.
+A \code{data.frame} of the aggregated priorities of all the decision-makers.
 }
 \description{
 Compute and aggregate individual priority weights from pairwise comparison matrices
