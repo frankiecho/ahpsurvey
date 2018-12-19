@@ -98,7 +98,7 @@ city200 %>%
 
 ## ----echo=FALSE----------------------------------------------------------
 rownum <- seq(1:15)
-RI <- t(data.frame(c(0,0,0.52,0.89,1.11,1.25,1.35,1.40,1.45,1.49, 1.52, 1.54, 1.56, 1.58, 1.59)))
+RI <- t(data.frame(c(0.0000000, 0.0000000, 0.5251686, 0.8836651, 1.1081014, 1.2492774, 1.3415514, 1.4048466, 1.4507197, 1.4857266, 1.5141022,1.5356638, 1.5545925, 1.5703498, 1.5839958)))
 rownames(RI) <- "RI"
 colnames(RI) <- 1:15
 RI%>% kable()
@@ -110,14 +110,20 @@ weight <- c(5,-3,2,-5,
             -7)
 sample_mat <- ahp.mat(t(weight), atts, negconvert = TRUE)
 
-cr_std <- ahp.cr(sample_mat, atts)
-cr_std
+(cr_std <- ahp.cr(sample_mat, atts))
 
 ## ------------------------------------------------------------------------
 cr <- city200 %>%
   ahp.mat(atts, negconvert = T) %>% 
   ahp.cr(atts)
 table(cr <= 0.1)
+
+## ------------------------------------------------------------------------
+## Generate a random index with 1000 simulations, 5 dimensions and seed 30000 for reproducibility (seed = 42 by default).
+(RI <- ahp.ri(nsims = 1000, dim = 5, seed = 30000))
+
+## Use this RI to calculate the consistency ratio instead of the default one.
+ahp.cr(sample_mat, atts, RI)
 
 ## ----fig.cap="\\label{fig:figs}Individual priorities with respect to goal", fig.height=4, fig.width=7----
 thres <- 0.1

@@ -23,5 +23,4 @@
 #'
 #' @format A `data.frame` with 200 row and 10 variables, which are pairwise comparisons of `atts`.
 #' @source \insertAllCited{}
-#'
 "city200"

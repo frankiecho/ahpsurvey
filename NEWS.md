@@ -1,3 +1,9 @@
+## ahpsurvey 0.3.1
+
+* Added `ahp.ri`, which allows users to self-generate random indices used to calculate the consistency ratio.
+
+* Replaced default values of RI in `ahp.cr` with values generated in `ahp.ri` with 500000 simulations.
+
 ## ahpsurvey 0.3.0
 
 * Added a new canned routine, `ahp`, which provides a detailed output using some of the best functions in `ahpsurvey`.
