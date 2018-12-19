@@ -14,14 +14,12 @@
 #' @param dim Number of dimensions of the matrix.
 #' @param seed The random number generator seed for reproducibility, which is same as `set.seed`. By default, `seed = 42`.
 #'
-#' @return The random index, which is numeric.
+#' @return The generated random index, which is numeric.
 #'
 #' @examples
 #'
 #' ahp.ri(nsims = 10000, dim = 5, seed = 42)
 #'
-#'@references
-#'\insertAllCited{}
 #'
 #'@export
 
