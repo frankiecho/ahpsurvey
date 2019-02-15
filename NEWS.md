@@ -1,3 +1,9 @@
+## ahpsurvey 0.4.0
+
+* Allows for an ID column/ columns for the `ahp` routine so that the output can preserve some column with an individual identifier(s).
+
+* Adds an `col` argument for `ahp` to specify the columns and its order of the pairwise comparison variables directly to `ahp`.
+
 ## ahpsurvey 0.3.1
 
 * Added `ahp.ri`, which allows users to self-generate random indices used to calculate the consistency ratio.
