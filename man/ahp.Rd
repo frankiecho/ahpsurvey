@@ -6,7 +6,8 @@
 \usage{
 ahp(df, atts, negconvert = FALSE, reciprocal = TRUE,
   method = "eigen", aggmethod = "geometric", qt = 0,
-  censorcr = Inf, agg = FALSE)
+  censorcr = Inf, agg = FALSE, ID = NULL, col = NULL,
+  suppress = "none")
 }
 \arguments{
 \item{df}{a dataframe, each row corresponding to one decision-maker, with columns ordered according to  \code{atts}.}
@@ -28,6 +29,12 @@ important than B by 6 units, set \code{negconvert = TRUE}.}
 \item{censorcr}{the threshold of censoring observations. All observations with a consistency ratio higher than the specified CR will be dropped from the routine. By default, \code{censorcr = Inf}, i.e. drops no observations.}
 
 \item{agg}{by default, \code{agg = FALSE}, which suppresses the output of Aggregated priorities. If \code{agg = TRUE}, the output will be a list where \code{$AggPref} contains the Aggregated priorities and Standard Deviations.}
+
+\item{ID}{the column name, or a vector of column names, of variables in \code{df}, which are used to indicate specific observations. For example, if a survey dataset comes with an identifier/ multiple identified for each observation, use this so that the output dataframe would contain this identifier.}
+
+\item{col}{a list of column names which contains the columns for the pairwise comparison matrix in chronological order, as specified in \code{atts}. For example, if \code{atts} is \code{c("A","B","C")}, then \code{col} would be \code{c("A_B","A_C","B_C")}, with \code{"A_B"} being a pairwise comparison of attribute A and B. \code{col = NULL} by default, indicating that the dataframe specified already contained the pairwise comparisons in correct order and nothing else except of what is inside \code{ID}.}
+
+\item{suppress}{Suppresses the supplementary indices. Can take the values of "all" (suppresses all indices), "pwerror" (suppresses pwerror), or "cr" (suppresses consistency ratio).}
 }
 \value{
 If \code{agg = TRUE}, returns a list of the results with two elements, \code{indpref} and \code{aggpref}. \code{$indpref} contains individual preference weight (same as \code{ahp.indpref}), consistency ratios, and the top three most inconsistent pairwise comparisons (same as \code{ahp.pwerror}). \code{$aggpref} contains the Aggregated Priorities and Standard Deviations. Otherwise (i.e. default setting), outputs a \code{data.frame} with only \code{$indpref}.
