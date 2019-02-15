@@ -14,7 +14,7 @@ ahp.ri(nsims, dim, seed = 42)
 \item{seed}{The random number generator seed for reproducibility, which is same as \code{set.seed}. By default, \code{seed = 42}.}
 }
 \value{
-The random index, which is numeric.
+The generated random index, which is numeric.
 }
 \description{
 The \code{ahp.ri} function calculates the mean consistency indices of a specific numbers of random number pairwise comparison matrices.
