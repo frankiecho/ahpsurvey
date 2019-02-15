@@ -387,6 +387,59 @@ head(canned$indpref)
 canned$aggpref
 
 ## ------------------------------------------------------------------------
+library(randomNames)
+
+edl <- c("No High School", "High School", "Undergraduate", "Postgraduate")
+
+edunames <- tibble(edu = factor(rep(edl,50)),
+                  names = randomNames(200, which.names = "first"),
+                  catowner = c(rep(TRUE,100), rep(FALSE,100)))
+
+citynames <- cbind(edunames, city200)
+head(citynames)
+
+## ---- error = TRUE-------------------------------------------------------
+named <- ahp(df = citynames, 
+              atts = c('cult', 'fam', 'house', 'jobs', 'trans'), 
+              negconvert = TRUE, 
+              reciprocal = TRUE,
+              method = 'arithmetic', 
+              aggmethod = "arithmetic", 
+              qt = 0.2,
+             censorcr = 0.1,
+             agg = FALSE, 
+             ID = c("edu", "names")
+             )
+
+head(named)
+
+## ------------------------------------------------------------------------
+columns <- c("cult_fam", "cult_house", "cult_jobs", "cult_trans",
+           "fam_house", "fam_jobs", "fam_trans",
+           "house_jobs", "house_trans",
+           "jobs_trans")
+
+named <- ahp(df = citynames, 
+             atts = c('cult', 'fam', 'house', 'jobs', 'trans'), 
+             negconvert = TRUE, 
+             reciprocal = TRUE,
+             method = 'arithmetic', 
+             aggmethod = "arithmetic",
+             qt = 0.2,
+             censorcr = 0.1,
+             agg = FALSE, 
+             ID = c("edu", "names"),
+             col = columns
+             )
+
+head(named)
+
+## ------------------------------------------------------------------------
+named %>%
+  group_by(edu) %>%
+  dplyr::summarize(Mean = mean(cult, na.rm=TRUE))
+
+## ------------------------------------------------------------------------
 ## Defining attributes
 set.seed(42)
 atts <- c("cult", "fam", "house", "jobs", "trans")

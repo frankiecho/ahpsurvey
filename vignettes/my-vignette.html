@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2018-12-19" />
+<meta name="date" content="2019-02-16" />
 
 <title>Analytic Hierarchy Process for Survey Data in R</title>
 
@@ -276,12 +276,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 <h1 class="title toc-ignore">Analytic Hierarchy Process for Survey Data in <code>R</code></h1>
-<h3 class="subtitle"><em>Vignettes for the <code>ahpsurvey</code> package (ver 0.3.0)</em></h3>
+<h3 class="subtitle"><em>Vignettes for the <code>ahpsurvey</code> package (ver 0.4.0)</em></h3>
 <h4 class="author"><em>Frankie Cho</em></h4>
 <address class="author_afil">
 Department of Geography, The University of Hong Kong, Pokfulam Road, Hong Kong<br><a class="author_email" href="mailto:#"><a href="mailto:htcho@connect.hku.hk">htcho@connect.hku.hk</a></a>
 </address>
-<h4 class="date"><em>19 December 2018</em></h4>
+<h4 class="date"><em>16 February 2019</em></h4>
 
 
 
@@ -638,6 +638,7 @@ Department of Geography, The University of Hong Kong, Pokfulam Road, Hong Kong<b
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co">## Use this RI to calculate the consistency ratio instead of the default one.</span></a>
 <a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw">ahp.cr</span>(sample_mat, atts, RI)</a></code></pre></div>
 <pre><code>## [1] 0.0502</code></pre>
+<p>The processing time of <code>ahp.ri</code> increases exponentially as <code>nsims</code> increase, and unfortunately I haven’t written it to optimise for speed. Generally I wouldn’t go beyond 6 digits of <code>nsims</code> unless I have too much time lying around.</p>
 </div>
 <div id="visualising-individual-priorities-and-consistency-ratios" class="section level2">
 <h2>Visualising individual priorities and consistency ratios</h2>
@@ -1267,54 +1268,139 @@ Department of Geography, The University of Hong Kong, Pokfulam Road, Hong Kong<b
 ## house  0.0757    0.00768
 ## jobs   0.2820    0.04593
 ## trans  0.0412    0.00559</code></pre>
-<p>You can also quickly censor inconsistent observations and estimate the aggregated preference weight of the population, and its standard deviation. The unique command here in this canned routine is <code>censorcr</code>, where you may specify the consistency ratio censoring threshold, which allows you to remove observations a higher consistency ratio than you specified. Usually, researchers censor observations with a CR higher than 0.1. But sometimes it is different depending on your discipline.</p>
-<p>Note: specifying <code>qt</code> only affects <code>aggpref</code> calculation, and does not censor the observations in <code>$indpref</code>.</p>
+<p>You can also quickly censor inconsistent observations and estimate the aggregated preference weight of the population, and its standard deviation. The unique command here in this canned routine is <code>censorcr</code>, where you may specify the consistency ratio censoring threshold, which allows you to remove observations a higher consistency ratio than you specified. Usually, researchers censor observations with a CR higher than 0.1. But sometimes it is different depending on your discipline. Note that specifying <code>qt</code> only affects <code>aggpref</code> calculation, and does not censor the observations in <code>$indpref</code>.</p>
+<p>For many researchers, it would be useful if an ID identifier was included in the input dataframe, so that one can directly join the output to the existing dataset for further analysis. For example, here in this case the data in <code>city200</code> was coded with the name of an individual and their educational attainment. By specifying <code>ID</code>, I can retain a column or many columns containing an inidviduals’ characteristics, and extract their preferences by educational attainment.</p>
+<p>To add a bit of flavour to this example, I am going to use a package called <code>randomNames</code> that can be installed from CRAN by <span class="citation">Betebenner (2017)</span>.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw">library</span>(randomNames)</a>
+<a class="sourceLine" id="cb68-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb68-3" data-line-number="3">edl &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;No High School&quot;</span>, <span class="st">&quot;High School&quot;</span>, <span class="st">&quot;Undergraduate&quot;</span>, <span class="st">&quot;Postgraduate&quot;</span>)</a>
+<a class="sourceLine" id="cb68-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb68-5" data-line-number="5">edunames &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">edu =</span> <span class="kw">factor</span>(<span class="kw">rep</span>(edl,<span class="dv">50</span>)),</a>
+<a class="sourceLine" id="cb68-6" data-line-number="6">                  <span class="dt">names =</span> <span class="kw">randomNames</span>(<span class="dv">200</span>, <span class="dt">which.names =</span> <span class="st">&quot;first&quot;</span>),</a>
+<a class="sourceLine" id="cb68-7" data-line-number="7">                  <span class="dt">catowner =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="ot">TRUE</span>,<span class="dv">100</span>), <span class="kw">rep</span>(<span class="ot">FALSE</span>,<span class="dv">100</span>)))</a>
+<a class="sourceLine" id="cb68-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb68-9" data-line-number="9">citynames &lt;-<span class="st"> </span><span class="kw">cbind</span>(edunames, city200)</a>
+<a class="sourceLine" id="cb68-10" data-line-number="10"><span class="kw">head</span>(citynames)</a></code></pre></div>
+<pre><code>##              edu   names catowner cult_fam cult_house cult_jobs cult_trans
+## 1 No High School Adhraaa     TRUE        2         -2         2         -6
+## 2    High School Heather     TRUE        2         -4         1         -4
+## 3  Undergraduate Ghaidaa     TRUE        4         -2         1         -3
+## 4   Postgraduate  Heaven     TRUE        8         -4         3         -4
+## 5 No High School  Alivia     TRUE        3         -3         5         -6
+## 6    High School Felicia     TRUE        6         -4         2         -4
+##   fam_house fam_jobs fam_trans house_jobs house_trans jobs_trans
+## 1        -4       -4        -8          4          -3         -8
+## 2        -4       -2        -8          4          -3         -7
+## 3        -7       -3        -5          4          -3         -6
+## 4        -8        1        -7          4          -3         -9
+## 5        -8        1        -4          4          -3         -6
+## 6        -7       -2        -4          4          -3         -6</code></pre>
+<p>Here we have created a fictitious sample of the population with their pairwise comparisons of which city to live in. We can specify which columns to keep. We can also specify how the pairwise comparisons were ordered directly to the AHP routine so that it saves you a step from extracting the columns you need in the order you want.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1">named &lt;-<span class="st"> </span><span class="kw">ahp</span>(<span class="dt">df =</span> citynames, </a>
+<a class="sourceLine" id="cb70-2" data-line-number="2">              <span class="dt">atts =</span> <span class="kw">c</span>(<span class="st">'cult'</span>, <span class="st">'fam'</span>, <span class="st">'house'</span>, <span class="st">'jobs'</span>, <span class="st">'trans'</span>), </a>
+<a class="sourceLine" id="cb70-3" data-line-number="3">              <span class="dt">negconvert =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb70-4" data-line-number="4">              <span class="dt">reciprocal =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb70-5" data-line-number="5">              <span class="dt">method =</span> <span class="st">'arithmetic'</span>, </a>
+<a class="sourceLine" id="cb70-6" data-line-number="6">              <span class="dt">aggmethod =</span> <span class="st">&quot;arithmetic&quot;</span>, </a>
+<a class="sourceLine" id="cb70-7" data-line-number="7">              <span class="dt">qt =</span> <span class="fl">0.2</span>,</a>
+<a class="sourceLine" id="cb70-8" data-line-number="8">             <span class="dt">censorcr =</span> <span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb70-9" data-line-number="9">             <span class="dt">agg =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb70-10" data-line-number="10">             <span class="dt">ID =</span> <span class="kw">c</span>(<span class="st">&quot;edu&quot;</span>, <span class="st">&quot;names&quot;</span>)</a>
+<a class="sourceLine" id="cb70-11" data-line-number="11">             )</a></code></pre></div>
+<pre><code>## Error in ahp(df = citynames, atts = c(&quot;cult&quot;, &quot;fam&quot;, &quot;house&quot;, &quot;jobs&quot;, : Non numeric elements in data frame supplied! Is there an ID column in there?</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="kw">head</span>(named)</a></code></pre></div>
+<pre><code>## Error in head(named): object 'named' not found</code></pre>
+<p>Oops! There seems to be an irrelevant <code>catowner</code> column (that I’ve added) that you just want the routine to ignore. Fortunately, we could avoid this error by directly specifying the names and order of the columns that contain the pairwise comparisons using the <code>col</code> argument. The <code>col</code> argument also reorders your data.frame so that you don’t have to do it manually if you want.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1">columns &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;cult_fam&quot;</span>, <span class="st">&quot;cult_house&quot;</span>, <span class="st">&quot;cult_jobs&quot;</span>, <span class="st">&quot;cult_trans&quot;</span>,</a>
+<a class="sourceLine" id="cb74-2" data-line-number="2">           <span class="st">&quot;fam_house&quot;</span>, <span class="st">&quot;fam_jobs&quot;</span>, <span class="st">&quot;fam_trans&quot;</span>,</a>
+<a class="sourceLine" id="cb74-3" data-line-number="3">           <span class="st">&quot;house_jobs&quot;</span>, <span class="st">&quot;house_trans&quot;</span>,</a>
+<a class="sourceLine" id="cb74-4" data-line-number="4">           <span class="st">&quot;jobs_trans&quot;</span>)</a>
+<a class="sourceLine" id="cb74-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb74-6" data-line-number="6">named &lt;-<span class="st"> </span><span class="kw">ahp</span>(<span class="dt">df =</span> citynames, </a>
+<a class="sourceLine" id="cb74-7" data-line-number="7">             <span class="dt">atts =</span> <span class="kw">c</span>(<span class="st">'cult'</span>, <span class="st">'fam'</span>, <span class="st">'house'</span>, <span class="st">'jobs'</span>, <span class="st">'trans'</span>), </a>
+<a class="sourceLine" id="cb74-8" data-line-number="8">             <span class="dt">negconvert =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb74-9" data-line-number="9">             <span class="dt">reciprocal =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb74-10" data-line-number="10">             <span class="dt">method =</span> <span class="st">'arithmetic'</span>, </a>
+<a class="sourceLine" id="cb74-11" data-line-number="11">             <span class="dt">aggmethod =</span> <span class="st">&quot;arithmetic&quot;</span>,</a>
+<a class="sourceLine" id="cb74-12" data-line-number="12">             <span class="dt">qt =</span> <span class="fl">0.2</span>,</a>
+<a class="sourceLine" id="cb74-13" data-line-number="13">             <span class="dt">censorcr =</span> <span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb74-14" data-line-number="14">             <span class="dt">agg =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb74-15" data-line-number="15">             <span class="dt">ID =</span> <span class="kw">c</span>(<span class="st">&quot;edu&quot;</span>, <span class="st">&quot;names&quot;</span>),</a>
+<a class="sourceLine" id="cb74-16" data-line-number="16">             <span class="dt">col =</span> columns</a>
+<a class="sourceLine" id="cb74-17" data-line-number="17">             )</a></code></pre></div>
+<pre><code>## [1] &quot;Number of observations censored = 70&quot;</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">head</span>(named)</a></code></pre></div>
+<pre><code>##              edu   names  cult   fam  house  jobs  trans     CR       top1
+## 1 No High School Adhraaa 0.181 0.433 0.0904 0.260 0.0355 0.0614   fam_jobs
+## 2    High School Heather 0.227 0.394 0.0846 0.253 0.0418 0.0297 cult_house
+## 3  Undergraduate Ghaidaa 0.153 0.485 0.0860 0.223 0.0524 0.0634  fam_trans
+## 4   Postgraduate  Heaven 0.131 0.436 0.0695 0.327 0.0364 0.0932   cult_fam
+## 5   Postgraduate Jessica 0.152 0.489 0.0644 0.255 0.0391 0.0617  cult_jobs
+## 6 No High School  Shelby 0.164 0.423 0.0785 0.293 0.0421 0.0383  fam_trans
+##         top2       top3
+## 1  fam_trans  cult_jobs
+## 2  fam_trans  cult_jobs
+## 3 cult_trans   fam_jobs
+## 4  cult_jobs cult_house
+## 5 cult_house   cult_fam
+## 6 cult_house  cult_jobs</code></pre>
+<p>That way, it would only be fitting to show you how to summarize the mean of the priority weights of <code>cult</code> across groups.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1">named <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb78-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(edu) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb78-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarize</span>(<span class="dt">Mean =</span> <span class="kw">mean</span>(cult, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 4 x 2
+##   edu             Mean
+##   &lt;fct&gt;          &lt;dbl&gt;
+## 1 High School    0.163
+## 2 No High School 0.158
+## 3 Postgraduate   0.153
+## 4 Undergraduate  0.160</code></pre>
 
 </div>
 <div id="appendix-i-data-generation-process" class="section level1">
 <h1>Appendix I: data generation process</h1>
 <p>The dataset <code>city200</code> is generated based on Saaty’s example of choosing a city to live in described in <span class="citation">Saaty (2004)</span>. I recreated Saaty’s example of criteria weights by simulating 200 decision-makers who make their choices based on the underlying true weights. The dataset is generated using a normal random sample from the Saaty scale with the mean set as the true weight and the standard deviation set manually. With a higher standard deviation, it is expected that the pairwise comparison will be less consistent. The methods employed later will reveal which pairwise comparison is less consistent than others.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="co">## Defining attributes</span></a>
-<a class="sourceLine" id="cb68-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb68-3" data-line-number="3">atts &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;cult&quot;</span>, <span class="st">&quot;fam&quot;</span>, <span class="st">&quot;house&quot;</span>, <span class="st">&quot;jobs&quot;</span>, <span class="st">&quot;trans&quot;</span>)</a>
-<a class="sourceLine" id="cb68-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb68-5" data-line-number="5">colnames &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;cult_fam&quot;</span>, <span class="st">&quot;cult_house&quot;</span>, <span class="st">&quot;cult_jobs&quot;</span>, <span class="st">&quot;cult_trans&quot;</span>,</a>
-<a class="sourceLine" id="cb68-6" data-line-number="6">              <span class="st">&quot;fam_house&quot;</span>, <span class="st">&quot;fam_jobs&quot;</span>, <span class="st">&quot;fam_trans&quot;</span>,</a>
-<a class="sourceLine" id="cb68-7" data-line-number="7">              <span class="st">&quot;house_jobs&quot;</span>, <span class="st">&quot;house_trans&quot;</span>,</a>
-<a class="sourceLine" id="cb68-8" data-line-number="8">              <span class="st">&quot;jobs_trans&quot;</span>)</a>
-<a class="sourceLine" id="cb68-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb68-10" data-line-number="10"><span class="co">## True weights derived from Saaty's example</span></a>
-<a class="sourceLine" id="cb68-11" data-line-number="11">weight &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>,<span class="op">-</span><span class="dv">3</span>,<span class="dv">2</span>,<span class="op">-</span><span class="dv">5</span>,</a>
-<a class="sourceLine" id="cb68-12" data-line-number="12">            <span class="dv">-7</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">7</span>,</a>
-<a class="sourceLine" id="cb68-13" data-line-number="13">            <span class="dv">4</span>,<span class="op">-</span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb68-14" data-line-number="14">            <span class="dv">-7</span>)</a>
-<a class="sourceLine" id="cb68-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb68-16" data-line-number="16"><span class="co">## Defining the saaty scale</span></a>
-<a class="sourceLine" id="cb68-17" data-line-number="17">saatyscale &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">9</span><span class="op">:-</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>)</a>
-<a class="sourceLine" id="cb68-18" data-line-number="18">nobs &lt;-<span class="st"> </span><span class="dv">200</span></a>
-<a class="sourceLine" id="cb68-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb68-20" data-line-number="20"><span class="co">## saatyprob creates a list of probabilities in the saaty scale for being sampled given</span></a>
-<a class="sourceLine" id="cb68-21" data-line-number="21"><span class="co">## the position of the weight in the weight list (x) and standard deviation (sd)</span></a>
-<a class="sourceLine" id="cb68-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb68-23" data-line-number="23">saatyprob &lt;-<span class="st"> </span><span class="cf">function</span>(x, sd) <span class="kw">dnorm</span>(saatyscale, <span class="dt">mean =</span> weight[x], <span class="dt">sd =</span> sd) </a>
-<a class="sourceLine" id="cb68-24" data-line-number="24"></a>
-<a class="sourceLine" id="cb68-25" data-line-number="25"><span class="co">## Standard deviation set on saatyprob(x, *sd*)</span></a>
-<a class="sourceLine" id="cb68-26" data-line-number="26">cult_fam &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb68-27" data-line-number="27">cult_house &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb68-28" data-line-number="28">cult_jobs &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">3</span>, <span class="dv">2</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb68-29" data-line-number="29">cult_trans &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">4</span>, <span class="fl">1.5</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb68-30" data-line-number="30">fam_house &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb68-31" data-line-number="31">fam_jobs &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">6</span>, <span class="fl">1.5</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb68-32" data-line-number="32">fam_trans &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">7</span>, <span class="fl">2.5</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb68-33" data-line-number="33">house_jobs &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">8</span>, <span class="fl">0.5</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb68-34" data-line-number="34">house_trans &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">9</span>, <span class="fl">0.5</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb68-35" data-line-number="35">jobs_trans &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">10</span>, <span class="dv">1</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb68-36" data-line-number="36"></a>
-<a class="sourceLine" id="cb68-37" data-line-number="37">city200 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(cult_fam, cult_house, cult_jobs, cult_trans,</a>
-<a class="sourceLine" id="cb68-38" data-line-number="38">                      fam_house, fam_jobs, fam_trans,</a>
-<a class="sourceLine" id="cb68-39" data-line-number="39">                      house_jobs, house_trans,</a>
-<a class="sourceLine" id="cb68-40" data-line-number="40">                      jobs_trans)</a>
-<a class="sourceLine" id="cb68-41" data-line-number="41"><span class="kw">head</span>(city200[,<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="co">## Defining attributes</span></a>
+<a class="sourceLine" id="cb80-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb80-3" data-line-number="3">atts &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;cult&quot;</span>, <span class="st">&quot;fam&quot;</span>, <span class="st">&quot;house&quot;</span>, <span class="st">&quot;jobs&quot;</span>, <span class="st">&quot;trans&quot;</span>)</a>
+<a class="sourceLine" id="cb80-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb80-5" data-line-number="5">colnames &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;cult_fam&quot;</span>, <span class="st">&quot;cult_house&quot;</span>, <span class="st">&quot;cult_jobs&quot;</span>, <span class="st">&quot;cult_trans&quot;</span>,</a>
+<a class="sourceLine" id="cb80-6" data-line-number="6">              <span class="st">&quot;fam_house&quot;</span>, <span class="st">&quot;fam_jobs&quot;</span>, <span class="st">&quot;fam_trans&quot;</span>,</a>
+<a class="sourceLine" id="cb80-7" data-line-number="7">              <span class="st">&quot;house_jobs&quot;</span>, <span class="st">&quot;house_trans&quot;</span>,</a>
+<a class="sourceLine" id="cb80-8" data-line-number="8">              <span class="st">&quot;jobs_trans&quot;</span>)</a>
+<a class="sourceLine" id="cb80-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb80-10" data-line-number="10"><span class="co">## True weights derived from Saaty's example</span></a>
+<a class="sourceLine" id="cb80-11" data-line-number="11">weight &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>,<span class="op">-</span><span class="dv">3</span>,<span class="dv">2</span>,<span class="op">-</span><span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb80-12" data-line-number="12">            <span class="dv">-7</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">7</span>,</a>
+<a class="sourceLine" id="cb80-13" data-line-number="13">            <span class="dv">4</span>,<span class="op">-</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb80-14" data-line-number="14">            <span class="dv">-7</span>)</a>
+<a class="sourceLine" id="cb80-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb80-16" data-line-number="16"><span class="co">## Defining the saaty scale</span></a>
+<a class="sourceLine" id="cb80-17" data-line-number="17">saatyscale &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">9</span><span class="op">:-</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>)</a>
+<a class="sourceLine" id="cb80-18" data-line-number="18">nobs &lt;-<span class="st"> </span><span class="dv">200</span></a>
+<a class="sourceLine" id="cb80-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb80-20" data-line-number="20"><span class="co">## saatyprob creates a list of probabilities in the saaty scale for being sampled given</span></a>
+<a class="sourceLine" id="cb80-21" data-line-number="21"><span class="co">## the position of the weight in the weight list (x) and standard deviation (sd)</span></a>
+<a class="sourceLine" id="cb80-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb80-23" data-line-number="23">saatyprob &lt;-<span class="st"> </span><span class="cf">function</span>(x, sd) <span class="kw">dnorm</span>(saatyscale, <span class="dt">mean =</span> weight[x], <span class="dt">sd =</span> sd) </a>
+<a class="sourceLine" id="cb80-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb80-25" data-line-number="25"><span class="co">## Standard deviation set on saatyprob(x, *sd*)</span></a>
+<a class="sourceLine" id="cb80-26" data-line-number="26">cult_fam &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb80-27" data-line-number="27">cult_house &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb80-28" data-line-number="28">cult_jobs &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">3</span>, <span class="dv">2</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb80-29" data-line-number="29">cult_trans &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">4</span>, <span class="fl">1.5</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb80-30" data-line-number="30">fam_house &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb80-31" data-line-number="31">fam_jobs &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">6</span>, <span class="fl">1.5</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb80-32" data-line-number="32">fam_trans &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">7</span>, <span class="fl">2.5</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb80-33" data-line-number="33">house_jobs &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">8</span>, <span class="fl">0.5</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb80-34" data-line-number="34">house_trans &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">9</span>, <span class="fl">0.5</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb80-35" data-line-number="35">jobs_trans &lt;-<span class="st"> </span><span class="kw">sample</span>(saatyscale, nobs, <span class="dt">prob =</span> <span class="kw">saatyprob</span>(<span class="dv">10</span>, <span class="dv">1</span>), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb80-36" data-line-number="36"></a>
+<a class="sourceLine" id="cb80-37" data-line-number="37">city200 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(cult_fam, cult_house, cult_jobs, cult_trans,</a>
+<a class="sourceLine" id="cb80-38" data-line-number="38">                      fam_house, fam_jobs, fam_trans,</a>
+<a class="sourceLine" id="cb80-39" data-line-number="39">                      house_jobs, house_trans,</a>
+<a class="sourceLine" id="cb80-40" data-line-number="40">                      jobs_trans)</a>
+<a class="sourceLine" id="cb80-41" data-line-number="41"><span class="kw">head</span>(city200[,<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>])</a></code></pre></div>
 <pre><code>##   cult_fam cult_house cult_jobs cult_trans fam_house fam_jobs fam_trans
 ## 1        2         -2         2         -6        -4       -4        -8
 ## 2        2         -4         1         -4        -4       -2        -8
@@ -1328,6 +1414,9 @@ Department of Geography, The University of Hong Kong, Pokfulam Road, Hong Kong<b
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 <div id="refs" class="references">
+<div id="ref-Betebenner2017">
+<p>Betebenner, Damian W. 2017. <em>randomNames: Function for Generating Random Names and a Dataset</em>. <a href="https://cran.r-project.org/package=randomNames" class="uri">https://cran.r-project.org/package=randomNames</a>.</p>
+</div>
 <div id="ref-Dargahi2016">
 <p>Dargahi, Daryanaz. 2016. <em>Prize: Prize: An R Package for Prioritization Estimation Based on Analytic Hierarchy Process</em>.</p>
 </div>
