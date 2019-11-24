@@ -1,5 +1,5 @@
 ## Test environments
-* macOS High Sierra 10.13.6 with R 3.5.1 (local system)
+* macOS Mojave 10.14.6 with R 3.6.1 (local system)
 * Ubuntu 12.04 (on travis-ci), R-oldrel, R-release, R-devel
 * win-builder (devel and release)
 

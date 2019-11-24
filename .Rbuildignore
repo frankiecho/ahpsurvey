@@ -13,3 +13,4 @@ my-vignette.pdf
 ^NEWS\.md$ 
 ^figure$
 ^revdep$
+^CRAN-RELEASE$

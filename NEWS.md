@@ -1,3 +1,7 @@
+## ahpsurvey 0.4.1
+
+* Removes `tidyverse` in SUGGESTS to improve installation speed.
+
 ## ahpsurvey 0.4.0
 
 * Allows for an ID column/ columns for the `ahp` routine so that the output can preserve some column with an individual identifier(s).
