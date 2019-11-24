@@ -78,7 +78,7 @@ ahp <- function (df, atts, negconvert = FALSE, reciprocal = TRUE, method = "eige
   for (i in 1:nrow(df)){
     for (j in 1:ncol(df)){
       if (is.numeric(df[i,j]) == FALSE) {
-        stop("Non numeric elements in data frame supplied! Is there an ID column in there?")
+        stop(paste("Non numeric element(s) in", names(df)[i], " column. Missing or miscoded data?"))
       } else if (df[i,j] > 9 | df[i,j] < -9){
         stop("There is something larger than 9 or smaller than -9 in your dataset. Miscoded?")
       }
@@ -101,7 +101,7 @@ ahp <- function (df, atts, negconvert = FALSE, reciprocal = TRUE, method = "eige
   # Make a list of only the non-censored people ID
   
     if (is.null(ID)==FALSE) {
-      if (ncol(ID_saved) > 1){
+      if (length(ID) > 1){
         cID <- ID_saved[censorlist,]
       } else {
     cID <- ID_saved[censorlist]
