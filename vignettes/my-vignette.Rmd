@@ -449,7 +449,7 @@ The results are favorable -- the frequency which a pairwise comparison is the mo
 
 ## Transforming inconsistent matrices
 
-Inconsistent pairwise matrices are problematic for AHP survey analysts. @Harker1987 described a method to replace inconsistent values: using the error matrix we have derived above, we can suggest a value that would reduce the inconsistency. Consider the below pairwise matrix found in Saaty's explication of Harker's method:
+Inconsistent pairwise matrices are problematic for AHP survey analysts. @Saaty2003 described a method to replace inconsistent values: using the maximum deviation method. With the error matrix we have derived above, we can suggest a value that would reduce the inconsistency. Consider the below pairwise matrix:
 
 ```{r}
 family <- c(1,1/5,1/3,1/7,1/6,1/6,3,4,
@@ -480,7 +480,7 @@ The consistency ratio of the pairwise matrix is unsatisfactory. The procedure in
 3. Compute new weights $w_i$ and $w_j$ (as in `ahp.indpref` with `method = "eigen"`)
 4. Replace the pairwise comparison with $\frac{w_i}{w_j}$ and $\frac{w_j}{w_i}$
 
-For an in-depth explication see @Saaty2003. Here I replicate the results in @Saaty2003 with the `ahp.md` function.
+Here I replicate the results in @Saaty2003 with the `ahp.md` function.
 
 ```{r}
 edited <- ahp.md(fam.mat, atts, iterations = 10, stopcr = 0.1)
@@ -533,7 +533,7 @@ data.frame(table(crmat[,1] <= 0.1),
 
 While using the maximum deviation method cannot completely lower the CR of all decision-makers to desired levels, it allows researchers to keep a lot more observations; whereas we would have to truncate `r table(crmat[,1] <= 0.1)[1]` samples, now we only have to censor `r table(crmat[,2] <= 0.1)[1]` samples with 1 iteration.
 
-```{r, fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Consistency Ratios under different number of iterations with Harker's method"}
+```{r, fig.height=4, fig.width=7, fig.cap="\\label{fig:figs}Consistency Ratios under different number of iterations with the maximum deviation method"}
 crmat %>% 
   as.data.frame() %>%
   gather(key = "iter", value = "cr", `0`, 1,2,3,4,5,6,7,8,9,10,11) %>%
@@ -581,7 +581,7 @@ city200 %>%
   theme_minimal()
 ```
 
-Let's take a look at how applying Harker's method affects the overall aggregated priorities of the population.
+Let's take a look at how applying maximum deviation method affects the overall aggregated priorities of the population.
 
 ```{r}
 options(scipen = 99)

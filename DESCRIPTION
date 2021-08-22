@@ -19,7 +19,8 @@ Imports:
     randomNames
 Suggests:
     ggplot2, 
-    scales
+    scales,
+    rmarkdown
 RdMacros: 
     Rdpack
 Collate:

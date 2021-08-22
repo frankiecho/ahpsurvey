@@ -244,7 +244,7 @@ fam.mat[[1]] %>% kable()
 ahp.cr(fam.mat, atts)
 
 ## ------------------------------------------------------------------------
-edited <- ahp.harker(fam.mat, atts, iterations = 10, stopcr = 0.1)
+edited <- ahp.md(fam.mat, atts, iterations = 10, stopcr = 0.1)
 edited[[1]]%>% kable() 
 ahp.cr(edited, atts)
 
@@ -261,7 +261,7 @@ crmat[,1] <- city200 %>%
 for (it in 1:10){
   crmat[,it+1] <- city200 %>%
     ahp.mat(atts, negconvert = TRUE) %>%
-    ahp.harker(atts, iterations = it, stopcr = 0.1, 
+    ahp.md(atts, iterations = it, stopcr = 0.1, 
                limit = T, round = T, printiter = F) %>%
     ahp.cr(atts)
 }
@@ -292,7 +292,7 @@ it <- 1
 thres <- 0.1
 cr.df1 <- data.frame(cr = city200 %>%
   ahp.mat(atts, negconvert = TRUE) %>%
-  ahp.harker(atts, iterations = it, stopcr = 0.1, limit = T, round = T, printiter = F) %>%
+  ahp.md(atts, iterations = it, stopcr = 0.1, limit = T, round = T, printiter = F) %>%
   ahp.cr(atts))
 
 cr.df2 <- cr.df1 %>%
@@ -301,7 +301,7 @@ cr.df2 <- cr.df1 %>%
 
 city200 %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
-  ahp.harker(atts, iterations = it, stopcr = 0.1, limit = T, round = T, printiter = F) %>%
+  ahp.md(atts, iterations = it, stopcr = 0.1, limit = T, round = T, printiter = F) %>%
   ahp.indpref(atts, method = "eigen") %>% 
   mutate(rowid = 1:nrow(city200)) %>%
   left_join(cr.df2, by = 'rowid') %>%
@@ -328,7 +328,7 @@ inconsistent <- city200 %>%
 
 consistent <- city200 %>%
   ahp.mat(atts = atts, negconvert = TRUE) %>% 
-  ahp.harker(atts, iterations = 5, stopcr = 0.1, limit = T, round = T, printiter = F) %>%
+  ahp.md(atts, iterations = 5, stopcr = 0.1, limit = T, round = T, printiter = F) %>%
   ahp.aggpref(atts, method = "eigen")
 
 true <- t(ahp.indpref(sample_mat, atts, method = "eigen"))

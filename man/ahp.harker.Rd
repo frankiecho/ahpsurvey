@@ -42,7 +42,7 @@ atts <- c('cult', 'fam', 'house', 'jobs', 'trans')
 data(city200)
 
 cityahp <- ahp.mat(city200, atts, negconvert = TRUE)
-ahp.harker(cityahp, atts)
+ahp.md(cityahp, atts)
 
 }
 \references{

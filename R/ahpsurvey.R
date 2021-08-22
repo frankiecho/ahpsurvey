@@ -4,7 +4,7 @@
 #'
 #' @docType package
 #'
-#' @author Frankie Cho \email{htcho@connnect.hku.hk}
+#' @author Frankie Cho \email{f.cho@exeter.ac.uk}
 #'
 #' @name ahpsurvey
 #'

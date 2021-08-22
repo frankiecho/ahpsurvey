@@ -8,7 +8,7 @@
 The \code{ahpsurvey} package provides a workflow for researchers to reformat data and run analytic hierarchy process on data that are originally formatted using the survey data entry mode. A diversified toolbox is available for researchers to explore ways to impute missing pairwise comparisons or to adjust comparisons based on consistency, and to conveniently customize the methods which weights derived from surveys are extracted and aggregated.
 }
 \author{
-Frankie Cho \email{htcho@connnect.hku.hk}
+Frankie Cho \email{f.cho@exeter.ac.uk}
 }
 \keyword{Analytic}
 \keyword{Hierarchy}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ahp_missing.R
 \name{ahp.missing}
 \alias{ahp.missing}
-\title{Impute missing observations using the method in \insertCite{Harker1987;textual}{ahpsurvey}}
+\title{Impute missing observations using the maximum deviation method.}
 \usage{
 ahp.missing(ahpmat, atts, round = FALSE, limit = FALSE)
 }
@@ -19,7 +19,7 @@ ahp.missing(ahpmat, atts, round = FALSE, limit = FALSE)
 A list of matrices with all \code{NA} values imputed.
 }
 \description{
-Imputes the missing values of a list of matrices produced by \code{ahp.mat} using the methods and assumptions made in \insertCite{Harker1987;textual}{ahpsurvey}. Missing values must be coded as \code{NA}. As suggested in \insertCite{Harker1987;textual}{ahpsurvey}, a minimum of n-1 comparisons must be made, where n is the number of attributes (assuming that the decision-maker is perfectly consistent). Note that the algorithm assumes that the NA values will be imputed under perfect consistency with the other pairwise comparisons made.
+Imputes the missing values of a list of matrices produced by \code{ahp.mat} using the maximum deviation method. Missing values must be coded as \code{NA}. A minimum of n-1 comparisons must be made, where n is the number of attributes (assuming that the decision-maker is perfectly consistent). Note that the algorithm assumes that the NA values will be imputed under perfect consistency with the other pairwise comparisons made.
 }
 \examples{
 
