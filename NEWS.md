@@ -1,3 +1,7 @@
+## ahpsurvey 0.4.2
+
+* Rename `ahp.harker` to `ahp.md` to correct naming of the algorithm. `ahp.harker` is now deprecated. The functionality is exactly the same in `ahp.md`.
+
 ## ahpsurvey 0.4.1
 
 * Removes `tidyverse` in SUGGESTS to improve installation speed.

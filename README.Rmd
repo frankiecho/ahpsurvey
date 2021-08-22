@@ -102,3 +102,7 @@ Please let me know if there are any features which could be useful to you in a f
 ## License
 
 This project is licensed under the MIT License.
+
+  <!-- badges: start -->
+  [![R-CMD-check](https://github.com/frankiecho/ahpsurvey/workflows/R-CMD-check/badge.svg)](https://github.com/frankiecho/ahpsurvey/actions)
+  <!-- badges: end -->
