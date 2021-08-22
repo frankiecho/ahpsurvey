@@ -1,9 +1,9 @@
 ## Test environments
-* macOS Mojave 10.14.6 with R 3.6.1 (local system)
+* macOS Big Sur 11.5.2 with R 4.1.1 (local system)
 * Ubuntu 12.04 (on travis-ci), R-oldrel, R-release, R-devel
 * win-builder (devel and release)
 
-(tested on 24 November 2019 with 0.4.1)
+(tested on 22 August 2021 with 0.4.2)
 
 ## R CMD check results
 0 ERRORs | 0 WARNINGs | 0 NOTES (on local system)
