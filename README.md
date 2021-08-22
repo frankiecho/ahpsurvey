@@ -71,7 +71,7 @@ Take a `data.frame` like that above and calculate the aggregated
 priorities of the 200 decision-makers.
 
 ``` r
-## Define the attributes used
+## Define the attribute used
 output <- ahp(city200, atts <- c("cult", "fam", "house", "jobs", "trans"), negconvert = TRUE, agg = TRUE)
 #> [1] "Number of observations censored = 0"
 output$aggpref
@@ -115,8 +115,8 @@ An overview of the functions in this package are as follows:
     pj/pi
   - `ahp.pwerror`: Finds the pairwise comparisons with the maximum
     amount of inconsistency
-  - `ahp.missing`: Impute missing pairwise comparsions
-  - `ahp.harker`: Replace inconsistent pairwise comparisons
+  - `ahp.missing`: Impute missing pairwise comparisons
+  - `ahp.md`: Replace inconsistent pairwise comparisons with the maximum deviation method
 
 ## Vignettes
 
@@ -125,23 +125,6 @@ than the vignettes, which are stored in `/my-vignette.pdf`. There, you
 can find a detailed step-by-step instruction of how to use the function
 using a simulated survey dataset and visualise the output using
 `ggplot2`.
-
-## Future development
-
-I have plans to add the following features in the future, perhaps after
-I finish writing up my masters thesis :-(
-
-  - Multiple level of attributes: right now, you can always multiply the
-    weights manually, but I’m looking to develop this feature in a
-    convenient function
-  - Comparing alternatives: or a way to export the matrices to be used
-    in other packages which does this
-  - Sensitivity analysis
-  - More ways to impute missing data
-  - Fuzzy AHP (or integration with existing packages)
-
-Please let me know if there are any features which could be useful to
-you in a feature request or contribution.
 
 ## Author
 

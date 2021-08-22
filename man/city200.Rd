@@ -4,7 +4,9 @@
 \name{city200}
 \alias{city200}
 \title{A dataframe of 200 simulated decision-makers based on \insertCite{Saaty2004;textual}{ahpsurvey}}
-\format{A \code{data.frame} with 200 row and 10 variables, which are pairwise comparisons of \code{atts}.}
+\format{
+A \code{data.frame} with 200 row and 10 variables, which are pairwise comparisons of \code{atts}.
+}
 \source{
 \insertAllCited{}
 }

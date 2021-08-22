@@ -33,7 +33,7 @@ ahp.harker(
 A list of matrices with values replaced with consistent values.
 }
 \description{
-Based on the matrix derived from \code{ahp.error}, replaces the top \code{n} number of inconsistent pairwise comparisons with a value calculated by from the method in \insertCite{Harker1987;textual}{ahpsurvey}. While there are strong arguments against replacing inconsistent values without the decision-maker's consent for the sake of satisfying the consistency ratio criterion of consistency ratio < 0.1 (see \insertCite{Saaty2007fuzzy;textual}{ahpsurvey}), it is often not possible for enumerators to ask respondents to change their answers based on consistency, whereas truncating inconsistent decisions may make the dataset unrepresentative of the population. Researchers should think carefully and explain fully the methods used to process AHP data, and whenever possible, use a lower number of iterations.
+Deprecated in version 0.4.2. Use \code{ahp.md} instead, which contains exactly the same functionality but with the correct name of the algorithm.
 }
 \examples{
 
