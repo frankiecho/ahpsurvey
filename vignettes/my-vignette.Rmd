@@ -181,7 +181,7 @@ amean <- ahp.aggpref(cityahp, atts, method = "arithmetic")
 amean
 ```
 
-Two steps were simutaneously conducted in the above command:
+Two steps were simultaneously conducted in the above command:
 
 1.    Compute the individual priorities of each decision-maker (using `method`)
 
@@ -425,7 +425,7 @@ city200 %>%
 
 A better way to visualise the pairwise comparisons is a bar chart:
 
-```{r,fig.cap="\\label{fig:figs}Pairwise comparison and its frequency\n as the most, second-most, and third most inconsistent pairwise comparsion", fig.height=4, fig.width=7}
+```{r,fig.cap="\\label{fig:figs}Pairwise comparison and its frequency\n as the most, second-most, and third most inconsistent pairwise comparisons", fig.height=4, fig.width=7}
 cityahp %>%
   ahp.pwerror(atts) %>% 
   gather(top1, top2, top3, key = "max", value = "pair") %>%
@@ -444,7 +444,7 @@ cityahp %>%
         panel.ontop = FALSE)
 ```
 
-The results are favorable -- the frequency which a pairwise comparison is the most inconsistent for that decision-maker is reflective of the degree of randomness I have used to generate the dataset. The cult_fam, cult_jobs and fam_trans are assigned the highest standard deviations for the normal random draw, which partly contributes to its high frequency of being in the most inconsistent pairwise comparison in the chart.
+The results are favourable -- the frequency which a pairwise comparison is the most inconsistent for that decision-maker is reflective of the degree of randomness I have used to generate the dataset. The cult_fam, cult_jobs and fam_trans are assigned the highest standard deviations for the normal random draw, which partly contributes to its high frequency of being in the most inconsistent pairwise comparison in the chart.
 
 
 ## Transforming inconsistent matrices

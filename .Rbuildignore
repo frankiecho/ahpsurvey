@@ -10,7 +10,6 @@ my-vignette.pdf
 ^README-.*\.png$
 ^\.travis\.yml$
 ^cran-comments\.md$
-^NEWS\.md$ 
 ^figure$
 ^revdep$
 ^CRAN-RELEASE$

@@ -41,3 +41,4 @@ Collate:
     'ahpsurvey.R'
     'data.R'
 VignetteBuilder: knitr
+Language: en-GB
