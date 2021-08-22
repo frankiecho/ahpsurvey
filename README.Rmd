@@ -77,7 +77,7 @@ An overview of the functions in this package are as follows:
 * `ahp.error`: The product between the pairwise comparison value and pj/pi
 * `ahp.pwerror`: Finds the pairwise comparisons with the maximum amount of inconsistency
 * `ahp.missing`: Impute missing pairwise comparsions
-* `ahp.harker`: Replace inconsistent pairwise comparisons
+* `ahp.md`: Replace inconsistent pairwise comparisons
 
 ## Vignettes
 
