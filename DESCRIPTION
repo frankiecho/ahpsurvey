@@ -20,7 +20,8 @@ Imports:
 Suggests:
     ggplot2, 
     scales,
-    rmarkdown
+    rmarkdown,
+    markdown
 RdMacros: 
     Rdpack
 Collate:
