@@ -93,7 +93,8 @@ $$ \mathbf{S_k} =\begin{pmatrix}
                       a_{2,1} & a_{2,2} & \cdots & a_{2,N} \\
                       \vdots  & \vdots  & a_{i,j} & \vdots  \\
                       a_{N,1} & a_{N,2} & \cdots & a_{N,N}
-                      \end{pmatrix} $$
+                      \end{pmatrix} 
+                      $$
 
 Where $a_{i,j}$ represents the pairwise comparison between the attribute $i$ and $j$. If $i$ is more important than $j$ for 6 units, $a_{i,j} = 6$ and $a_{j,i} = \frac{1}{6}$, i.e. the reciprocal. Data must be reformatted into this pairwise comparison matrix format to proceed.
 
@@ -328,7 +329,8 @@ city200 %>%
   scale_color_discrete(breaks = c(0,1), 
                        labels = c(paste("CR >", thres), 
                                   paste("CR <", thres))) +
-  labs(NULL, caption = paste("n =", nrow(city200), ",", "Mean CR =",
+  labs(title = "", 
+  caption = paste("n =", nrow(city200), ",", "Mean CR =",
                            round(mean(cr),3)))+
   theme_minimal()
 ```
@@ -349,7 +351,8 @@ $$ \mathbf{S} =\begin{pmatrix}
                       \frac{p_{2}}{p_{1}} & \frac{p_{2}}{p_{2}} & \cdots & \frac{p_{2}}{p_{N}} \\
                       \vdots  & \vdots  & \frac{p_{i}}{p_{j}} & \vdots  \\
                       \frac{p_{N}}{p_{1}} & \frac{p_{N}}{p_{2}} & \cdots & \frac{p_{N}}{p_{N}}
-                      \end{pmatrix} $$
+                      \end{pmatrix} 
+                      $$
 
 Where $p_{i}$ and $p_{j}$ are the final weights of the $i^{th}$ and $j^{th}$ attribute respectively, and $N$ is the number of attributes.
 
@@ -577,7 +580,7 @@ city200 %>%
   scale_color_discrete(breaks = c(0,1), 
                        labels = c(paste("CR >", thres), 
                                   paste("CR <", thres))) +
-  labs(NULL, caption =paste("n =",nrow(city200), ",", "Mean CR =",round(mean(cr),3)))+
+  labs(title = "", caption =paste("n =",nrow(city200), ",", "Mean CR =",round(mean(cr),3)))+
   theme_minimal()
 ```
 
