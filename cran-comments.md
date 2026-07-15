@@ -5,18 +5,19 @@ Thank you for reviewing the package contents. In this iteration, I addressed a c
 In addition, I made the following changes:
 - Moved the vignette-only dependencies `knitr`, `randomNames`, and `tidyr` from Imports to Suggests to reduce dependencies
 - Added the language setting in the DESCRIPTION field and made all vignette and function descriptions consistent in British English spelling
+- Updated the package-level documentation to roxygen 8.0.0 requirements by not using @docType "package" and using the _PACKAGE special sentinel
 
 Best regards,
 Frankie Cho
 
 
 ## Test environments
-* macOS Big Sur 11.5.2 with R 4.1.1 (local system)
+* macOS Tahoe 26.5.2 with R 4.6.0 (local system)
 
-(tested on 22 August 2021 with 0.4.2)
+(tested on 16 July 2026 with 0.4.2)
 
 ## R CMD check results
-0 ERRORs | 0 WARNINGs | 0 NOTES (on local system)
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 OK using win-builder.
 

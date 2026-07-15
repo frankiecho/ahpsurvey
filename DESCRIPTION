@@ -7,7 +7,7 @@ Description: The Analytic Hierarchy Process is a versatile multi-criteria decisi
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 8.0.0
 Roxygen: list(markdown = TRUE)
 Imports: 
     Rdpack,
@@ -38,7 +38,7 @@ Collate:
     'ahp_harker.R'
     'ahp_md.R'
     'ahp_missing.R'
-    'ahpsurvey.R'
+    'ahpsurvey-package.R'
     'data.R'
 VignetteBuilder: knitr
 Language: en-GB
