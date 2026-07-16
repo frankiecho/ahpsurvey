@@ -14,3 +14,6 @@ my-vignette.pdf
 ^revdep$
 ^CRAN-RELEASE$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
