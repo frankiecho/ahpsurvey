@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 
 # ahpsurvey
 
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![Rdoc](http://www.rdocumentation.org/badges/version/ahpsurvey)](http://www.rdocumentation.org/packages/ahpsurvey) [![CRAN_time_from_release](http://www.r-pkg.org/badges/ago/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey) 
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/) [![Rdoc](http://www.rdocumentation.org/badges/version/ahpsurvey)](http://www.rdocumentation.org/packages/ahpsurvey) [![CRAN_time_from_release](http://www.r-pkg.org/badges/ago/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey) 
 [![CRAN_downloads](https://cranlogs.r-pkg.org/badges/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
 
 ## Overview

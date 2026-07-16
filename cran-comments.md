@@ -1,11 +1,14 @@
 Dear CRAN volunteers,
 
-Thank you for reviewing the package contents. In this iteration, I addressed a critical bug that was raised in the R CMD check, caused by the use of `ggplot2::labs` in the vignettes of the package, where the function `labs` previously included an unnamed argument that is now prohibited in newer versions. I have now added argument names to usage of `labs` and confirm that all R CMD check passes on Github Actions and are ready for resubmission to CRAN.
+Thank you for reviewing the package contents. The package was archived on 2025-10-02 as check issues were not corrected in time. I have now fully addressed the check issues that caused the package to be archived.
+
+In this iteration, I addressed a critical bug that was raised in the R CMD check, caused by the use of `ggplot2::labs` in the vignettes of the package, where the function `labs` previously included an unnamed argument that is now prohibited in newer versions. I have now added argument names to usage of `labs` and confirm that all R CMD check passes on Github Actions and are ready for resubmission to CRAN.
 
 In addition, I made the following changes:
 * Moved the vignette-only dependencies `knitr`, `randomNames`, and `tidyr` from Imports to Suggests to reduce dependencies
 * Added the language setting in the DESCRIPTION field and made all vignette and function descriptions consistent in British English spelling
 * Updated the package-level documentation to roxygen 8.0.0 requirements by not using @docType "package" and using the `_PACKAGE` special sentinel
+* Enabled github pages for the package
 
 Best regards,
 Frankie Cho

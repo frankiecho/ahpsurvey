@@ -11,15 +11,17 @@ The Analytic Hierarchy Process is a versatile multi-criteria decision-making too
 Useful links:
 \itemize{
   \item \url{https://frankiecho.github.io/ahpsurvey/}
+  \item \url{https://github.com/frankiecho/ahpsurvey}
+  \item Report bugs at \url{https://github.com/frankiecho/ahpsurvey/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Frankie Cho \email{frankie.cho@monash.edu}
+\strong{Maintainer}: Frankie Cho \email{frankie.cho@monash.edu} [copyright holder]
 
 Authors:
 \itemize{
-  \item Frankie Cho \email{frankie.cho@monash.edu}
+  \item Frankie Cho \email{frankie.cho@monash.edu} [copyright holder]
 }
 
 }
