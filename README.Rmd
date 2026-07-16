@@ -105,4 +105,6 @@ This project is licensed under the MIT License.
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/frankiecho/ahpsurvey/workflows/R-CMD-check/badge.svg)](https://github.com/frankiecho/ahpsurvey/actions)
+[![R-CMD-check](https://github.com/frankiecho/ahpsurvey/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/frankiecho/ahpsurvey/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/frankiecho/ahpsurvey/graph/badge.svg)](https://app.codecov.io/gh/frankiecho/ahpsurvey)
 <!-- badges: end -->
