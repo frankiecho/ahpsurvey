@@ -19,10 +19,15 @@ Useful links:
 
 - <https://frankiecho.github.io/ahpsurvey/>
 
+- <https://github.com/frankiecho/ahpsurvey>
+
+- Report bugs at <https://github.com/frankiecho/ahpsurvey/issues>
+
 ## Author
 
-**Maintainer**: Frankie Cho <frankie.cho@monash.edu>
+**Maintainer**: Frankie Cho <frankie.cho@monash.edu> \[copyright
+holder\]
 
 Authors:
 
-- Frankie Cho <frankie.cho@monash.edu>
+- Frankie Cho <frankie.cho@monash.edu> \[copyright holder\]

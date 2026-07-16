@@ -1,7 +1,7 @@
 # ahpsurvey
 
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/)
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
+[![Rdoc](http://www.rdocumentation.org/badges/version/ahpsurvey)](http://www.rdocumentation.org/packages/ahpsurvey)
 [![CRAN_time_from_release](http://www.r-pkg.org/badges/ago/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
 [![CRAN_downloads](https://cranlogs.r-pkg.org/badges/ahpsurvey)](https://cran.r-project.org/package=ahpsurvey)
 
@@ -69,9 +69,8 @@ priorities of the 200 decision-makers.
 
 ``` r
 
-## Define the attribute used
+## Define the attributes used
 output <- ahp(city200, atts <- c("cult", "fam", "house", "jobs", "trans"), negconvert = TRUE, agg = TRUE)
-#> [1] "Number of observations censored = 0"
 output$aggpref
 #>          AggPref  SD.AggPref
 #> cult  0.15261018 0.033564038
@@ -89,12 +88,12 @@ that list:
 
 head(output$indpref)[1:6]
 #>        cult       fam      house      jobs      trans         CR
-#> 1 0.1709466 0.4587181 0.08547330 0.2507636 0.03409845 0.06125366
-#> 2 0.2291009 0.3935620 0.08292558 0.2531962 0.04121537 0.02962755
-#> 3 0.1540045 0.4921905 0.08239372 0.2213908 0.05002052 0.06327989
-#> 4 0.1242495 0.4634863 0.06162027 0.3159930 0.03465092 0.09308731
-#> 5 0.1521676 0.3556904 0.07239889 0.3748108 0.04493236 0.10604443
-#> 6 0.1536560 0.4738939 0.07106456 0.2516808 0.04970479 0.10740624
+#> 1 0.1709466 0.4587181 0.08547330 0.2507636 0.03409845 0.06135861
+#> 2 0.2291009 0.3935620 0.08292558 0.2531962 0.04121537 0.02967831
+#> 3 0.1540045 0.4921905 0.08239372 0.2213908 0.05002052 0.06338831
+#> 4 0.1242495 0.4634863 0.06162027 0.3159930 0.03465092 0.09324680
+#> 5 0.1521676 0.3556904 0.07239889 0.3748108 0.04493236 0.10622613
+#> 6 0.1536560 0.4738939 0.07106456 0.2516808 0.04970479 0.10759026
 ```
 
 Further arguments allow you to specify the aggregation method, impute
@@ -114,9 +113,8 @@ An overview of the functions in this package are as follows:
   pj/pi
 - `ahp.pwerror`: Finds the pairwise comparisons with the maximum amount
   of inconsistency
-- `ahp.missing`: Impute missing pairwise comparisons
-- `ahp.md`: Replace inconsistent pairwise comparisons with the maximum
-  deviation method
+- `ahp.missing`: Impute missing pairwise comparsions
+- `ahp.md`: Replace inconsistent pairwise comparisons
 
 ## Vignettes
 
@@ -125,6 +123,23 @@ than the vignettes, which are stored in `/my-vignette.pdf`. There, you
 can find a detailed step-by-step instruction of how to use the function
 using a simulated survey dataset and visualise the output using
 `ggplot2`.
+
+## Future development
+
+I have plans to add the following features in the future, perhaps after
+I finish writing up my masters thesis :-(
+
+- Multiple level of attributes: right now, you can always multiply the
+  weights manually, but I’m looking to develop this feature in a
+  convenient function
+- Comparing alternatives: or a way to export the matrices to be used in
+  other packages which does this
+- Sensitivity analysis
+- More ways to impute missing data
+- Fuzzy AHP (or integration with existing packages)
+
+Please let me know if there are any features which could be useful to
+you in a feature request or contribution.
 
 ## Author
 

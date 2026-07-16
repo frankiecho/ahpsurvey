@@ -2,9 +2,12 @@
 
 ## Authors
 
-- **Frankie Cho**. Author, maintainer.
+- **Frankie Cho**. Author, maintainer, copyright holder.
 
 ## Citation
+
+Source:
+[`DESCRIPTION`](https://github.com/frankiecho/ahpsurvey/blob/master/DESCRIPTION)
 
 Cho F (2026). *ahpsurvey: Analytic Hierarchy Process for Survey Data*. R
 package version 0.4.2, <https://frankiecho.github.io/ahpsurvey/>.

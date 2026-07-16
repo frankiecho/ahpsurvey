@@ -44,6 +44,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/frankiecho/ahpsurvey/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -54,7 +55,7 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="ahpsurvey">ahpsurvey<a class="anchor" aria-label="anchor" href="#ahpsurvey"></a>
 </h1></div>
-<p><a href="http://choosealicense.com/licenses/mit/" class="external-link"><img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license"></a> <a href="https://cran.r-project.org/package=ahpsurvey" class="external-link"><img src="https://www.r-pkg.org/badges/version/ahpsurvey" alt="CRAN_Status_Badge"></a> <a href="https://cran.r-project.org/package=ahpsurvey" class="external-link"><img src="http://www.r-pkg.org/badges/ago/ahpsurvey" alt="CRAN_time_from_release"></a> <a href="https://cran.r-project.org/package=ahpsurvey" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/ahpsurvey" alt="CRAN_downloads"></a></p>
+<p><a href="https://choosealicense.com/licenses/mit/" class="external-link"><img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license"></a> <a href="http://www.rdocumentation.org/packages/ahpsurvey" class="external-link"><img src="http://www.rdocumentation.org/badges/version/ahpsurvey" alt="Rdoc"></a> <a href="https://cran.r-project.org/package=ahpsurvey" class="external-link"><img src="http://www.r-pkg.org/badges/ago/ahpsurvey" alt="CRAN_time_from_release"></a> <a href="https://cran.r-project.org/package=ahpsurvey" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/ahpsurvey" alt="CRAN_downloads"></a></p>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
@@ -97,9 +98,8 @@
 <span><span class="co">#&gt; 6          4          -3         -6</span></span></code></pre></div>
 <p>Take a <code>data.frame</code> like that above and calculate the aggregated priorities of the 200 decision-makers.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Define the attribute used</span></span>
+<code class="sourceCode R"><span><span class="co">## Define the attributes used</span></span>
 <span><span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ahp.html">ahp</a></span><span class="op">(</span><span class="va">city200</span>, <span class="va">atts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cult"</span>, <span class="st">"fam"</span>, <span class="st">"house"</span>, <span class="st">"jobs"</span>, <span class="st">"trans"</span><span class="op">)</span>, negconvert <span class="op">=</span> <span class="cn">TRUE</span>, agg <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Number of observations censored = 0"</span></span>
 <span><span class="va">output</span><span class="op">$</span><span class="va">aggpref</span></span>
 <span><span class="co">#&gt;          AggPref  SD.AggPref</span></span>
 <span><span class="co">#&gt; cult  0.15261018 0.033564038</span></span>
@@ -111,12 +111,12 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">output</span><span class="op">$</span><span class="va">indpref</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
 <span><span class="co">#&gt;        cult       fam      house      jobs      trans         CR</span></span>
-<span><span class="co">#&gt; 1 0.1709466 0.4587181 0.08547330 0.2507636 0.03409845 0.06125366</span></span>
-<span><span class="co">#&gt; 2 0.2291009 0.3935620 0.08292558 0.2531962 0.04121537 0.02962755</span></span>
-<span><span class="co">#&gt; 3 0.1540045 0.4921905 0.08239372 0.2213908 0.05002052 0.06327989</span></span>
-<span><span class="co">#&gt; 4 0.1242495 0.4634863 0.06162027 0.3159930 0.03465092 0.09308731</span></span>
-<span><span class="co">#&gt; 5 0.1521676 0.3556904 0.07239889 0.3748108 0.04493236 0.10604443</span></span>
-<span><span class="co">#&gt; 6 0.1536560 0.4738939 0.07106456 0.2516808 0.04970479 0.10740624</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0.1709466 0.4587181 0.08547330 0.2507636 0.03409845 0.06135861</span></span>
+<span><span class="co">#&gt; 2 0.2291009 0.3935620 0.08292558 0.2531962 0.04121537 0.02967831</span></span>
+<span><span class="co">#&gt; 3 0.1540045 0.4921905 0.08239372 0.2213908 0.05002052 0.06338831</span></span>
+<span><span class="co">#&gt; 4 0.1242495 0.4634863 0.06162027 0.3159930 0.03465092 0.09324680</span></span>
+<span><span class="co">#&gt; 5 0.1521676 0.3556904 0.07239889 0.3748108 0.04493236 0.10622613</span></span>
+<span><span class="co">#&gt; 6 0.1536560 0.4738939 0.07106456 0.2516808 0.04970479 0.10759026</span></span></code></pre></div>
 <p>Further arguments allow you to specify the aggregation method, impute missing values and identify and correct inconsistent responses.</p>
 </div>
 <div class="section level2">
@@ -141,15 +141,28 @@
 <li>
 <code>ahp.pwerror</code>: Finds the pairwise comparisons with the maximum amount of inconsistency</li>
 <li>
-<code>ahp.missing</code>: Impute missing pairwise comparisons</li>
+<code>ahp.missing</code>: Impute missing pairwise comparsions</li>
 <li>
-<code>ahp.md</code>: Replace inconsistent pairwise comparisons with the maximum deviation method</li>
+<code>ahp.md</code>: Replace inconsistent pairwise comparisons</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a>
 </h2>
 <p>For a detailed example of how the above function works, look no further than the vignettes, which are stored in <code>/my-vignette.pdf</code>. There, you can find a detailed step-by-step instruction of how to use the function using a simulated survey dataset and visualise the output using <code>ggplot2</code>.</p>
+</div>
+<div class="section level2">
+<h2 id="future-development">Future development<a class="anchor" aria-label="anchor" href="#future-development"></a>
+</h2>
+<p>I have plans to add the following features in the future, perhaps after I finish writing up my masters thesis :-(</p>
+<ul>
+<li>Multiple level of attributes: right now, you can always multiply the weights manually, but I’m looking to develop this feature in a convenient function</li>
+<li>Comparing alternatives: or a way to export the matrices to be used in other packages which does this</li>
+<li>Sensitivity analysis</li>
+<li>More ways to impute missing data</li>
+<li>Fuzzy AHP (or integration with existing packages)</li>
+</ul>
+<p>Please let me know if there are any features which could be useful to you in a feature request or contribution.</p>
 </div>
 <div class="section level2">
 <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a>
@@ -164,12 +177,16 @@
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h2>
 <p>This project is licensed under the MIT License.</p>
+<!-- badges: start -->
+
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=ahpsurvey" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/frankiecho/ahpsurvey/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/frankiecho/ahpsurvey/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -193,11 +210,18 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Frankie Cho <br><small class="roles"> Author, maintainer </small>   </li>
+<li>Frankie Cho <br><small class="roles"> Author, maintainer, copyright holder </small>   </li>
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/frankiecho/ahpsurvey/actions" class="external-link"><img src="https://github.com/frankiecho/ahpsurvey/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/frankiecho/ahpsurvey/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/frankiecho/ahpsurvey/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/frankiecho/ahpsurvey" class="external-link"><img src="https://codecov.io/gh/frankiecho/ahpsurvey/graph/badge.svg" alt="Codecov test coverage"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
